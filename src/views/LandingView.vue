@@ -1,5 +1,11 @@
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      objectiveStore: use,
+    };
+  },
+};
 </script>
 
 <template>
