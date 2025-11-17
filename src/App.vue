@@ -12,7 +12,6 @@ export default {
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold underline text-red-400">Tailwind!</h1>
   <RouterView />
 </template>
 
