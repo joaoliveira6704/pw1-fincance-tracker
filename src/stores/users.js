@@ -4,6 +4,7 @@ export const useUsersStore = defineStore("users", {
   state: () => ({
     users: [
       {
+        id:1,
         username: "joao",
         firstName: "João",
         lastName: "Oliveira",
@@ -14,6 +15,7 @@ export const useUsersStore = defineStore("users", {
         friends: ["miguel"],
       },
       {
+        id:2,
         username: "miguel",
         firstName: "Miguel",
         lastName: "Neto",
