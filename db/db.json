@@ -1,6 +1,7 @@
 {
   "users": [
     {
+      "id": 1,
       "username": "joao",
       "firstName": "João",
       "lastName": "Oliveira",
@@ -11,6 +12,7 @@
       "friends": ["miguel"]
     },
     {
+      "id": 2,
       "username": "miguel",
       "firstName": "Miguel",
       "lastName": "Neto",
