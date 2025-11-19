@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 
 export const useObjectiveStore = defineStore("objective", {
-  state: () => {
+  state: () => ({
+    counter: 1,
     objectives: [
       {
         id: 1,
@@ -24,8 +25,8 @@ export const useObjectiveStore = defineStore("objective", {
         hasFixedContribution: true,
         fixedContribution: 20,
       },
-    ];
-  },
+    ],
+  }),
 
   getters: {
     getObjectiveById: (state) => (objId) =>

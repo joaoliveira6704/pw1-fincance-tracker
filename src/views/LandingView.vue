@@ -1,15 +1,20 @@
 <script>
+import { useObjectiveStore } from "../stores/ostore.js";
+
 export default {
   data() {
     return {
-      objectiveStore: use,
+      oStore: useObjectiveStore(),
     };
   },
 };
 </script>
 
 <template>
-  <h1 class="text-red-400">Landing Page</h1>
+  <li v-for="log in oStore.objectives">
+    {{ log.id }}
+  </li>
+  <h1>{{ oStore.getObjectiveById(1) }}</h1>
 </template>
 
 <style lang="scss" scoped></style>
