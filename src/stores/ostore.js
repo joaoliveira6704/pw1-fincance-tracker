@@ -32,4 +32,27 @@ export const useObjectiveStore = defineStore("objective", {
     getObjectiveById: (state) => (objId) =>
       state.objectives.find((obj) => obj.id === objId),
   },
+
+  actions: {
+    createObjective(
+      name,
+      meta,
+      /* dueDate, */
+      hasFixedContribution,
+      fixedContribution
+    ) {
+      const obj = {
+        id: this.objectives.length + 1,
+        name,
+        meta,
+        logs: [],
+        createdDate: Date.now().toString(),
+        /* dueDate, */
+        hasFixedContribution,
+        fixedContribution,
+      };
+      this.objectives.push(obj);
+      console.log(this.objectives);
+    },
+  },
 });
