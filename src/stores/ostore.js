@@ -25,12 +25,33 @@ export const useObjectiveStore = defineStore("objective", {
         hasFixedContribution: true,
         fixedContribution: 20,
       },
+      {
+        id: 2,
+        name: "Carro",
+        meta: 12000,
+        log: [
+          {
+            type: "in",
+            amount: 10,
+            date: "2025-11-15T14:40:00",
+          },
+          {
+            type: "out",
+            amount: 5,
+            date: "2025-11-16T13:00:00",
+          },
+        ],
+        createdDate: "2025-11-01",
+        dueDate: "2025-12-01",
+        hasFixedContribution: false,
+        fixedContribution: 20,
+      },
     ],
   }),
 
   getters: {
-    getObjectiveById: (state) => (objId) =>
-      state.objectives.find((obj) => obj.id === objId),
+    getIndexById: (state) => (objId) =>
+      state.objectives.findIndex((obj, index) => obj.id === objId),
   },
 
   actions: {
@@ -53,6 +74,14 @@ export const useObjectiveStore = defineStore("objective", {
       };
       this.objectives.push(obj);
       console.log(this.objectives);
+    },
+
+    deleteObjective(id) {
+      this.objectives.splice(this.getIndexById(id), 1);
+    },
+
+    logID(id) {
+      console.log(id);
     },
   },
 });

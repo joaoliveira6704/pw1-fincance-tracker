@@ -12,12 +12,12 @@ export default {
 
 <template>
   <li v-for="log in oStore.objectives">
-    {{ log }}
+    {{ log.id }} {{ log.name }}
+    <button @click="oStore.deleteObjective(log.id)">DELETE</button>
+    <!-- <button @click="oStore.logID(log.id)">clog Id>></button>
+    <button @click="oStore.deleteObjective(log.id)">||delete</button>
+ -->
   </li>
-  <!-- <h1>{{ oStore.getObjectiveById(1) }}</h1> -->
-  <button @click="oStore.createObjective('teste', 5000, true, 30)">
-    teste
-  </button>
 </template>
 
 <style lang="scss" scoped></style>
