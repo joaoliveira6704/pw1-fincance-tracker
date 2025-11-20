@@ -51,7 +51,7 @@ export const useObjectiveStore = defineStore("objective", {
 
   getters: {
     getIndexById: (state) => (objId) =>
-      state.objectives.findIndex((obj, index) => obj.id === objId),
+      state.objectives.findIndex((obj) => obj.id === objId),
   },
 
   actions: {
@@ -78,10 +78,6 @@ export const useObjectiveStore = defineStore("objective", {
 
     deleteObjective(id) {
       this.objectives.splice(this.getIndexById(id), 1);
-    },
-
-    logID(id) {
-      console.log(id);
     },
   },
 });
