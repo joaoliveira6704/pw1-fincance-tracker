@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useObjectiveStore = defineStore("objective", {
+export const useObjectivesStore = defineStore("objectives", {
   state: () => ({
     counter: 1,
     objectives: [

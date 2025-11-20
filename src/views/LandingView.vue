@@ -1,19 +1,19 @@
 <script>
-import { useObjectiveStore } from "../stores/ostore.js";
+import { useObjectiveStore } from "../stores/objectivesStore.js";
 
 export default {
   data() {
     return {
-      oStore: useObjectiveStore(),
+      objectivesStore: useObjectiveStore(),
     };
   },
 };
 </script>
 
 <template>
-  <li v-for="log in oStore.objectives">
+  <li v-for="log in objectivesStore.objectives">
     {{ log.id }} {{ log.name }}
-    <button @click="oStore.deleteObjective(log.id)">DELETE</button>
+    <button @click="objectivesStore.deleteObjective(log.id)">DELETE</button>
     <!-- <button @click="oStore.logID(log.id)">clog Id>></button>
     <button @click="oStore.deleteObjective(log.id)">||delete</button>
  -->
