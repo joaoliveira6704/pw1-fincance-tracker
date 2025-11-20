@@ -6,17 +6,21 @@ export default {
       type: String,
       default: "fill",
     },
+    to: {
+      type: String,
+      default: "",
+    },
   },
   computed: {
     buttonClasses() {
       const base =
-        "px-4 py-2 cursor-pointer transition-all duration-200 ease-in-out text-lg font-ProximaNova";
+        "items-center px-4 py-2 text-center cursor-pointer transition-all duration-200 ease-in-out text-primary-color text-lg font-ProximaNova";
 
       const variants = {
-        fill: "bg-stackrgreen-500 rounded-full text-white hover:bg-stackrgreen-200",
+        fill: "flex text-center bg-stackrgreen-500 rounded-full  hover:bg-stackrgreen-200",
         outline:
-          "border border-solid rounded-full border-stackrgreen-500 text-white hover:text-stackrblack hover:bg-stackrgreen-500",
-        full: "bg-stackrgreen-500 rounded-2xl text-white w-full max-w-2xl hover:bg-stackrgreen-200 mt-6",
+          "flex text-center border border-solid rounded-full border-stackrgreen-500 hover:text-stackrblack hover:bg-stackrgreen-500",
+        full: "bg-stackrgreen-500 rounded-2xl w-full max-w-2xl hover:bg-stackrgreen-200 mt-6",
       };
 
       return `${base} ${variants[this.variant]}`;
@@ -26,9 +30,7 @@ export default {
 </script>
 
 <template>
-  <button :class="buttonClasses">
-    <slot></slot>
-  </button>
+  <RouterLink :to="to" :class="buttonClasses"><slot></slot></RouterLink>
 </template>
 
 <style lang="scss" scoped></style>
