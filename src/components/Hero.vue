@@ -11,10 +11,11 @@
       Track Your Money. Master Your Habits.
     </h3>
   </div>
-  <Button variant="full">Start Now</Button>
+  <Button variant="full" to="/register">Start Now</Button>
 </template>
 
 <script>
+import { RouterLink } from "vue-router";
 import Button from "./Button.vue";
 
 export default {
