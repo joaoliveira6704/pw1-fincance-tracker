@@ -12,6 +12,7 @@ export default {
 <template>
   <RouterLink to="/">Página Inicial</RouterLink>
   <RouterLink to="/profile">Perfil</RouterLink>
+  <RouterLink to="/register">Register</RouterLink>
   <RouterView />
 </template>
 
