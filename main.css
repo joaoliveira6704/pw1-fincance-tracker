@@ -1,1 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,718;1,718&display=swap");
 @import "tailwindcss";
+
+@font-face {
+  font-family: ProximaNova;
+  src: url("/fonts/proximanova_extrabold.otf");
+}
+
+@theme {
+  --color-stackrgreen-500: #4ddf7b;
+  --color-stackrgreen-200: #86ffac;
+  --color-stackrblack: #212121;
+  --color-stackrgrey-light: #9e9e9e;
+  --font-ProximaNova: ProximaNova, "sans";
+}
+
+:root {
+  color-scheme: dark;
+  --primary-bg-color: light-dark(#ffffff, var(--color-stackrblack));
+  --primary-color: light-dark(var(--color-stackrblack), #ffffff);
+}
+
+::-moz-selection {
+  background-color: var(--color-stackrgreen-500);
+  color: var(--color-stackrblack);
+}
+
+::selection {
+  background-color: var(--color-stackrgreen-500);
+  color: var(--color-stackrblack);
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--primary-bg-color);
+}

@@ -1,27 +1,23 @@
 <script>
-import { useObjectiveStore } from "../stores/objectivesStore.js";
+import BlurCircle from "@/components/BlurCircle.vue";
+import Hero from "@/components/Hero.vue";
+import Navbar from "@/components/Navbar.vue";
 
 export default {
-  data() {
-    return {
-      objectivesStore: useObjectiveStore(),
-    };
+  components: {
+    Navbar,
+    BlurCircle,
+    Hero,
   },
 };
 </script>
 
 <template>
-  <li v-for="log in objectivesStore.objectives">
-    {{ log.id }} {{ log.name }}
-    <button @click="objectivesStore.deleteObjective(log.id)">DELETE</button>
-    <!-- <button @click="oStore.logID(log.id)">clog Id>></button>
-    <button @click="oStore.deleteObjective(log.id)">||delete</button>
- -->
-  </li>
-  <h1 class="text-red-400">Landing Page</h1>
-  <RouterLink to="/main">Main</RouterLink>
-  <RouterLink to="/login">Login</RouterLink>
-  <RouterLink to="/register">Register</RouterLink>
+  <main class="items-center flex flex-col relative z-10">
+    <BlurCircle />
+    <Navbar />
+    <Hero />
+  </main>
 </template>
 
 <style lang="scss" scoped></style>

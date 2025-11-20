@@ -10,8 +10,6 @@ export default {
 </script>
 
 <template>
-  <RouterLink to="/">Página Inicial</RouterLink>
-  <RouterLink to="/profile">Perfil</RouterLink>
   <RouterView />
 </template>
 
