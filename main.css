@@ -1,1 +1,27 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,718;1,718&display=swap");
+
+:root {
+  --primary-bg-color: #212121;
+  --primary-color: #ffffff;
+}
+
+@theme {
+  --color-stackrgreen-500: #4ddf7b;
+  --color-stackrgreen-200: #86ffac;
+  --color-stackrblack: #212121;
+}
+
+.roboto-<uniquifier > {
+  font-family: "Roboto", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 718;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-color);
+}

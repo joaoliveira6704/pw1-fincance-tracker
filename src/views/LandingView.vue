@@ -1,9 +1,15 @@
 <script>
-export default {};
+import Navbar from "@/components/Navbar.vue";
+
+export default {
+  components: {
+    Navbar,
+  },
+};
 </script>
 
 <template>
-  <h1 class="text-red-400">Landing Page</h1>
+  <Navbar />
 </template>
 
 <style lang="scss" scoped></style>
