@@ -9,7 +9,8 @@ export default {
   },
 
   mounted() {
-    this.user = this.userStore.getUser("joao");
+    userStore.fetchUsers();
+    this.user = this.userStore.fetchUserById(1);
   },
 };
 </script>
