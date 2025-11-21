@@ -20,6 +20,9 @@ export default {
     <BlurCircle />
     <Navbar />
     <Hero />
+    <Hero />
+    <Hero />
+    <Hero />
   </main>
 </template>
 
