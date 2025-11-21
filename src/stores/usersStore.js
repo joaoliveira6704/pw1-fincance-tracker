@@ -2,34 +2,66 @@ import { defineStore } from "pinia";
 
 export const useUsersStore = defineStore("users", {
   state: () => ({
-    users: [
-      {
-        id:1,
-        username: "joao",
-        firstName: "João",
-        lastName: "Oliveira",
-        createdAt: "2025-05-24",
-        income: 12000,
-        objectives: [1, 2],
-        expenses: [1, 3, 4, 5],
-        friends: ["miguel"],
-      },
-      {
-        id:2,
-        username: "miguel",
-        firstName: "Miguel",
-        lastName: "Neto",
-        createdAt: "2023-04-21",
-        income: 18490,
-        objectives: [10, 22],
-        expenses: [12, 31, 41, 51],
-      },
-    ],
+    users: [],
   }),
   getters: {
     getUsers: (state) => state.users,
     getUser: (state) => (username) =>
       state.users.find((user) => user.username === username),
   },
-  actions: {},
+  actions: {
+    async fetchUsers() {
+      try {
+        const response = await fetch("http://localhost:3000/users");
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        this.users = data;
+      } catch (e) {
+        this.error = e.message;
+        console.error("Error fetching users:", e);
+      }
+    },
+    async fetchUserById(id) {
+      try {
+        const response = await fetch(`http://localhost:3000/users/${id}`);
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+      } catch (e) {
+        this.error = e.message;
+        console.error("Error fetching user:", e);
+      }
+    },
+    async addUser(userData) {
+      try {
+        const response = await fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
+
+        const newUser = await response.json();
+        this.users.push(newUser);
+        return newUser;
+      } catch (e) {
+        this.error = e.message;
+        console.error("Error adding user:", e);
+        throw e;
+      }
+    },
+  },
 });
