@@ -40,5 +40,28 @@ export const useUsersStore = defineStore("users", {
         console.error("Error fetching user:", e);
       }
     },
+    async addUser(userData) {
+      try {
+        const response = await fetch("http://localhost:3000/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
+
+        const newUser = await response.json();
+        this.users.push(newUser);
+        return newUser;
+      } catch (e) {
+        this.error = e.message;
+        console.error("Error adding user:", e);
+        throw e;
+      }
+    },
   },
 });

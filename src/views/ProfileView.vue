@@ -7,10 +7,11 @@ export default {
       user: {},
     };
   },
-
-  mounted() {
-    userStore.fetchUsers();
-    this.user = this.userStore.fetchUserById(1);
+  beforeMount() {
+    this.userStore.fetchUsers();
+  },
+  async mounted() {
+    this.user = await this.userStore.fetchUserById(1);
   },
 };
 </script>

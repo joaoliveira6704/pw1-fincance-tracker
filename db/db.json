@@ -1,25 +1,93 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "username": "joao",
       "firstName": "João",
       "lastName": "Oliveira",
       "createdAt": "2025-05-24",
       "income": 12000,
-      "objectives": [1, 2],
-      "expenses": [1, 3, 4, 5],
-      "friends": ["miguel"]
+      "objectives": [
+        1,
+        2
+      ],
+      "expenses": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "friends": [
+        "miguel"
+      ]
     },
     {
-      "id": 2,
+      "id": "2",
       "username": "miguel",
       "firstName": "Miguel",
       "lastName": "Neto",
       "createdAt": "2023-04-21",
       "income": 18490,
-      "objectives": [10, 22],
-      "expenses": [12, 31, 41, 51]
+      "objectives": [
+        10,
+        22
+      ],
+      "expenses": [
+        12,
+        31,
+        41,
+        51
+      ]
+    },
+    {
+      "id": "48f6",
+      "username": "maria",
+      "firstName": "Maria",
+      "lastName": "Silva",
+      "createdAt": "2025-11-21",
+      "income": 15000,
+      "objectives": [],
+      "expenses": []
+    },
+    {
+      "id": "a912",
+      "username": "maria",
+      "firstName": "Maria",
+      "lastName": "Silva",
+      "createdAt": "2025-11-21",
+      "income": 15000,
+      "objectives": [],
+      "expenses": []
+    },
+    {
+      "id": "a9f3",
+      "username": "maria",
+      "firstName": "Maria",
+      "lastName": "Silva",
+      "createdAt": "2025-11-20",
+      "income": 15000,
+      "objectives": [],
+      "expenses": []
+    },
+    {
+      "id": "c9db",
+      "username": "maria",
+      "firstName": "Maria",
+      "lastName": "Silva",
+      "createdAt": 1763725590109,
+      "income": 15000,
+      "objectives": [],
+      "expenses": []
+    },
+    {
+      "id": "c6a7",
+      "username": "maria",
+      "firstName": "Maria",
+      "lastName": "Silva",
+      "createdAt": "2025-11-21",
+      "income": 15000,
+      "objectives": [],
+      "expenses": []
     }
   ]
 }
