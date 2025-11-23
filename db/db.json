@@ -73,6 +73,29 @@
     }
   ],
   "wallets": [],
-  "expenses": [],
+  "transactions": [
+    {
+      "id": 1,
+      "userId": 1,
+      "walletId": 1,
+      "categoryId": 2,
+      "type": "expense",
+      "isFixed": false,
+      "amount": 25.5,
+      "date": "2023-11-23T13:00:00.000Z",
+      "description": "Almoço Executivo"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "walletId": 1,
+      "categoryId": 1,
+      "type": "income",
+      "isFixed": true,
+      "amount": 1500,
+      "date": "2023-11-23",
+      "description": "Salário"
+    }
+  ],
   "logs": []
 }
