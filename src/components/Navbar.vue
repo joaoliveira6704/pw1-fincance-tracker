@@ -16,8 +16,8 @@ export default {
   >
     <Logo />
     <div class="flex space-x-2">
-      <Button variant="fill" to="/login">Login</Button>
-      <Button variant="outline" to="/register">Register</Button>
+      <Button variant="outline" to="/login">Login</Button>
+      <Button variant="fill" to="/register">Register</Button>
     </div>
   </div>
 </template>
