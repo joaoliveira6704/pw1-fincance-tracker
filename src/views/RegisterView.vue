@@ -1,5 +1,5 @@
 <script>
-import { useUsersStore } from "@/stores/usersStore";
+import { useUsersStore } from "@/stores/userStore";
 
 export default {
   data() {
