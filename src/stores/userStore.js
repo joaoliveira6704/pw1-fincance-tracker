@@ -40,6 +40,13 @@ export const useUsersStore = defineStore("users", {
         console.error("Error fetching user:", e);
       }
     },
+    async fetchLoggedUser() {
+      const loggedUserId = JSON.parse(
+        localStorage.getItem("user-session")
+      ).userId;
+
+      return await this.fetchUserById(loggedUserId);
+    },
     async addUser(userData) {
       try {
         const response = await fetch("http://localhost:3000/users", {
