@@ -1,4 +1,7 @@
 import { defineStore } from "pinia";
+import * as api from "@/api/api.js";
+
+const BASE_URL = "http://localhost:3000";
 
 export const useUsersStore = defineStore("users", {
   state: () => ({
@@ -12,14 +15,7 @@ export const useUsersStore = defineStore("users", {
   actions: {
     async fetchUsers() {
       try {
-        const response = await fetch("http://localhost:3000/users");
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} `);
-        }
-
-        const data = await response.json();
-        this.users = data;
+        this.users = await api.get(BASE_URL, "users");
       } catch (e) {
         this.error = e.message;
         console.error("Error fetching users:", e);
@@ -27,14 +23,7 @@ export const useUsersStore = defineStore("users", {
     },
     async fetchUserById(id) {
       try {
-        const response = await fetch(`http://localhost:3000/users/${id}`);
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data;
+        return await api.get(BASE_URL, `users/${id}`);
       } catch (e) {
         this.error = e.message;
         console.error("Error fetching user:", e);
@@ -49,21 +38,7 @@ export const useUsersStore = defineStore("users", {
     },
     async addUser(userData) {
       try {
-        const response = await fetch("http://localhost:3000/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP Error: ${response.status}`);
-        }
-
-        const newUser = await response.json();
-        this.users.push(newUser);
-        return newUser;
+        return await api.post(BASE_URL, "users", userData);
       } catch (e) {
         this.error = e.message;
         console.error("Error adding user:", e);

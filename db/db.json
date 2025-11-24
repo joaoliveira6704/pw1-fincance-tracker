@@ -44,23 +44,38 @@
       "income": 0,
       "objectives": [],
       "expenses": []
+    },
+    {
+      "id": "6857",
+      "username": "admin",
+      "firstName": "admin",
+      "lastName": "admin",
+      "createdAt": "2025-11-24",
+      "income": 0,
+      "objectives": [],
+      "expenses": []
     }
   ],
   "userSessions": [
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "42c88765-b8a7-4849-beab-7cdafee19fc7"
+      "token": "84c1a6e8-942e-4910-871f-c5fb1b3bdc25"
     },
     {
       "id": "92c6",
       "userId": "2",
-      "token": "5b0aadfb-695b-4b49-8cf9-442a697002ec"
+      "token": "d892342c-660c-4544-bfcb-36b1fe1e3b2d"
     },
     {
       "id": "a2ab",
       "userId": "d7b4",
       "token": "3e495e2a-c6e9-4752-9dfb-f0114489e4e2"
+    },
+    {
+      "id": "2184",
+      "userId": "6857",
+      "token": "83feaed6-a019-48dd-9f07-a64bbd875f2c"
     }
   ]
 }

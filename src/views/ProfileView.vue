@@ -30,7 +30,7 @@ export default {
   <p>Salário: {{ user.income }}€</p>
   <p v-if="user.friends">Amigos: {{ user.friends.map((friend) => friend) }}</p>
 
-  <Button variant="fill" @click="authStore.logout()">Logout</Button>
+  <Button variant="full" @click="authStore.logout()">Logout</Button>
 </template>
 
 <style lang="scss" scoped></style>
