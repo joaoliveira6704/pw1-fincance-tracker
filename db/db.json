@@ -158,11 +158,53 @@
     }
   ],
   "logs": [],
+  "friends": [
+    {
+      "id": "37f4",
+      "userId": "1",
+      "friendId": "6857",
+      "friendUsername": "admin",
+      "status": "accepted",
+      "addedAt": "2025-11-24"
+    },
+    {
+      "id": "70d5",
+      "userId": "1",
+      "friendId": "6ad8",
+      "friendUsername": "teste",
+      "status": "accepted",
+      "addedAt": "2025-11-24"
+    },
+    {
+      "id": "2b27",
+      "userId": "1",
+      "friendId": "d7b4",
+      "friendUsername": "teste2",
+      "status": "accepted",
+      "addedAt": "2025-11-24"
+    },
+    {
+      "id": "5234",
+      "userId": "1",
+      "friendId": "92df",
+      "friendUsername": "acb",
+      "status": "accepted",
+      "addedAt": "2025-11-24"
+    },
+    {
+      "id": "a84b",
+      "userId": "1",
+      "friendId": "38e59c19-50e1-4b18-affc-49f82932ffef",
+      "friendUsername": "joao123",
+      "status": "accepted",
+      "addedAt": "2025-11-24"
+    }
+  ],
   "userSessions": [
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "a0ad3519-c2eb-4cd3-b8ff-dac4e2ff5727"
+      "token": "c230e25d-9d7e-4f90-936e-4d50f14f2088"
     },
     {
       "id": "92c6",
