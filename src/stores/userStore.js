@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import * as api from "@/api/api.js";
+import * as factory from "@/utils/factories";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -36,8 +37,15 @@ export const useUsersStore = defineStore("users", {
 
       return await this.fetchUserById(loggedUserId);
     },
-    async addUser(userData) {
+    async addUser(username, firstName, lastName, email, password) {
       try {
+        const userData = factory.createUser(
+          username,
+          firstName,
+          lastName,
+          email,
+          password
+        );
         return await api.post(BASE_URL, "users", userData);
       } catch (e) {
         this.error = e.message;
