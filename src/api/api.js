@@ -38,6 +38,18 @@ export async function patch(apiBaseUrl, endpoint, data) {
   }
 }
 
+export async function remove(apiBaseUrl, endpoint) {
+  try {
+    const response = await fetch(`${apiBaseUrl}/${endpoint}`, {
+      method: "DELETE",
+    });
+    return handleResponse(response);
+  } catch (error) {
+    console.error(`Error deleting to ${endpoint}:`, error);
+    throw error;
+  }
+}
+
 async function handleResponse(response) {
   if (!response.ok) {
     const errorMessage = await response.text();

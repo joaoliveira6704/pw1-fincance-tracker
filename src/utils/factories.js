@@ -1,6 +1,12 @@
 // Gera um ID único
 const generateId = () => crypto.randomUUID();
 
+// Retorna a data atual (mm-dd-aaaa)
+const todayDate = () => new Date().toISOString().slice(0, 10);
+
+// Retorna a data atual (com horas minutos e segundos)
+const todayDateTime = () => new Date().toISOString();
+
 // Cria um Utilizador
 export function createUser(username, firstName, lastName, email, password) {
   return {
@@ -9,7 +15,7 @@ export function createUser(username, firstName, lastName, email, password) {
     username: username,
     password: password,
     email: email,
-    createdAt: new Date().toISOString().slice(0, 10),
+    createdAt: todayDate(),
     isAdmin: false,
     income: 0,
     preferences: {
@@ -90,10 +96,22 @@ export function createGoal(
 export function createLog() {
   return {
     id: generateId(),
-    timestamp: new Date().toISOString(),
+    timestamp: todayDateTime(),
     actionType: "",
     entity: "system",
     description: "",
     userId: null,
+  };
+}
+
+//Cria objeto de amigo
+export function createFriend(currentUserId, friendUserObj) {
+  return {
+    userId: currentUserId,
+    friendId: friendUserObj.id,
+    friendName: friendUserObj.name,
+    friendUsername: friendUserObj.username,
+    status: "accepted", // 'accepted' 'pending'
+    addedAt: todayDate(),
   };
 }
