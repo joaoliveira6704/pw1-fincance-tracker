@@ -1,5 +1,8 @@
 import { defineStore } from "pinia";
 import router from "@/router";
+import * as api from "@/api/api.js";
+
+const BASE_URL = "http://localhost:3000";
 
 function getUserSession() {
   const data =
@@ -12,30 +15,34 @@ async function saveUserSession(userId, token) {
   localStorage.setItem("user-session", JSON.stringify({ userId, token }));
 
   try {
-    const checkResponse = await fetch(
-      `http://localhost:3000/userSessions?userId=${userId}`
+    const existingSessions = await api.get(
+      BASE_URL,
+      `userSessions?userId=${userId}`
     );
-    const existingSessions = await checkResponse.json();
 
     if (existingSessions.length > 0) {
-      const sessionId = existingSessions[0].id;
+      const newData = {
+        id: existingSessions[0].id,
+        userId: existingSessions[0].userId,
+        token: token,
+      };
 
-      await fetch(`http://localhost:3000/userSessions/${sessionId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          token: token,
-        }),
-      });
+      const message = await api.patch(
+        BASE_URL,
+        `userSessions/${existingSessions[0].id}`,
+        newData
+      );
+
+      console.log(message);
     } else {
-      await fetch("http://localhost:3000/userSessions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: userId,
-          token: token,
-        }),
-      });
+      const data = {
+        userId: userId,
+        token: token,
+      };
+
+      const message = await api.post(BASE_URL, "userSessions", data);
+
+      console.log(message);
     }
   } catch (error) {
     console.error("Erro do servidor:", error);
@@ -59,10 +66,11 @@ export const useAuthStore = defineStore("auth", {
     async validateSession() {
       if (!this.userId || !this.sessionToken) return false;
 
-      const url = `http://localhost:3000/userSessions?userId=${this.userId}&token=${this.sessionToken}`;
       try {
-        const response = await fetch(url);
-        const data = await response.json();
+        const data = await api.get(
+          BASE_URL,
+          `userSessions?userId=${this.userId}&token=${this.sessionToken}`
+        );
 
         if (data.length === 1) {
           return true;
@@ -77,11 +85,11 @@ export const useAuthStore = defineStore("auth", {
     },
 
     async login(username, password) {
-      const url = `http://localhost:3000/users?username=${username}&password=${password}`;
-
       try {
-        const response = await fetch(url);
-        const data = await response.json();
+        const data = await api.get(
+          BASE_URL,
+          `users?username=${username}&password=${password}`
+        );
 
         if (data.length === 1) {
           const loggedInUser = data[0];

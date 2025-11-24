@@ -24,6 +24,20 @@ export async function post(apiBaseUrl, endpoint, data) {
   }
 }
 
+export async function patch(apiBaseUrl, endpoint, data) {
+  try {
+    const response = await fetch(`${apiBaseUrl}/${endpoint}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    return handleResponse(response);
+  } catch (error) {
+    console.error(`Error patching to ${endpoint}:`, error);
+    throw error;
+  }
+}
+
 async function handleResponse(response) {
   if (!response.ok) {
     const errorMessage = await response.text();
