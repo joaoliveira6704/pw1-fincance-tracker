@@ -63,17 +63,26 @@ export function createWallet() {
 }
 
 // Cria um novo Objetivo
-export function createGoal(data = {}) {
+export function createGoal(
+  name,
+  targetAmount,
+  deadline,
+  status = "active",
+  ownerId,
+  isShared,
+  memberIds,
+  contributions
+) {
   return {
     id: generateId(),
-    name: "Novo Objetivo",
-    targetAmount: 0,
-    deadline: null,
-    status: "active",
-    ownerId: null,
-    isShared: false,
-    memberIds: [],
-    contributions: [],
+    name,
+    targetAmount,
+    deadline,
+    status,
+    ownerId,
+    isShared,
+    memberIds,
+    contributions,
   };
 }
 

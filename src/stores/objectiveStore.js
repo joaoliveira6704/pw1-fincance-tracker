@@ -1,83 +1,66 @@
 import { defineStore } from "pinia";
+import * as api from "@/api/api.js";
+import * as factory from "@/utils/factories.js";
+
+const BASE_URL = "http://localhost:3000";
+
+function getUserId() {
+  const sessionStr = localStorage.getItem("user-session");
+  if (!sessionStr) return null;
+  return JSON.parse(sessionStr).userId;
+}
 
 export const useObjectivesStore = defineStore("objectives", {
   state: () => ({
-    counter: 1,
-    objectives: [
-      {
-        id: 1,
-        name: "Viagem",
-        meta: 1000,
-        log: [
-          {
-            type: "in",
-            amount: 10,
-            date: "2025-11-15T14:40:00",
-          },
-          {
-            type: "out",
-            amount: 5,
-            date: "2025-11-16T13:00:00",
-          },
-        ],
-        createdDate: "2025-11-01",
-        dueDate: "2025-12-01",
-        hasFixedContribution: true,
-        fixedContribution: 20,
-      },
-      {
-        id: 2,
-        name: "Carro",
-        meta: 12000,
-        log: [
-          {
-            type: "in",
-            amount: 10,
-            date: "2025-11-15T14:40:00",
-          },
-          {
-            type: "out",
-            amount: 5,
-            date: "2025-11-16T13:00:00",
-          },
-        ],
-        createdDate: "2025-11-01",
-        dueDate: "2025-12-01",
-        hasFixedContribution: false,
-        fixedContribution: 20,
-      },
-    ],
+    objectives: [],
   }),
 
   getters: {
+    getObjectives: (state) => state.objectives,
     getIndexById: (state) => (objId) =>
       state.objectives.findIndex((obj) => obj.id === objId),
   },
 
   actions: {
-    createObjective(
-      name,
-      meta,
-      /* dueDate, */
-      hasFixedContribution,
-      fixedContribution
-    ) {
-      const obj = {
-        id: this.objectives.length + 1,
-        name,
-        meta,
-        logs: [],
-        createdDate: Date.now().toString(),
-        /* dueDate, */
-        hasFixedContribution,
-        fixedContribution,
-      };
-      this.objectives.push(obj);
-      console.log(this.objectives);
+    async fetchObjectives() {
+      const userID = getUserId();
+      if (!userID) return;
+
+      try {
+        const data = await api.get(BASE_URL, `objectives?userID=${userID}`);
+        this.objectives = data;
+      } catch (e) {
+        console.error("Erro ao buscar Objetivos", e);
+      }
     },
 
-    deleteObjective(id) {
-      this.objectives.splice(this.getIndexById(id), 1);
+    async addObjective(
+      name,
+      targetAmount,
+      deadline,
+      status,
+      isShared,
+      memberIds
+    ) {
+      const userId = getUserId();
+      const objectiveData = factory.createGoal(
+        name,
+        targetAmount,
+        deadline,
+        status,
+        userId,
+        isShared,
+        memberIds
+      );
+      try {
+        await api.post(BASE_URL, "objectives", objectiveData);
+        this.objectives.push(objectiveData);
+        return;
+      } catch (e) {
+        this.error = e.message;
+        console.error("Error adding Objective", e);
+        throw e;
+      }
     },
   },
 });
