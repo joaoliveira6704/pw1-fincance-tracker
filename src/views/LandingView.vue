@@ -1,23 +1,35 @@
 <script>
-import { useObjectivesStore } from "../stores/objectivesStore.js";
+import BlurCircle from "@/components/BlurCircle.vue";
+import Hero from "@/components/Hero.vue";
+import Navbar from "@/components/Navbar.vue";
+import LightDarkBtn from "@/components/LightDarkBtn.vue";
+import SocialProof from "@/components/SocialProof.vue";
+import KillerFeature from "@/components/KillerFeature.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
-  data() {
-    return {
-      oStore: useObjectivesStore(),
-    };
+  components: {
+    Navbar,
+    BlurCircle,
+    Hero,
+    LightDarkBtn,
+    SocialProof,
+    KillerFeature,
+    Footer,
   },
 };
 </script>
 
 <template>
-  <li v-for="log in oStore.objectives">
-    {{ log.id }} {{ log.name }}
-    <button @click="oStore.deleteObjective(log.id)">DELETE</button>
-    <!-- <button @click="oStore.logID(log.id)">clog Id>></button>
-    <button @click="oStore.deleteObjective(log.id)">||delete</button>
- -->
-  </li>
+  <LightDarkBtn />
+  <main class="items-center flex flex-col relative z-10">
+    <BlurCircle />
+    <Navbar />
+    <Hero />
+    <KillerFeature />
+    <SocialProof />
+    <Footer />
+  </main>
 </template>
 
 <style lang="scss" scoped></style>
