@@ -155,6 +155,16 @@
       "categoryId": 2,
       "walletId": 1,
       "description": "compras na nike"
+    },
+    {
+      "id": "3e33",
+      "userId": "1",
+      "name": "Televisão",
+      "date": "2025-11-11",
+      "amount": 450,
+      "categoryId": 2,
+      "walletId": 1,
+      "description": "Compra de televisão na worten"
     }
   ],
   "logs": [],
@@ -162,7 +172,7 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "a0ad3519-c2eb-4cd3-b8ff-dac4e2ff5727"
+      "token": "f70b26b2-ddac-4652-bf4a-484c96fca824"
     },
     {
       "id": "92c6",

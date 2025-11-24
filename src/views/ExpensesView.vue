@@ -1,4 +1,5 @@
 <script>
+import Button from "@/components/Button.vue";
 import { useExpenseStore } from "@/stores/expenseStore";
 
 export default {
@@ -45,6 +46,9 @@ export default {
   async created() {
     await this.expenseStore.fetchExpenses();
   },
+  components: {
+    Button,
+  },
 };
 </script>
 
@@ -72,11 +76,11 @@ export default {
       <textarea v-model="description"></textarea>
     </div>
     <br />
-    <button type="submit">Criar</button>
+    <Button type="submit" variant="full" @click="createExpense">Criar</Button>
   </form>
 
-  <p v-if="error" style="color: red">{{ error }}</p>
-
+  <p v-if="error" class="text-red-500">{{ error }}</p>
+  <br />
   <hr />
   <h3>Lista de Despesas</h3>
   <ul>

@@ -32,24 +32,6 @@ export function createExpense(userId, name, date, amount, description) {
   };
 }
 
-/* id: "log_001",
-  userId: "user_tiago",
-  actionType: "CREATE",
-  entity: "transaction",
-  entityId: "txn_55",
-  
-  amount: -25.50,               // Negativo para indicar saída visualmente fácil
-  currency: "EUR",
-  
-  description: "Jantar no McDonald's",
-  details: {
-    category: "Alimentação",
-    wallet: "Dinheiro Vivo"
-  },
-  
-  timestamp: "2023-11-23T20:15:00Z"
-} */
-
 // Cria uma nova Carteira (Wallet)
 export function createWallet() {
   return {
