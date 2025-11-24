@@ -27,7 +27,7 @@ export default {
   >
     <Logo />
     <div v-if="isAuth" class="flex space-x-2">
-      <Button variant="fill" to="/main">Entrar</Button>
+      <Button variant="fill" to="/main">Dashboard</Button>
     </div>
 
     <div v-else class="flex space-x-2">
