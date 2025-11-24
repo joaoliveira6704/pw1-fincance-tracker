@@ -2,6 +2,7 @@
   <div class="circles-container">
     <div class="left-circle"></div>
     <div class="right-circle"></div>
+    <div class="middle-circle"></div>
   </div>
 </template>
 
@@ -15,14 +16,15 @@ export default {};
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   pointer-events: none;
   z-index: -1;
 }
 
 .left-circle,
-.right-circle {
+.right-circle,
+.middle-circle {
   background-image: radial-gradient(
     closest-side,
     var(--inner-circle-color),
@@ -40,11 +42,19 @@ export default {};
   opacity: 0.2;
 }
 
+.middle-circle {
+  height: 1000px;
+  width: 1000px;
+  top: 70%;
+  left: 50%;
+  opacity: 0.1;
+}
+
 .right-circle {
   height: 800px;
   width: 800px;
   top: -200px;
   left: 60%;
-  opacity: 0.1;
+  opacity: 0.15;
 }
 </style>

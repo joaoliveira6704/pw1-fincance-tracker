@@ -2,6 +2,22 @@
 @import "tailwindcss";
 @import "primeicons/primeicons.css";
 
+:root {
+  --primary-bg-color: #212121;
+  --primary-color: #ffffff;
+  color-scheme: dark;
+}
+
+::-moz-selection {
+  background-color: var(--color-stackrgreen-500);
+  color: var(--color-stackrblack);
+}
+
+::selection {
+  background-color: var(--color-stackrgreen-500);
+  color: var(--color-stackrblack);
+}
+
 @font-face {
   font-family: ProximaNova;
   src: url("/fonts/proximanova_extrabold.otf");
@@ -21,7 +37,14 @@
   --color-stackrgreen-500: #4ddf7b;
   --color-stackrgreen-200: #86ffac;
   --color-stackrblack: #212121;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-color);
   --color-stackrgrey-light: #9e9e9e;
+  --font-Roboto: Roboto, "sans";
   --font-ProximaNova: ProximaNova, "sans";
   --font-ProximaNova-Reg: ProximaNova-Reg, "sans";
   --font-ProximaNova-Bold: ProximaNova-Bold, "sans";
@@ -32,24 +55,7 @@
   --outer-circle-color: light-dark(#ffffff, var(--color-stackrblack));
   --primary-bg-color: light-dark(#ffffff, var(--color-stackrblack));
   --primary-color: light-dark(var(--color-stackrblack), #ffffff);
-}
-
-:root {
-  color-scheme: dark;
-}
-
-::-moz-selection {
-  background-color: var(--color-stackrgreen-500);
-  color: var(--color-stackrblack);
-}
-
-::selection {
-  background-color: var(--color-stackrgreen-500);
-  color: var(--color-stackrblack);
-}
-
-body {
-  transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
   font-family: "Roboto", sans-serif;
   background-color: var(--primary-bg-color);
 }

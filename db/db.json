@@ -3,9 +3,11 @@
     {
       "id": "1",
       "username": "joao",
+      "password": "joao",
       "firstName": "João",
       "lastName": "Oliveira",
       "createdAt": "2025-05-24",
+      "isAdmin": true,
       "income": 12000,
       "objectives": [1, 2],
       "expenses": [1, 3, 4, 5],
@@ -14,60 +16,42 @@
     {
       "id": "2",
       "username": "miguel",
+      "password": "miguel",
       "firstName": "Miguel",
       "lastName": "Neto",
       "createdAt": "2023-04-21",
+      "isAdmin": false,
       "income": 18490,
       "objectives": [10, 22],
       "expenses": [12, 31, 41, 51]
     },
     {
-      "id": "48f6",
-      "username": "maria",
-      "firstName": "Maria",
-      "lastName": "Silva",
-      "createdAt": "2025-11-21",
-      "income": 15000,
+      "id": "6ad8",
+      "username": "teste",
+      "firstName": "Teste",
+      "lastName": "Ultimo",
+      "createdAt": "2025-11-24",
+      "income": 0,
       "objectives": [],
       "expenses": []
     },
     {
-      "id": "a912",
-      "username": "maria",
-      "firstName": "Maria",
-      "lastName": "Silva",
-      "createdAt": "2025-11-21",
-      "income": 15000,
+      "id": "d7b4",
+      "username": "teste2",
+      "firstName": "Teste",
+      "lastName": "Segundo",
+      "createdAt": "2025-11-24",
+      "income": 0,
       "objectives": [],
       "expenses": []
     },
     {
-      "id": "a9f3",
-      "username": "maria",
-      "firstName": "Maria",
-      "lastName": "Silva",
-      "createdAt": "2025-11-20",
-      "income": 15000,
-      "objectives": [],
-      "expenses": []
-    },
-    {
-      "id": "c9db",
-      "username": "maria",
-      "firstName": "Maria",
-      "lastName": "Silva",
-      "createdAt": 1763725590109,
-      "income": 15000,
-      "objectives": [],
-      "expenses": []
-    },
-    {
-      "id": "c6a7",
-      "username": "maria",
-      "firstName": "Maria",
-      "lastName": "Silva",
-      "createdAt": "2025-11-21",
-      "income": 15000,
+      "id": "6857",
+      "username": "admin",
+      "firstName": "admin",
+      "lastName": "admin",
+      "createdAt": "2025-11-24",
+      "income": 0,
       "objectives": [],
       "expenses": []
     }
@@ -97,5 +81,27 @@
       "description": "Salário"
     }
   ],
-  "logs": []
+  "logs": [],
+  "userSessions": [
+    {
+      "id": "d1f3",
+      "userId": "1",
+      "token": "84c1a6e8-942e-4910-871f-c5fb1b3bdc25"
+    },
+    {
+      "id": "92c6",
+      "userId": "2",
+      "token": "d892342c-660c-4544-bfcb-36b1fe1e3b2d"
+    },
+    {
+      "id": "a2ab",
+      "userId": "d7b4",
+      "token": "3e495e2a-c6e9-4752-9dfb-f0114489e4e2"
+    },
+    {
+      "id": "2184",
+      "userId": "6857",
+      "token": "83feaed6-a019-48dd-9f07-a64bbd875f2c"
+    }
+  ]
 }

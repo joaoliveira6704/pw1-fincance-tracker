@@ -1,9 +1,12 @@
 <script>
-import { useUsersStore } from "@/stores/usersStore";
+import Button from "@/components/Button.vue";
+import { useAuthStore } from "@/stores/authStore";
+import { useUsersStore } from "@/stores/userStore";
 export default {
   data() {
     return {
       userStore: useUsersStore(),
+      authStore: useAuthStore(),
       user: {},
     };
   },
@@ -11,7 +14,10 @@ export default {
     this.userStore.fetchUsers();
   },
   async mounted() {
-    this.user = await this.userStore.fetchUserById(1);
+    this.user = await this.userStore.fetchLoggedUser();
+  },
+  components: {
+    Button,
   },
 };
 </script>
@@ -23,6 +29,8 @@ export default {
   <p>Entrou em: {{ user.createdAt }}</p>
   <p>Salário: {{ user.income }}€</p>
   <p v-if="user.friends">Amigos: {{ user.friends.map((friend) => friend) }}</p>
+
+  <Button variant="full" @click="authStore.logout()">Logout</Button>
 </template>
 
 <style lang="scss" scoped></style>
