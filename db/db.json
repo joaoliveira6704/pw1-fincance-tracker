@@ -9,9 +9,19 @@
       "createdAt": "2025-05-24",
       "isAdmin": true,
       "income": 12000,
-      "objectives": [1, 2],
-      "expenses": [1, 3, 4, 5],
-      "friends": ["miguel"]
+      "objectives": [
+        1,
+        2
+      ],
+      "expenses": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "friends": [
+        "miguel"
+      ]
     },
     {
       "id": "2",
@@ -22,8 +32,16 @@
       "createdAt": "2023-04-21",
       "isAdmin": false,
       "income": 18490,
-      "objectives": [10, 22],
-      "expenses": [12, 31, 41, 51]
+      "objectives": [
+        10,
+        22
+      ],
+      "expenses": [
+        12,
+        31,
+        41,
+        51
+      ]
     },
     {
       "id": "6ad8",
@@ -54,31 +72,89 @@
       "income": 0,
       "objectives": [],
       "expenses": []
+    },
+    {
+      "id": "38e59c19-50e1-4b18-affc-49f82932ffef",
+      "firstName": "joao",
+      "lastName": "joao",
+      "username": "joao123",
+      "password": "joao",
+      "email": "joao",
+      "createdAt": "2025-11-24",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "currency": "EUR",
+        "theme": "light"
+      }
+    },
+    {
+      "id": "92df",
+      "firstName": "Abc",
+      "lastName": "abc",
+      "username": "acb",
+      "password": "acb",
+      "email": "abc",
+      "createdAt": "2025-11-24",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "currency": "EUR",
+        "theme": "light"
+      }
     }
   ],
   "wallets": [],
-  "transactions": [
+  "expenses": [
     {
-      "id": 1,
-      "userId": 1,
-      "walletId": 1,
+      "id": "ae60",
+      "userId": "92df",
+      "date": "1932-12-03",
+      "name": "abc",
+      "amount": 34242,
+      "description": "Compras no pingo-doce",
       "categoryId": 2,
-      "type": "expense",
-      "isFixed": false,
-      "amount": 25.5,
-      "date": "2023-11-23T13:00:00.000Z",
-      "description": "Almoço Executivo"
+      "walletId": 1
     },
     {
-      "id": 2,
-      "userId": 1,
+      "id": "9b22",
+      "userId": "92df",
+      "name": "abc",
+      "date": "1993-12-02",
+      "amount": 12,
+      "categoryId": 2,
       "walletId": 1,
-      "categoryId": 1,
-      "type": "income",
-      "isFixed": true,
-      "amount": 1500,
-      "date": "2023-11-23",
-      "description": "Salário"
+      "description": "jsxjsjasjxnajxas"
+    },
+    {
+      "id": "da23",
+      "userId": "92df",
+      "name": "compra",
+      "date": "1992-12-02",
+      "amount": 2,
+      "categoryId": 2,
+      "walletId": 1,
+      "description": "sdfefef"
+    },
+    {
+      "id": "1c8b",
+      "userId": "92df",
+      "name": "ab",
+      "date": "1992-12-02",
+      "amount": 2,
+      "categoryId": 2,
+      "walletId": 1,
+      "description": "efef"
+    },
+    {
+      "id": "7e97",
+      "userId": "1",
+      "name": "compras",
+      "date": "1992-12-03",
+      "amount": 200,
+      "categoryId": 2,
+      "walletId": 1,
+      "description": "compras na nike"
     }
   ],
   "logs": [],
@@ -86,12 +162,12 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "84c1a6e8-942e-4910-871f-c5fb1b3bdc25"
+      "token": "a0ad3519-c2eb-4cd3-b8ff-dac4e2ff5727"
     },
     {
       "id": "92c6",
       "userId": "2",
-      "token": "d892342c-660c-4544-bfcb-36b1fe1e3b2d"
+      "token": "fc98bb18-68eb-4473-ae59-66a888e883d0"
     },
     {
       "id": "a2ab",
@@ -102,6 +178,16 @@
       "id": "2184",
       "userId": "6857",
       "token": "83feaed6-a019-48dd-9f07-a64bbd875f2c"
+    },
+    {
+      "id": "c6d3",
+      "userId": "38e59c19-50e1-4b18-affc-49f82932ffef",
+      "token": "b1dc098a-578f-4b0a-bdce-5f29dfcf782f"
+    },
+    {
+      "id": "d0ac",
+      "userId": "92df",
+      "token": "4fd38099-5661-4f7f-a4ed-4c1caf5bc74a"
     }
   ]
 }

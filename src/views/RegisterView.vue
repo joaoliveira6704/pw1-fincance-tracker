@@ -13,6 +13,7 @@ export default {
       usersStore: useUsersStore(),
       firstName: "",
       lastName: "",
+      email: "",
       username: "",
       password: "",
     };
@@ -28,16 +29,13 @@ export default {
       }
     },
     async addNewUser() {
-      const formattedDate = new Date().toISOString().slice(0, 10);
-      await this.usersStore.addUser({
-        username: this.username,
-        firstName: this.firstName,
-        lastName: this.lastName,
-        createdAt: formattedDate,
-        income: 0,
-        objectives: [],
-        expenses: [],
-      });
+      await this.usersStore.addUser(
+        this.username,
+        this.firstName,
+        this.lastName,
+        this.email,
+        this.password
+      );
       await this.handleLogin();
     },
   },
@@ -89,9 +87,10 @@ console.log(n);
         <label for="e-mail">E-mail :</label>
         <input
           class="bg-[#9e9e9e]/50 rounded-xl px-3 py-2 hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50 focus:outline-none"
-          name="e-mail"
-          type="text"
+          name="email"
+          type="email"
           placeholder="you@example.com"
+          v-model="email"
         />
       </div>
       <div class="flex flex-col gap-y-2 col-span-2">
