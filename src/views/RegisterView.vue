@@ -1,12 +1,48 @@
 <script>
-import { useUsersStore } from "@/stores/usersStore";
+import Button from "@/components/Button.vue";
+import { useAuthStore } from "@/stores/authStore";
+import { useUsersStore } from "@/stores/userStore";
+
 export default {
+  setup() {
+    const authStore = useAuthStore();
+    return { authStore };
+  },
   data() {
     return {
+      usersStore: useUsersStore(),
       firstName: "",
       lastName: "",
+      username: "",
       password: "",
     };
+  },
+  methods: {
+    async handleLogin() {
+      try {
+        this.error = null;
+        await this.authStore.login(this.username, this.password);
+        router.push("/main");
+      } catch (err) {
+        this.error = "Erro: Credenciais erradas.";
+      }
+    },
+    async addNewUser() {
+      const formattedDate = new Date().toISOString().slice(0, 10);
+      await this.usersStore.addUser({
+        username: this.username,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        createdAt: formattedDate,
+        income: 0,
+        objectives: [],
+        expenses: [],
+      });
+      await this.handleLogin();
+    },
+  },
+  components: {
+    Button,
   },
 };
 
@@ -56,7 +92,6 @@ console.log(n);
           name="e-mail"
           type="text"
           placeholder="you@example.com"
-          autocapitalize="on"
         />
       </div>
       <div class="flex flex-col gap-y-2 col-span-2">
@@ -66,10 +101,9 @@ console.log(n);
             class="bg-[#9e9e9e]/50 rounded-xl px-3 py-2 hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50 focus:outline-none grow"
             name="username"
             type="text"
+            v-model="username"
             placeholder="username"
-            autocapitalize="on"
           />
-          <p>icon</p>
         </div>
       </div>
       <div class="flex flex-col gap-y-2">
@@ -80,40 +114,11 @@ console.log(n);
           type="password"
           v-model="password"
           placeholder="*******"
-          autocapitalize="on"
         />
       </div>
     </div>
+    <Button variant="full" @click="addNewUser()">Register</Button>
   </form>
-import { useUsersStore } from "@/stores/userStore";
-
-export default {
-  data() {
-    return {
-      usersStore: useUsersStore(),
-    };
-  },
-
-  methods: {
-    async addNewUser() {
-      const formattedDate = new Date().toISOString().slice(0, 10);
-      await this.usersStore.addUser({
-        username: "maria",
-        firstName: "Maria",
-        lastName: "Silva",
-        createdAt: formattedDate,
-        income: 15000,
-        objectives: [],
-        expenses: [],
-      });
-    },
-  },
-};
-</script>
-
-<template>
-  <h1>Register</h1>
-  <button @click="addNewUser()">Add User</button>
 </template>
 
 <style scoped>
