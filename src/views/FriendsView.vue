@@ -29,13 +29,12 @@ export default {
       }
     },
 
-    // A helper to get your custom swal config easily
     getSwalConfig(title, text, showCancel = false) {
       return {
         title: title,
         text: text,
         iconHtml: this.alertIcon,
-        buttonsStyling: false, // IMPORTANT: Allows us to use our own CSS classes
+        buttonsStyling: false, 
         showCancelButton: showCancel,
         confirmButtonText: "Sim",
         cancelButtonText: "Cancelar",
