@@ -89,6 +89,9 @@ export default {
 </template>
 
 <style scoped>
+div {
+  background-color: var(--main-bg-color);
+}
 button:hover {
   background-color: var(--color-stackrgreen-200);
   color: var(--color-stackrblack);

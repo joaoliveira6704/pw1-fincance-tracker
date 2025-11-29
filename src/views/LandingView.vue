@@ -21,7 +21,7 @@ export default {
 </script>
 
 <template>
-  <LightDarkBtn />
+  <LightDarkBtn variant="landing" />
   <main class="items-center flex flex-col relative z-10">
     <BlurCircle />
     <Navbar />

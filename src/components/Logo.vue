@@ -1,12 +1,32 @@
-<template>
-  <div class="flex space-x-4">
-    <img src="/logo-icon.svg" alt="" srcset="" width="50" />
-    <p class="text-5xl font-ProximaNova-Bold">stackr</p>
-  </div>
-</template>
-
 <script>
-export default {};
+export default {
+  props: {
+    variant: {
+      type: String,
+      default: "default",
+    },
+  },
+  computed: {
+    isLanding() {
+      return this.variant === "landing";
+    },
+  },
+};
 </script>
 
-<style scoped></style>
+<template>
+  <div class="flex items-center" :class="isLanding ? 'gap-x-4' : 'gap-x-2'">
+    <img
+      src="/logo-icon.svg"
+      alt="Stackr Logo"
+      :class="isLanding ? 'w-[50px]' : 'w-8'"
+    />
+
+    <p
+      class="font-ProximaNova font-bold text-primary"
+      :class="isLanding ? 'text-5xl' : 'text-2xl'"
+    >
+      stackr
+    </p>
+  </div>
+</template>

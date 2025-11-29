@@ -5,6 +5,8 @@
 :root {
   --primary-bg-color: #212121;
   --primary-color: #ffffff;
+  --secondary-bg-color: #f6f6f6;
+  --secondary-border-color: #e3e3e3;
   color-scheme: dark;
 }
 
@@ -37,6 +39,9 @@
   --color-stackrgreen-500: #4ddf7b;
   --color-stackrgreen-200: #86ffac;
   --color-stackrblack: #212121;
+  --color-deepblack: #0a0a0a;
+  --color-bordergray: #2e2e2e;
+  --font-ProximaNova: "ProximaNova";
 }
 
 body {
@@ -52,10 +57,25 @@ body {
     var(--color-stackrgreen-500),
     rgb(190, 83, 83)
   );
-  --outer-circle-color: light-dark(#ffffff, var(--color-stackrblack));
-  --primary-bg-color: light-dark(#ffffff, var(--color-stackrblack));
-  --primary-color: light-dark(var(--color-stackrblack), #ffffff);
-    transition: all 0.3s ease-out;
+  --outer-circle-color: light-dark(
+    var(--primary-color),
+    var(--color-stackrblack)
+  );
+  --primary-bg-color: light-dark(
+    var(--primary-color),
+    var(--color-stackrblack)
+  );
+  --primary-color: light-dark(var(--color-stackrblack), var(--primary-color));
+  --navbar-bg-color: light-dark(
+    var(--secondary-bg-color),
+    var(--color-stackrblack)
+  );
+  --border-color: light-dark(
+    var(--secondary-border-color),
+    var(--color-bordergray)
+  );
+  --main-bg-color: light-dark(var(--primary-color), var(--color-deepblack));
+  transition: all 0.2s ease-out;
   font-family: "Roboto", sans-serif;
   background-color: var(--primary-bg-color);
 }
