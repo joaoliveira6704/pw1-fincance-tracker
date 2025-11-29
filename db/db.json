@@ -79,6 +79,50 @@
         "currency": "EUR",
         "theme": "light"
       }
+    },
+    {
+      "id": "e717",
+      "firstName": "",
+      "lastName": "",
+      "username": "",
+      "password": "",
+      "email": "",
+      "createdAt": "2025-11-29",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "currency": "EUR",
+        "theme": "light"
+      }
+    },
+    {
+      "id": "a61e",
+      "lastName": "",
+      "username": "",
+      "password": "",
+      "email": "",
+      "createdAt": "2025-11-29",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "currency": "EUR",
+        "theme": "light"
+      }
+    },
+    {
+      "id": "1244",
+      "firstName": "",
+      "lastName": "",
+      "username": "",
+      "password": "",
+      "email": "",
+      "createdAt": "2025-11-29",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "currency": "EUR",
+        "theme": "light"
+      }
     }
   ],
   "wallets": [],
