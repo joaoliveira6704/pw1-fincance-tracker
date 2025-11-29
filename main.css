@@ -55,7 +55,7 @@ body {
   --outer-circle-color: light-dark(#ffffff, var(--color-stackrblack));
   --primary-bg-color: light-dark(#ffffff, var(--color-stackrblack));
   --primary-color: light-dark(var(--color-stackrblack), #ffffff);
-    transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
   font-family: "Roboto", sans-serif;
   background-color: var(--primary-bg-color);
 }
