@@ -1,5 +1,6 @@
 <script>
 import Button from "@/components/Button.vue";
+import RegisterInput from "@/components/RegisterInput.vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useUsersStore } from "@/stores/userStore";
 
@@ -41,12 +42,9 @@ export default {
   },
   components: {
     Button,
+    RegisterInput,
   },
 };
-
-let text = "Visit W3Schools";
-let n = text.match(/4/i);
-console.log(n);
 </script>
 
 <template>
@@ -59,62 +57,18 @@ console.log(n);
   <form
     class="m-auto bg-white text-black flex flex-col w-fit p-10 py-10 gap-y-15 rounded-xl"
   >
-    <div class="grid grid-cols-2 grid-rows-4 gap-x-5 gap-y-5">
+    <div class="grid grid-cols-2 grid-rows-4 gap-x-10 gap-y-10">
       <!-- grid setup -->
-      <div class="flex flex-col gap-y-2">
-        <label for="firstName">First name :</label>
-        <input
-          class="bg-[#9e9e9e]/50 rounded-xl px-3 py-2 hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50 focus:outline-none"
-          name="firstName"
-          type="text"
-          v-model="firstName"
-          placeholder="First Name"
-          autocapitalize="on"
-        />
-      </div>
-      <div class="flex flex-col gap-y-2">
-        <label for="lastName">Last name :</label>
-        <input
-          class="bg-[#9e9e9e]/50 rounded-xl px-3 py-2 hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50 focus:outline-none"
-          name="lastName"
-          type="text"
-          v-model="lastName"
-          placeholder="Last Name"
-          autocapitalize="on"
-        />
-      </div>
-      <div class="flex flex-col gap-y-2 col-span-2">
-        <label for="e-mail">E-mail :</label>
-        <input
-          class="bg-[#9e9e9e]/50 rounded-xl px-3 py-2 hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50 focus:outline-none"
-          name="email"
-          type="email"
-          placeholder="you@example.com"
-          v-model="email"
-        />
-      </div>
-      <div class="flex flex-col gap-y-2 col-span-2">
-        <label for="username">Username :</label>
-        <div class="flex flex-row flex-justify-center gap-2">
-          <input
-            class="bg-[#9e9e9e]/50 rounded-xl px-3 py-2 hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50 focus:outline-none grow"
-            name="username"
-            type="text"
-            v-model="username"
-            placeholder="username"
-          />
-        </div>
-      </div>
-      <div class="flex flex-col gap-y-2">
-        <label for="password">Password :</label>
-        <input
-          class="bg-[#9e9e9e]/50 rounded-xl px-3 py-2 hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50 focus:outline-none"
-          name="firstName"
-          type="password"
-          v-model="password"
-          placeholder="*******"
-        />
-      </div>
+      <RegisterInput label-text="First Name" inputType="text" />
+      <RegisterInput label-text="Last Name" inputType="text" />
+      <RegisterInput label-text="E-mail" inputType="email" variant="span" />
+      <RegisterInput label-text="Username" inputType="text" variant="span" />
+      <RegisterInput label-text="Password" inputType="password" />
+      <RegisterInput label-text="Confirm Password" inputType="password" />
+      <h1 :class="{ active: isActive }">
+        <!-- verificar se password contem carater especial WIP -->
+        Password must contain special characters <i class="pi pi-times"></i>
+      </h1>
     </div>
     <Button variant="full" @click="addNewUser()">Register</Button>
   </form>
