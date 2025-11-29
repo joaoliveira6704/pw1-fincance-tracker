@@ -147,15 +147,31 @@
   "logs": [],
   "friends": [
     {
-      "id": "5550",
+      "id": "6307",
       "userId": "1",
-      "friendId": "2",
-      "friendUsername": "miguel",
+      "friendId": "6ad8",
+      "friendUsername": "teste",
       "status": "accepted",
       "addedAt": "2025-11-29"
     },
     {
-      "id": "bb93",
+      "id": "7c91",
+      "userId": "1",
+      "friendId": "6857",
+      "friendUsername": "admin",
+      "status": "accepted",
+      "addedAt": "2025-11-29"
+    },
+    {
+      "id": "bca2",
+      "userId": "1",
+      "friendId": "92df",
+      "friendUsername": "acb",
+      "status": "accepted",
+      "addedAt": "2025-11-29"
+    },
+    {
+      "id": "7f22",
       "userId": "1",
       "friendId": "38e59c19-50e1-4b18-affc-49f82932ffef",
       "friendUsername": "joao123",
@@ -163,10 +179,18 @@
       "addedAt": "2025-11-29"
     },
     {
-      "id": "e955",
+      "id": "8da3",
       "userId": "1",
-      "friendId": "6ad8",
-      "friendUsername": "teste",
+      "friendId": "d7b4",
+      "friendUsername": "teste2",
+      "status": "accepted",
+      "addedAt": "2025-11-29"
+    },
+    {
+      "id": "2435",
+      "userId": "1",
+      "friendId": "2",
+      "friendUsername": "miguel",
       "status": "accepted",
       "addedAt": "2025-11-29"
     }
@@ -175,7 +199,7 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "85bbabe3-1681-4b71-9d8d-486604172b10"
+      "token": "8676fc94-e07a-47ae-8f36-86d61085f031"
     },
     {
       "id": "92c6",

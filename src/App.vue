@@ -13,4 +13,21 @@ export default {
   <RouterView />
 </template>
 
-<style scoped></style>
+<style scoped>
+div:where(.swal2-container) div:where(.swal2-popup) {
+  display: none;
+  position: relative;
+  box-sizing: border-box;
+  grid-template-columns: minmax(0, 100%);
+  width: var(--swal2-width);
+  max-width: 100%;
+  padding: var(--swal2-padding);
+  border: var(--swal2-border);
+  border-radius: var(--swal2-border-radius);
+  background: var(--primary-bg-color);
+  color: var(--primary-color);
+  font-family: inherit;
+  font-size: 1rem;
+  container-name: swal2-popup;
+}
+</style>
