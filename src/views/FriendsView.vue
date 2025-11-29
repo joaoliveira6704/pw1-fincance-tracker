@@ -1,43 +1,56 @@
 <script>
 import { useFriendStore } from "@/stores/friendStore";
+import Swal from "sweetalert2";
 
 export default {
   data() {
     return {
       friendStore: useFriendStore(),
       activeTab: "friends",
+      friends: [],
+      discoverUsers: [],
     };
   },
-  computed: {
-    friends() {
-      return this.friendStore.friends || [];
-    },
-    discoverUsers() {
-      return this.friendStore.availableUsers || [];
-    },
-  },
-
+  computed: {},
   methods: {
+    async updateInfo() {
+      await this.friendStore.fetchFriends();
+      await this.friendStore.fetchCommunity();
+      this.friends = this.friendStore.friends || [];
+      this.discoverUsers = this.friendStore.availableUsers || [];
+    },
+
     async addFriend(user) {
       try {
         await this.friendStore.addFriend(user);
-        alert("Amigo adicionado!");
       } catch (error) {
         alert("Erro ao adicionar.");
       }
     },
 
     async removeFriend(id) {
-      if (confirm("Remover amigo?")) {
-        await this.friendStore.removeFriend(id);
-      }
+      Swal.fire({
+        title: "Tens a certeza?",
+        text: "Vais deixar de ser amigo deste utilizador!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sim",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await this.friendStore.removeFriend(id);
+        }
+      });
     },
   },
 
   // Carregar os dados automaticamente ao entrar na página
   async created() {
-    await this.friendStore.fetchFriends();
-    await this.friendStore.fetchCommunity();
+    this.updateInfo();
+  },
+  async updated() {
+    this.updateInfo();
   },
 };
 </script>

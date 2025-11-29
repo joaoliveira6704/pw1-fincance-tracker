@@ -147,51 +147,35 @@
   "logs": [],
   "friends": [
     {
-      "id": "70d5",
-      "userId": "1",
-      "friendId": "6ad8",
-      "friendUsername": "teste",
-      "status": "accepted",
-      "addedAt": "2025-11-24"
-    },
-    {
-      "id": "2b27",
-      "userId": "1",
-      "friendId": "d7b4",
-      "friendUsername": "teste2",
-      "status": "accepted",
-      "addedAt": "2025-11-24"
-    },
-    {
-      "id": "5234",
-      "userId": "1",
-      "friendId": "92df",
-      "friendUsername": "acb",
-      "status": "accepted",
-      "addedAt": "2025-11-24"
-    },
-    {
-      "id": "a84b",
-      "userId": "1",
-      "friendId": "38e59c19-50e1-4b18-affc-49f82932ffef",
-      "friendUsername": "joao123",
-      "status": "accepted",
-      "addedAt": "2025-11-24"
-    },
-    {
-      "id": "9f40",
+      "id": "5550",
       "userId": "1",
       "friendId": "2",
       "friendUsername": "miguel",
       "status": "accepted",
-      "addedAt": "2025-11-24"
+      "addedAt": "2025-11-29"
+    },
+    {
+      "id": "bb93",
+      "userId": "1",
+      "friendId": "38e59c19-50e1-4b18-affc-49f82932ffef",
+      "friendUsername": "joao123",
+      "status": "accepted",
+      "addedAt": "2025-11-29"
+    },
+    {
+      "id": "e955",
+      "userId": "1",
+      "friendId": "6ad8",
+      "friendUsername": "teste",
+      "status": "accepted",
+      "addedAt": "2025-11-29"
     }
   ],
   "userSessions": [
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "660c8614-933e-4f11-bd8a-9a9936519153"
+      "token": "85bbabe3-1681-4b71-9d8d-486604172b10"
     },
     {
       "id": "92c6",

@@ -41,7 +41,7 @@ export default {
 
 <template>
   <div
-    class="flex flex-col justify-between px-1 py-1 w-full h-fit text-center border-2"
+    class="flex flex-col justify-between px-1 py-1 w-full h-fit text-center border-b-2 border-l-2 border-r-2"
   >
     <nav class="flex flex-col">
       <SidebarLink
