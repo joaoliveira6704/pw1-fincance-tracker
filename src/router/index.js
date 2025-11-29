@@ -8,17 +8,20 @@ const router = createRouter({
       path: "/",
       name: "landing",
       component: () => import("@/views/LandingView.vue"),
+      meta: {
+        title: "Stackr - Finances Made Easy",
+      },
     },
     {
       path: "/login",
       name: "login",
-      meta: { guest: true },
+      meta: { guest: true, title: "Login - Stackr" },
       component: () => import("@/views/LoginView.vue"),
     },
     {
       path: "/register",
       name: "register",
-      meta: { guest: true },
+      meta: { guest: true, title: "Registo - Stackr" },
       component: () => import("@/views/RegisterView.vue"),
     },
     {
@@ -30,26 +33,41 @@ const router = createRouter({
         {
           path: "",
           name: "dashboard",
+          meta: {
+            title: "Dashboard - Stackr",
+          },
           component: () => import("@/views/DashboardView.vue"),
         },
         {
           path: "objectives",
           name: "objectives",
+          meta: {
+            title: "Objetivos - Stackr",
+          },
           component: () => import("@/views/ObjectivesView.vue"),
         },
         {
           path: "expenses",
           name: "expenses",
+          meta: {
+            title: "Despesas - Stackr",
+          },
           component: () => import("@/views/ExpensesView.vue"),
         },
         {
           path: "profile",
           name: "profile",
+          meta: {
+            title: "Perfil - Stackr",
+          },
           component: () => import("@/views/ProfileView.vue"),
         },
         {
           path: "friends",
           name: "friends",
+          meta: {
+            title: "Amigos - Stackr",
+          },
           component: () => import("@/views/FriendsView.vue"),
         },
       ],
@@ -92,6 +110,11 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
+  next();
+});
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title;
   next();
 });
 
