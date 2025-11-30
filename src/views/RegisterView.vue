@@ -3,6 +3,8 @@ import Button from "@/components/Button.vue";
 import RegisterInput from "@/components/RegisterInput.vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useUsersStore } from "@/stores/userStore";
+import * as api from "@/api/api.js";
+const BASE_URL = "http://localhost:3000";
 
 export default {
   setup() {
@@ -12,11 +14,12 @@ export default {
   data() {
     return {
       usersStore: useUsersStore(),
+      username: "",
       firstName: "",
       lastName: "",
       email: "",
-      username: "",
       password: "",
+      confirmPassword: "",
     };
   },
   methods: {
@@ -39,6 +42,24 @@ export default {
       );
       await this.handleLogin();
     },
+    isPasswordValid() {
+      const format =
+        /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]{1,}[0-9]{1,}[a-zA-Z]{4,14}/;
+      const passwordValue = this.password;
+      console.log(format.test(passwordValue));
+      return format.test(passwordValue);
+    },
+
+    async checkUniqueUsername() {
+      const usernameValue = this.username;
+      try {
+        const userList = await api.get(BASE_URL, "users");
+        const usernameList = userList.map((user) => user.username);
+        if (usernameList.includes(usernameValue)) return;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   components: {
     Button,
@@ -52,26 +73,58 @@ export default {
 
   <h1 class="text-lg">
     Bem vindo
-    <span class="text-stackrgreen-200">{{ firstName }} {{ lastName }}</span>
+    <span class="text-stackrgreen-200"
+      >{{ firstName }} {{ lastName }} {{ password }} {{ confirmPassword }}
+      {{ email }} {{ username }}
+    </span>
   </h1>
   <form
     class="m-auto bg-white text-black flex flex-col w-fit p-10 py-10 gap-y-15 rounded-xl"
   >
     <div class="grid grid-cols-2 grid-rows-4 gap-x-10 gap-y-10">
       <!-- grid setup -->
-      <RegisterInput label-text="First Name" inputType="text" />
-      <RegisterInput label-text="Last Name" inputType="text" />
-      <RegisterInput label-text="E-mail" inputType="email" variant="span" />
-      <RegisterInput label-text="Username" inputType="text" variant="span" />
-      <RegisterInput label-text="Password" inputType="password" />
-      <RegisterInput label-text="Confirm Password" inputType="password" />
-      <h1 :class="{ active: isActive }">
-        <!-- verificar se password contem carater especial WIP -->
+      <RegisterInput
+        v-model="firstName"
+        label-text="First Name"
+        inputType="text"
+      />
+      <RegisterInput
+        v-model="lastName"
+        label-text="Last Name"
+        inputType="text"
+      />
+      <RegisterInput
+        v-model="email"
+        label-text="E-mail"
+        inputType="email"
+        variant="span"
+      />
+      <RegisterInput
+        v-model="username"
+        label-text="Username"
+        inputType="text"
+        variant="span"
+      />
+      <RegisterInput
+        v-model="password"
+        label-text="Password"
+        inputType="password"
+      />
+      <RegisterInput
+        v-model="confirmPassword"
+        label-text="Confirm Password"
+        inputType="password"
+      />
+      <h1 class="text-red-300" v-if="isPasswordValid">
         Password must contain special characters <i class="pi pi-times"></i>
+      </h1>
+      <h1 class="text-green-300" v-else>
+        Password is valid <i class="pi pi-times"></i>
       </h1>
     </div>
     <Button variant="full" @click="addNewUser()">Register</Button>
   </form>
+  <button @click="checkUniqueUsername()">teste</button>
 </template>
 
 <style scoped>

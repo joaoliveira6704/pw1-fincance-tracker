@@ -13,6 +13,14 @@ export default {
       type: String,
       default: "",
     },
+    modelValue: {
+      type: String,
+    },
+  },
+  methods: {
+    onInput(e) {
+      this.$emit("update:modelValue", e.target.value);
+    },
   },
   computed: {
     inputClasses() {
@@ -37,6 +45,8 @@ export default {
       class="bg-[#9e9e9e]/50 rounded-xl px-3 py-2 hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50 focus:outline-none"
       :type="inputType"
       :placeholder="labelText"
+      @input="onInput"
+      @change="checkUniqueUsername"
       autocapitalize="on"
     />
   </div>
