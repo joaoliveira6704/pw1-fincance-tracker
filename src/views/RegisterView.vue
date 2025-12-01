@@ -20,6 +20,17 @@ export default {
       email: "",
       password: "",
       confirmPassword: "",
+      inputValidation: {
+        name: { valid: true },
+        username: { isUnique: true, validLength: true },
+        email: { notTaken: true, valid: true },
+        password: {
+          containsSpecialChar: true,
+          containsNum: true,
+          validLength: true,
+          matches: true,
+        },
+      },
     };
   },
   methods: {
@@ -32,6 +43,7 @@ export default {
         this.error = "Erro: Credenciais erradas.";
       }
     },
+
     async addNewUser() {
       await this.usersStore.addUser(
         this.username,
@@ -42,23 +54,45 @@ export default {
       );
       await this.handleLogin();
     },
+
+    isNameValid() {
+      const fullName = this.firstName + this.lastName;
+      console.log(fullName);
+
+      const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~0-9]/;
+      console.log(format.test(fullName));
+
+      return format.test(fullName);
+    },
+
     isPasswordValid() {
       const format =
         /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]{1,}[0-9]{1,}[a-zA-Z]{4,14}/;
       const passwordValue = this.password;
-      console.log(format.test(passwordValue));
       return format.test(passwordValue);
     },
 
-    async checkUniqueUsername() {
-      const usernameValue = this.username;
+    async uniqueUsername() {
       try {
         const userList = await api.get(BASE_URL, "users");
         const usernameList = userList.map((user) => user.username);
-        if (usernameList.includes(usernameValue)) return;
+        return !usernameList.includes(this.username);
       } catch (error) {
         console.log(error);
       }
+    },
+    getInputField(index) {
+      /*       const gridEl = document.getElementById("grid");
+      const inputF = gridEl.children[index].lastChild;
+      console.log(inputF.classList);
+      inputF.classList.add("ring");
+      inputF.classList.add("ring-red-500"); */
+    },
+
+    someInvalid(field) {
+      return Object.keys(this.inputValidation[field]).some(
+        (value) => !this.inputValidation[field][value]
+      );
     },
   },
   components: {
@@ -81,12 +115,13 @@ export default {
   <form
     class="m-auto bg-white text-black flex flex-col w-fit p-10 py-10 gap-y-15 rounded-xl"
   >
-    <div class="grid grid-cols-2 grid-rows-4 gap-x-10 gap-y-10">
+    <div id="grid" class="grid grid-cols-2 grid-rows-4 gap-x-10 gap-y-10">
       <!-- grid setup -->
       <RegisterInput
         v-model="firstName"
         label-text="First Name"
         inputType="text"
+        @input="isNameValid"
       />
       <RegisterInput
         v-model="lastName"
@@ -104,6 +139,7 @@ export default {
         label-text="Username"
         inputType="text"
         variant="span"
+        @input=""
       />
       <RegisterInput
         v-model="password"
@@ -115,16 +151,16 @@ export default {
         label-text="Confirm Password"
         inputType="password"
       />
-      <h1 class="text-red-300" v-if="isPasswordValid">
+      <!-- <h1 class="text-red-300" v-if="isPasswordValid">
         Password must contain special characters <i class="pi pi-times"></i>
       </h1>
       <h1 class="text-green-300" v-else>
         Password is valid <i class="pi pi-times"></i>
-      </h1>
+      </h1> -->
     </div>
     <Button variant="full" @click="addNewUser()">Register</Button>
   </form>
-  <button @click="checkUniqueUsername()">teste</button>
+  <button @click="someInvalid('username')">teste</button>
 </template>
 
 <style scoped>
