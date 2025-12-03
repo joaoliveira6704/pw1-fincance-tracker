@@ -13,6 +13,7 @@ export default {
   },
   data() {
     return {
+      usernameList: getUsernameList(),
       usersStore: useUsersStore(),
       username: "",
       firstName: "",
@@ -22,14 +23,14 @@ export default {
       confirmPassword: "",
       inputValidation: {
         firstName: { valid: null },
-        lastName: { valid: true },
-        username: { isUnique: true, validLength: true },
+        lastName: { valid: null },
+        username: { valid: null, isUnique: true, validLength: true },
         email: { notTaken: true, valid: true },
         password: {
-          valid: false,
-          containsSpecialChar: false,
-          containsNum: true,
-          validLength: true,
+          valid: null,
+          containsSpecialChar: null,
+          containsNum: null,
+          validLength: null,
         },
         passwordConfirmation: {
           valid: true,
@@ -60,15 +61,12 @@ export default {
     },
 
     nameValidation(field) {
-      console.log(this[field].length);
       const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~0-9]/;
       if (this[field].length > 0)
         this.inputValidation[field].valid = !format.test(this[field]);
       else {
         this.inputValidation[field].valid = null;
       }
-      console.log(this.inputValidation.password.containsNum);
-      return this.isFieldValid(field);
     },
 
     passwordValidation() {
@@ -77,41 +75,63 @@ export default {
       const minLength = 6;
 
       const passwordValue = this.password;
-      this.inputValidation.password.containsSpecialChar =
-        specialCharPattern.test(passwordValue);
+      const passwordObj = this.inputValidation.password;
 
-      this.inputValidation.password.containsNum =
-        numPattern.test(passwordValue);
-      this.inputValidation.password.validLength =
-        passwordValue.length >= minLength;
+      passwordObj.containsSpecialChar = specialCharPattern.test(passwordValue);
+      passwordObj.containsNum = numPattern.test(passwordValue);
+      passwordObj.validLength = passwordValue.length >= minLength;
+
+      passwordObj.valid =
+        passwordObj.containsSpecialChar &&
+        passwordObj.containsNum &&
+        passwordObj.validLength;
+
+      console.log(passwordObj.valid);
     },
 
-    async isUniqueUsername() {
+    usernameValidation(userList) {
+      const minLength = 6;
+      `
+      `;
+      const usernameValue = this.username;
+      const usernameObj = this.inputValidation.username;
+
+      usernameObj.isUnique = !userList.contains(usernameValue);
+      usernameObj.validLength = usernameValue.length >= minLength;
+
+      usernameObj.valid = usernameObj.isUnique && usernameObj.validLength;
+
+      console.log(userList);
+      console.log(usernameObj.valid);
+    },
+
+    async getUsernameList() {
       try {
         const userList = await api.get(BASE_URL, "users");
         const usernameList = userList.map((user) => user.username);
-        return !usernameList.includes(this.username);
+        return usernameList;
       } catch (error) {
         console.log(error);
       }
     },
+  },
 
-    isFieldValid(field) {
-      const out = Object.keys(this.inputValidation[field]).every(
-        (value) => this.inputValidation[field][value]
-      );
-
-      console.log(out);
-
-      return Object.keys(this.inputValidation[field]).every(
-        (value) => this.inputValidation[field][value]
-      );
+  watch: {
+    firstName() {
+      this.nameValidation(`firstName`);
     },
-
-    returnClass() {
-      return true;
+    lastName() {
+      this.nameValidation(`lastName`);
+    },
+    username() {
+      this.usernameValidation(this.usernameList);
+    },
+    username() {},
+    password() {
+      this.passwordValidation();
     },
   },
+
   components: {
     Button,
     RegisterInput,
@@ -138,13 +158,13 @@ export default {
         v-model="firstName"
         label-text="First Name"
         inputType="text"
-        @input="nameValidation('firstName')"
-        :is-valid="inputValidation.password"
+        :is-valid="inputValidation.firstName.valid"
       />
       <RegisterInput
         v-model="lastName"
         label-text="Last Name"
         inputType="text"
+        :is-valid="inputValidation.lastName.valid"
       />
       <RegisterInput
         v-model="email"
@@ -162,6 +182,7 @@ export default {
         v-model="password"
         label-text="Password"
         inputType="password"
+        :is-valid="inputValidation.password.valid"
       />
       <RegisterInput
         v-model="confirmPassword"
