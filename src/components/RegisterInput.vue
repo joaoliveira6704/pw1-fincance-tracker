@@ -18,6 +18,9 @@ export default {
     isValid: {
       type: Boolean,
     },
+    length: {
+      type: Number,
+    },
   },
   methods: {
     onInput(e) {
@@ -56,13 +59,12 @@ export default {
   <div :class="divClass">
     <label class="ml-1">{{ labelText }} :</label>
     <input
-      ref="labelText"
       class="bg-[#9e9e9e]/50 rounded-xl px-3 py-2 hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50"
       :class="inputClass"
       :type="inputType"
       :placeholder="labelText"
       @input="onInput"
-      autocapitalize="on"
+      :maxlength="length"
     />
   </div>
 </template>

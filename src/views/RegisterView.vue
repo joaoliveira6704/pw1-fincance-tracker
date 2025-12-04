@@ -13,7 +13,6 @@ export default {
   },
   data() {
     return {
-      usernameList: getUsernameList(),
       usersStore: useUsersStore(),
       username: "",
       firstName: "",
@@ -21,11 +20,12 @@ export default {
       email: "",
       password: "",
       confirmPassword: "",
+      helpText: true,
       inputValidation: {
         firstName: { valid: null },
         lastName: { valid: null },
-        username: { valid: null, isUnique: true, validLength: true },
-        email: { notTaken: true, valid: true },
+        username: { valid: null, isUnique: null, validLength: null },
+        email: { notTaken: null, valid: null },
         password: {
           valid: null,
           containsSpecialChar: null,
@@ -33,11 +33,12 @@ export default {
           validLength: null,
         },
         passwordConfirmation: {
-          valid: true,
+          valid: null,
         },
       },
     };
   },
+
   methods: {
     async handleLogin() {
       try {
@@ -68,6 +69,14 @@ export default {
         this.inputValidation[field].valid = null;
       }
     },
+    emailValidation() {
+      const format = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/;
+      if (this.email.length > 0)
+        this.inputValidation.email.valid = format.test(this.email);
+      else {
+        this.inputValidation.email.valid = null;
+      }
+    },
 
     passwordValidation() {
       const specialCharPattern = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
@@ -89,30 +98,41 @@ export default {
       console.log(passwordObj.valid);
     },
 
-    usernameValidation(userList) {
+    passwordMatchValidation() {
+      const passwordInput = this.password;
+      if (this.confirmPassword.length > 0) {
+        this.inputValidation.passwordConfirmation.valid =
+          passwordInput === this.confirmPassword;
+        console.log(this.inputValidation.passwordConfirmation.valid);
+      } else {
+        this.inputValidation.passwordConfirmation.valid = null;
+      }
+    },
+
+    async usernameValidation() {
       const minLength = 6;
-      `
-      `;
       const usernameValue = this.username;
       const usernameObj = this.inputValidation.username;
+      try {
+        const data = await api.get(BASE_URL, `users?username=${usernameValue}`);
+        console.log(data);
 
-      usernameObj.isUnique = !userList.contains(usernameValue);
+        usernameObj.isUnique = data.length == 0;
+      } catch (e) {
+        console.log(e, "Error retrieving data");
+      }
+
       usernameObj.validLength = usernameValue.length >= minLength;
 
       usernameObj.valid = usernameObj.isUnique && usernameObj.validLength;
-
-      console.log(userList);
+      console.log(usernameObj.isUnique);
+      console.log(usernameObj.validLength);
       console.log(usernameObj.valid);
     },
 
-    async getUsernameList() {
-      try {
-        const userList = await api.get(BASE_URL, "users");
-        const usernameList = userList.map((user) => user.username);
-        return usernameList;
-      } catch (error) {
-        console.log(error);
-      }
+    helpTextHandler() {
+      this.helpText = !this.helpText;
+      console.log(this.helpText);
     },
   },
 
@@ -120,15 +140,26 @@ export default {
     firstName() {
       this.nameValidation(`firstName`);
     },
+
     lastName() {
       this.nameValidation(`lastName`);
     },
+
     username() {
-      this.usernameValidation(this.usernameList);
+      this.usernameValidation();
     },
-    username() {},
+
+    email() {
+      this.emailValidation();
+    },
+
     password() {
       this.passwordValidation();
+      this.passwordMatchValidation();
+    },
+
+    confirmPassword() {
+      this.passwordMatchValidation();
     },
   },
 
@@ -140,65 +171,89 @@ export default {
 </script>
 
 <template>
-  <h1 class="text-stackrgreen-500">Register Page :</h1>
-
-  <h1 class="text-lg">
-    Bem vindo
-    <span class="text-stackrgreen-200"
-      >{{ firstName }} {{ lastName }} {{ password }} {{ confirmPassword }}
-      {{ email }} {{ username }}
-    </span>
-  </h1>
-  <form
-    class="m-auto bg-white text-black flex flex-col w-fit p-10 py-10 gap-y-15 rounded-xl"
-  >
-    <div id="grid" class="grid grid-cols-2 grid-rows-4 gap-x-10 gap-y-10">
-      <!-- grid setup -->
-      <RegisterInput
-        v-model="firstName"
-        label-text="First Name"
-        inputType="text"
-        :is-valid="inputValidation.firstName.valid"
-      />
-      <RegisterInput
-        v-model="lastName"
-        label-text="Last Name"
-        inputType="text"
-        :is-valid="inputValidation.lastName.valid"
-      />
-      <RegisterInput
-        v-model="email"
-        label-text="E-mail"
-        inputType="email"
-        variant="span"
-      />
-      <RegisterInput
-        v-model="username"
-        label-text="Username"
-        inputType="text"
-        variant="span"
-      />
-      <RegisterInput
-        v-model="password"
-        label-text="Password"
-        inputType="password"
-        :is-valid="inputValidation.password.valid"
-      />
-      <RegisterInput
-        v-model="confirmPassword"
-        label-text="Confirm Password"
-        inputType="password"
-      />
-      <!-- <h1 class="text-red-300" v-if="isPasswordValid">
-        Password must contain special characters <i class="pi pi-times"></i>
+  <!-- WRAPPER -->
+  <div class="flex h-screen gap-5">
+    <!-- title wrapper -->
+    <div class="flex flex-col pt-5 absolute">
+      <h1 class="text-4xl m-auto">
+        Bem vind@
+        <h1 class="text-stackrgreen-200 text-8xl">
+          {{ firstName }} <br />
+          {{ lastName }}
+        </h1>
       </h1>
-      <h1 class="text-green-300" v-else>
-        Password is valid <i class="pi pi-times"></i>
-      </h1> -->
     </div>
-    <Button variant="full" @click="addNewUser()">Register</Button>
-  </form>
-  <button @click="isFieldValid('password')">teste</button>
+
+    <!-- form -->
+    <form
+      class="relative m-auto bg-white text-black flex flex-col w-200 h-fit p-10 py-10 justify-between rounded-xl"
+    >
+      <i
+        @click="this.helpTextHandler()"
+        class="pi pi-question-circle absolute right-5 top-5"
+        style="font-size: 1.5rem"
+      ></i>
+
+      <!-- grid setup -->
+      <div id="grid" class="grid grid-cols-2 grid-rows-4 gap-x-5 gap-y-1">
+        <RegisterInput
+          v-model="firstName"
+          label-text="First Name"
+          inputType="text"
+          length="12,"
+          :is-valid="inputValidation.firstName.valid"
+        />
+
+        <RegisterInput
+          v-model="lastName"
+          label-text="Last Name"
+          inputType="text"
+          length="12"
+          :is-valid="inputValidation.lastName.valid"
+        />
+        <RegisterInput
+          v-model="email"
+          label-text="E-mail"
+          inputType="email"
+          variant="span"
+          :is-valid="inputValidation.email.valid"
+        />
+        <RegisterInput
+          v-model="username"
+          label-text="Username"
+          inputType="text"
+          length="20"
+          variant="span"
+          :is-valid="inputValidation.username.valid"
+        />
+
+        <RegisterInput
+          v-model="password"
+          label-text="Password"
+          inputType="password"
+          :is-valid="inputValidation.password.valid"
+          length="12"
+        />
+
+        <RegisterInput
+          v-model="confirmPassword"
+          label-text="Confirm Password"
+          inputType="password"
+          :is-valid="inputValidation.passwordConfirmation.valid"
+        />
+      </div>
+      <hr class="mt-5" />
+      <div v-if="this.helpText" class="mt-5 text-sm text-black/75">
+        <p>First and Last name : can´t contain special characters</p>
+        <p>Username : must be unique</p>
+        <p>
+          Password : must be at least 6 characters long and contain a number and
+          a special character
+        </p>
+      </div>
+      <Button variant="full" @click="addNewUser()">Register</Button>
+    </form>
+  </div>
 </template>
 
 <style scoped>
