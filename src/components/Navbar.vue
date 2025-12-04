@@ -25,7 +25,7 @@ export default {
   <div
     class="flex w-full max-w-7xl py-6 px-8 rounded-xl text-center justify-between fixed mt-5 backdrop-blur-sm z-50"
   >
-    <Logo variant="landing" />
+    <Logo />
     <div v-if="isAuth" class="flex space-x-2">
       <Button variant="fill" to="/main">Dashboard</Button>
     </div>
