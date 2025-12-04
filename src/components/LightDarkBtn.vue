@@ -9,7 +9,7 @@ export default {
   props: {
     variant: {
       type: String,
-      default: "navbar",
+      default: "navbarOpen",
     },
   },
   data() {
@@ -53,7 +53,7 @@ export default {
 
 <template>
   <button
-    v-if="!isLanding"
+    v-if="!isLanding && variant === 'navbarOpen'"
     @click="toggleColorMode"
     class="relative notLanding flex h-8 w-full cursor-pointer items-center rounded-full bg-gray-200 p-1 shadow-inner transition-colors duration-300 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
   >
@@ -69,11 +69,22 @@ export default {
 
     <span
       class="z-10 h-6 w-6 rounded-full ball-landing shadow-md bg-stackrgreen-500 transition-transform duration-300 ease-in-out"
-      :class="darkMode ? 'translate-x-0' : 'translate-x-25'"
+      :class="darkMode ? 'translate-x-0' : 'translate-x-23'"
     ></span>
   </button>
 
-  <div v-else class="fixed bottom-5 left-5 z-50">
+  <button
+    v-if="!isLanding && variant === 'navbarClosed'"
+    @click="toggleColorMode"
+    class="relative flex cursor-pointer h-8"
+  >
+    <span class="flex items-center justify-center text-primary">
+      <Moon v-if="darkMode" class="h-5 w-5" />
+      <Sun v-else class="h-5 w-5" />
+    </span>
+  </button>
+
+  <div v-if="isLanding" class="fixed bottom-5 left-5 z-50">
     <button
       @click="toggleColorMode"
       class="flex h-14 w-14 items-center justify-center rounded-full bg-stackrgreen-500 text-white shadow-lg transition-transform duration-300 hover:scale-110 hover:text-black"

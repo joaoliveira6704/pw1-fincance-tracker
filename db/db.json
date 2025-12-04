@@ -79,50 +79,6 @@
         "currency": "EUR",
         "theme": "light"
       }
-    },
-    {
-      "id": "e717",
-      "firstName": "",
-      "lastName": "",
-      "username": "",
-      "password": "",
-      "email": "",
-      "createdAt": "2025-11-29",
-      "isAdmin": false,
-      "income": 0,
-      "preferences": {
-        "currency": "EUR",
-        "theme": "light"
-      }
-    },
-    {
-      "id": "a61e",
-      "lastName": "",
-      "username": "",
-      "password": "",
-      "email": "",
-      "createdAt": "2025-11-29",
-      "isAdmin": false,
-      "income": 0,
-      "preferences": {
-        "currency": "EUR",
-        "theme": "light"
-      }
-    },
-    {
-      "id": "1244",
-      "firstName": "",
-      "lastName": "",
-      "username": "",
-      "password": "",
-      "email": "",
-      "createdAt": "2025-11-29",
-      "isAdmin": false,
-      "income": 0,
-      "preferences": {
-        "currency": "EUR",
-        "theme": "light"
-      }
     }
   ],
   "wallets": [],
@@ -186,18 +142,20 @@
       "categoryId": 2,
       "walletId": 1,
       "description": "jwjdwdjwd"
+    },
+    {
+      "id": "8405",
+      "userId": "1",
+      "name": "Abc",
+      "date": "2025-12-09",
+      "amount": 240,
+      "categoryId": 2,
+      "walletId": 1,
+      "description": "gahb"
     }
   ],
   "logs": [],
   "friends": [
-    {
-      "id": "6307",
-      "userId": "1",
-      "friendId": "6ad8",
-      "friendUsername": "teste",
-      "status": "accepted",
-      "addedAt": "2025-11-29"
-    },
     {
       "id": "7c91",
       "userId": "1",
@@ -243,7 +201,7 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "8676fc94-e07a-47ae-8f36-86d61085f031"
+      "token": "b6cba1cc-3184-48f5-840b-f00b1ef390c3"
     },
     {
       "id": "92c6",

@@ -55,6 +55,14 @@ const router = createRouter({
           component: () => import("@/views/ExpensesView.vue"),
         },
         {
+          path: "wallets",
+          name: "wallets",
+          meta: {
+            title: "Carteiras - Stackr",
+          },
+          component: () => import("@/views/WalletsView.vue"),
+        },
+        {
           path: "profile",
           name: "profile",
           meta: {
@@ -109,11 +117,6 @@ router.beforeEach(async (to, from, next) => {
       }
     }
   }
-
-  next();
-});
-
-router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
   next();
 });

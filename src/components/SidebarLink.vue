@@ -4,6 +4,7 @@ export default {
     page: String,
     name: String,
     icon: [Object, Function, String],
+    isOpen: Boolean,
   },
 };
 </script>
@@ -15,7 +16,7 @@ export default {
     exact-active-class="bg-stackrgreen-500 text-stackrblack hover:text-white shadow-sm"
   >
     <component :is="icon" :size="20" />
-    <span class="text-sm font-medium">{{ name }}</span>
+    <span v-if="isOpen" class="text-sm font-medium">{{ name }}</span>
   </RouterLink>
 </template>
 

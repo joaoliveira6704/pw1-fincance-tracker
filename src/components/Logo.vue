@@ -5,6 +5,7 @@ export default {
       type: String,
       default: "default",
     },
+    isOpen: { type: Boolean, default: true },
   },
   computed: {
     isLanding() {
@@ -23,6 +24,7 @@ export default {
     />
 
     <p
+      v-if="isOpen"
       class="font-ProximaNova font-bold text-primary"
       :class="isLanding ? 'text-5xl' : 'text-2xl'"
     >

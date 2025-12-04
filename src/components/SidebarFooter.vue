@@ -15,6 +15,9 @@ export default {
     SidebarLink,
     User,
   },
+  props: {
+    isOpen: { type: Boolean, default: true },
+  },
   computed: {
     formattedName() {
       if (!this.userObj || !this.userObj.lastName) {
@@ -41,13 +44,14 @@ export default {
 
 <template>
   <div
-    class="flex flex-col justify-between px-1 py-1 w-full h-fit text-center border-b-2 border-l-2 border-r-2"
+    class="flex flex-col justify-between px-2 py-1 w-full h-fit text-center border-b-4"
   >
     <nav class="flex flex-col">
       <SidebarLink
         v-if="userObj"
         page="profile"
         :name="formattedName"
+        :isOpen="isOpen"
         :icon="User"
       />
     </nav>

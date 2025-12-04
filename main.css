@@ -74,6 +74,10 @@ body {
     var(--secondary-border-color),
     var(--color-bordergray)
   );
+  --border-hover-color: light-dark(
+    var(--color-stackrblack),
+    var(--color-stackrgrey-light)
+  );
   --main-bg-color: light-dark(var(--primary-color), var(--color-deepblack));
   transition: all 0.2s ease-out;
   font-family: "Roboto", sans-serif;
