@@ -8,20 +8,17 @@ const router = createRouter({
       path: "/",
       name: "landing",
       component: () => import("@/views/LandingView.vue"),
-      meta: {
-        title: "Stackr - Finances Made Easy",
-      },
     },
     {
       path: "/login",
       name: "login",
-      meta: { guest: true, title: "Login - Stackr" },
+      meta: { guest: true },
       component: () => import("@/views/LoginView.vue"),
     },
     {
       path: "/register",
       name: "register",
-      meta: { guest: true, title: "Registo - Stackr" },
+      meta: { guest: true },
       component: () => import("@/views/RegisterView.vue"),
     },
     {
@@ -33,25 +30,16 @@ const router = createRouter({
         {
           path: "",
           name: "dashboard",
-          meta: {
-            title: "Dashboard - Stackr",
-          },
           component: () => import("@/views/DashboardView.vue"),
         },
         {
           path: "objectives",
           name: "objectives",
-          meta: {
-            title: "Objetivos - Stackr",
-          },
           component: () => import("@/views/ObjectivesView.vue"),
         },
         {
           path: "expenses",
           name: "expenses",
-          meta: {
-            title: "Despesas - Stackr",
-          },
           component: () => import("@/views/ExpensesView.vue"),
         },
         {
@@ -65,17 +53,11 @@ const router = createRouter({
         {
           path: "profile",
           name: "profile",
-          meta: {
-            title: "Perfil - Stackr",
-          },
           component: () => import("@/views/ProfileView.vue"),
         },
         {
           path: "friends",
           name: "friends",
-          meta: {
-            title: "Amigos - Stackr",
-          },
           component: () => import("@/views/FriendsView.vue"),
         },
       ],

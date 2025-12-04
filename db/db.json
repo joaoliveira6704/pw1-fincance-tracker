@@ -8,7 +8,10 @@
       "lastName": "Oliveira",
       "createdAt": "2025-05-24",
       "isAdmin": true,
-      "income": 12000
+      "income": 12000,
+      "objectives": [1, 2],
+      "expenses": [1, 3, 4, 5],
+      "friends": ["miguel"]
     },
     {
       "id": "2",
@@ -18,11 +21,13 @@
       "lastName": "Neto",
       "createdAt": "2023-04-21",
       "isAdmin": false,
-      "income": 18490
+      "income": 18490,
+      "objectives": [10, 22],
+      "expenses": [12, 31, 41, 51]
     },
     {
       "id": "6ad8",
-      "username": "teste",
+      "username": "testeteste",
       "firstName": "Teste",
       "lastName": "Ultimo",
       "createdAt": "2025-11-24",
@@ -162,39 +167,39 @@
       "friendId": "6857",
       "friendUsername": "admin",
       "status": "accepted",
-      "addedAt": "2025-11-29"
+      "addedAt": "2025-11-24"
     },
     {
-      "id": "bca2",
+      "id": "70d5",
       "userId": "1",
-      "friendId": "92df",
-      "friendUsername": "acb",
+      "friendId": "6ad8",
+      "friendUsername": "teste",
       "status": "accepted",
-      "addedAt": "2025-11-29"
+      "addedAt": "2025-11-24"
     },
     {
-      "id": "7f22",
-      "userId": "1",
-      "friendId": "38e59c19-50e1-4b18-affc-49f82932ffef",
-      "friendUsername": "joao123",
-      "status": "accepted",
-      "addedAt": "2025-11-29"
-    },
-    {
-      "id": "8da3",
+      "id": "2b27",
       "userId": "1",
       "friendId": "d7b4",
       "friendUsername": "teste2",
       "status": "accepted",
-      "addedAt": "2025-11-29"
+      "addedAt": "2025-11-24"
     },
     {
-      "id": "2435",
+      "id": "5234",
       "userId": "1",
-      "friendId": "2",
-      "friendUsername": "miguel",
+      "friendId": "92df",
+      "friendUsername": "acb",
       "status": "accepted",
-      "addedAt": "2025-11-29"
+      "addedAt": "2025-11-24"
+    },
+    {
+      "id": "a84b",
+      "userId": "1",
+      "friendId": "38e59c19-50e1-4b18-affc-49f82932ffef",
+      "friendUsername": "joao123",
+      "status": "accepted",
+      "addedAt": "2025-11-24"
     }
   ],
   "userSessions": [
@@ -206,7 +211,7 @@
     {
       "id": "92c6",
       "userId": "2",
-      "token": "11643d65-50b9-4a54-bdb7-ff017961dc28"
+      "token": "fc98bb18-68eb-4473-ae59-66a888e883d0"
     },
     {
       "id": "a2ab",
@@ -250,7 +255,7 @@
       "dueDate": "2025-12-01",
       "hasFixedContribution": true,
       "fixedContribution": 20,
-      "id": "c1dc"
+      "id": "20e5"
     }
   ]
 }

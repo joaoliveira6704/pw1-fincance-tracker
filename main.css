@@ -5,8 +5,6 @@
 :root {
   --primary-bg-color: #212121;
   --primary-color: #ffffff;
-  --secondary-bg-color: #f6f6f6;
-  --secondary-border-color: #e3e3e3;
   color-scheme: dark;
 }
 
@@ -39,9 +37,6 @@
   --color-stackrgreen-500: #4ddf7b;
   --color-stackrgreen-200: #86ffac;
   --color-stackrblack: #212121;
-  --color-deepblack: #0a0a0a;
-  --color-bordergray: #2e2e2e;
-  --font-ProximaNova: "ProximaNova";
 }
 
 body {

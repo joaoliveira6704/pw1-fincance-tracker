@@ -1,19 +1,14 @@
 <script>
-import Sidebar from "@/components/Sidebar.vue";
-
-export default {
-  components: {
-    Sidebar,
-  },
-};
+export default {};
 </script>
 
 <template>
-  <div id="main-app" class="flex h-screen"><Sidebar /> <RouterView /></div>
+  <RouterLink :to="{ name: 'dashboard' }">Dashboard</RouterLink>
+  <RouterLink :to="{ name: 'objectives' }">Objetivos</RouterLink>
+  <RouterLink :to="{ name: 'expenses' }">Despesas</RouterLink>
+  <RouterLink :to="{ name: 'profile' }">Perfil</RouterLink>
+  <RouterLink :to="{ name: 'friends' }">Amigos</RouterLink>
+  <RouterView />
 </template>
 
-<style>
-.main-app {
-  background-color: var(--main-bg-color);
-}
-</style>
+<style lang="scss" scoped></style>
