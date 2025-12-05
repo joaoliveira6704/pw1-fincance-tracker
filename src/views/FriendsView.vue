@@ -57,7 +57,7 @@ export default {
         Swal.fire({
           ...this.getSwalConfig("Sucesso", "Amigo adicionado!"),
           icon: "success",
-          iconHtml: undefined, // Use default success icon or custom checkmark
+          iconHtml: undefined,
         });
       } catch (error) {
         Swal.fire({
