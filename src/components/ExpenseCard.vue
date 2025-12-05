@@ -45,7 +45,6 @@ export default {
 
 <template>
   <div class="text-center px-100">
-    <h1>Despesas</h1>
     <div class="w-full bg-gray-300 h-fit rounded-xl px-5 py-3">
       <form @submit.prevent="createExpense" class="grid grid-cols-2">
         <div>

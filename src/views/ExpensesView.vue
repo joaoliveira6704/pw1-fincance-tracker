@@ -14,7 +14,8 @@ export default {
 </script>
 
 <template>
-  <div class="text-center w-full">
+  <div class="flex flex-col gap-y-15 text-center w-full">
+    <h1 class="text-4xl font-ProximaNova mt-5">Despesas</h1>
     <ExpenseCard />
     <ExpensesList />
   </div>

@@ -96,51 +96,52 @@ export default {
 </script>
 
 <template>
-  <div class="p-2 wrapper">
-    <h1>Comunidade</h1>
+  <div class="flex flex-col gap-y-15 text-center w-full">
+    <h1 class="text-4xl mt-10 font-ProximaNova">Comunidade</h1>
+    <div class="p-2 wrapper mx-50">
+      <div class="mb-4">
+        <button
+          @click="activeTab = 'friends'"
+          :class="{ active: activeTab === 'friends' }"
+        >
+          Amigos
+        </button>
 
-    <div class="mb-4">
-      <button
-        @click="activeTab = 'friends'"
-        :class="{ active: activeTab === 'friends' }"
-      >
-        Amigos
-      </button>
+        <button
+          @click="activeTab = 'discover'"
+          :class="{ active: activeTab === 'discover' }"
+        >
+          Descobrir Pessoas
+        </button>
+      </div>
 
-      <button
-        @click="activeTab = 'discover'"
-        :class="{ active: activeTab === 'discover' }"
-      >
-        Descobrir Pessoas
-      </button>
-    </div>
+      <hr />
 
-    <hr />
+      <div v-if="activeTab === 'friends'">
+        <h3>A tua lista ({{ friends.length }})</h3>
+        <ul>
+          <li v-for="friend in friends" :key="friend.id">
+            {{ friend.friendUsername }}
+            <button class="action-btn remove" @click="removeFriend(friend.id)">
+              Remover
+            </button>
+          </li>
+        </ul>
+        <p v-if="friends.length === 0">Ainda não tens amigos.</p>
+      </div>
 
-    <div v-if="activeTab === 'friends'">
-      <h3>A tua lista ({{ friends.length }})</h3>
-      <ul>
-        <li v-for="friend in friends" :key="friend.id">
-          {{ friend.friendUsername }}
-          <button class="action-btn remove" @click="removeFriend(friend.id)">
-            Remover
-          </button>
-        </li>
-      </ul>
-      <p v-if="friends.length === 0">Ainda não tens amigos.</p>
-    </div>
-
-    <div v-if="activeTab === 'discover'">
-      <h3>Pessoas novas ({{ discoverUsers.length }})</h3>
-      <ul>
-        <li v-for="user in discoverUsers" :key="user.id">
-          {{ user.name }} ({{ user.username }})
-          <button class="action-btn add" @click="addFriend(user)">
-            Adicionar
-          </button>
-        </li>
-      </ul>
-      <p v-if="discoverUsers.length === 0">Ninguém novo para adicionar.</p>
+      <div v-if="activeTab === 'discover'">
+        <h3>Pessoas novas ({{ discoverUsers.length }})</h3>
+        <ul>
+          <li v-for="user in discoverUsers" :key="user.id">
+            {{ user.name }} ({{ user.username }})
+            <button class="action-btn add" @click="addFriend(user)">
+              Adicionar
+            </button>
+          </li>
+        </ul>
+        <p v-if="discoverUsers.length === 0">Ninguém novo para adicionar.</p>
+      </div>
     </div>
   </div>
 </template>
