@@ -14,8 +14,7 @@ export default {
 </script>
 
 <template>
-  <div class="">
-    <h1>Despesas</h1>
+  <div class="text-center w-full">
     <ExpenseCard />
     <ExpensesList />
   </div>

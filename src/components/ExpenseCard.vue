@@ -44,28 +44,31 @@ export default {
 </script>
 
 <template>
-  <div class="w-full bg-gray-300 h-fit rounded-xl px-5 py-3">
-    <form @submit.prevent="createExpense" class="grid grid-cols-2">
-      <div>
-        <label>Nome da Despesa: </label>
-        <input type="text" v-model="name" placeholder="Compras..." required />
-      </div>
-      <div>
-        <label>Data: </label>
-        <input type="date" v-model="date" required />
-      </div>
-      <div>
-        <label>Quantia: </label>
-        <input type="number" min="0" v-model="amount" required />
-      </div>
-      <div class="">
-        <label>Descrição: </label>
-        <textarea v-model="description"></textarea>
-      </div>
-      <div><button type="submit">Criar</button></div>
-    </form>
+  <div class="text-center px-100">
+    <h1>Despesas</h1>
+    <div class="w-full bg-gray-300 h-fit rounded-xl px-5 py-3">
+      <form @submit.prevent="createExpense" class="grid grid-cols-2">
+        <div>
+          <label>Nome da Despesa: </label>
+          <input type="text" v-model="name" placeholder="Compras..." required />
+        </div>
+        <div>
+          <label>Data: </label>
+          <input type="date" v-model="date" required />
+        </div>
+        <div>
+          <label>Quantia: </label>
+          <input type="number" min="0" v-model="amount" required />
+        </div>
+        <div class="">
+          <label>Descrição: </label>
+          <textarea v-model="description"></textarea>
+        </div>
+        <div><button type="submit">Criar</button></div>
+      </form>
 
-    <p v-if="error" style="color: red">{{ error }}</p>
+      <p v-if="error" style="color: red">{{ error }}</p>
+    </div>
   </div>
 </template>
 
