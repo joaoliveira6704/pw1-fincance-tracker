@@ -9,9 +9,19 @@
       "createdAt": "2025-05-24",
       "isAdmin": true,
       "income": 12000,
-      "objectives": [1, 2],
-      "expenses": [1, 3, 4, 5],
-      "friends": ["miguel"]
+      "objectives": [
+        1,
+        2
+      ],
+      "expenses": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "friends": [
+        "miguel"
+      ]
     },
     {
       "id": "2",
@@ -22,8 +32,16 @@
       "createdAt": "2023-04-21",
       "isAdmin": false,
       "income": 18490,
-      "objectives": [10, 22],
-      "expenses": [12, 31, 41, 51]
+      "objectives": [
+        10,
+        22
+      ],
+      "expenses": [
+        12,
+        31,
+        41,
+        51
+      ]
     },
     {
       "id": "6ad8",
@@ -78,6 +96,21 @@
       "password": "acb",
       "email": "abc",
       "createdAt": "2025-11-24",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "currency": "EUR",
+        "theme": "light"
+      }
+    },
+    {
+      "id": "61b7",
+      "firstName": "Joao",
+      "lastName": "Oliveira",
+      "username": "diacidos",
+      "password": "jOAOPEDRO04*",
+      "email": "joaopedrooliveira6704@gmail.com",
+      "createdAt": "2025-12-04",
       "isAdmin": false,
       "income": 0,
       "preferences": {
@@ -157,6 +190,16 @@
       "categoryId": 2,
       "walletId": 1,
       "description": "gahb"
+    },
+    {
+      "id": "6936",
+      "userId": "61b7",
+      "name": "abc",
+      "date": "2025-12-04",
+      "amount": 154,
+      "categoryId": 2,
+      "walletId": 1,
+      "description": "efesfsfsef"
     }
   ],
   "logs": [],
@@ -200,13 +243,37 @@
       "friendUsername": "joao123",
       "status": "accepted",
       "addedAt": "2025-11-24"
+    },
+    {
+      "id": "0d1f",
+      "userId": "61b7",
+      "friendId": "1",
+      "friendUsername": "joao",
+      "status": "accepted",
+      "addedAt": "2025-12-04"
+    },
+    {
+      "id": "03b3",
+      "userId": "61b7",
+      "friendId": "2",
+      "friendUsername": "miguel",
+      "status": "accepted",
+      "addedAt": "2025-12-04"
+    },
+    {
+      "id": "ed2e",
+      "userId": "61b7",
+      "friendId": "6ad8",
+      "friendUsername": "testeteste",
+      "status": "accepted",
+      "addedAt": "2025-12-04"
     }
   ],
   "userSessions": [
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "b6cba1cc-3184-48f5-840b-f00b1ef390c3"
+      "token": "0cd2b3a4-c4db-4470-933b-74b36286484b"
     },
     {
       "id": "92c6",
@@ -232,6 +299,11 @@
       "id": "d0ac",
       "userId": "92df",
       "token": "4fd38099-5661-4f7f-a4ed-4c1caf5bc74a"
+    },
+    {
+      "id": "4d6e",
+      "userId": "61b7",
+      "token": "8d19afb4-65b4-412c-82a1-df83cb26e85e"
     }
   ],
   "objectives": [
