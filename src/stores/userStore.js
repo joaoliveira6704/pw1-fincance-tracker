@@ -7,6 +7,8 @@ const BASE_URL = "http://localhost:3000";
 export const useUsersStore = defineStore("users", {
   state: () => ({
     users: [],
+    loading: false,
+    error: null,
   }),
   getters: {
     getUsers: (state) => state.users,
@@ -15,27 +17,47 @@ export const useUsersStore = defineStore("users", {
   },
   actions: {
     async fetchUsers() {
+      this.loading = true;
+      this.error = null;
       try {
         this.users = await api.get(BASE_URL, "users");
       } catch (e) {
         this.error = e.message;
         console.error("Error fetching users:", e);
+      } finally {
+        this.loading = false;
       }
     },
     async fetchUserById(id) {
+      this.loading = true;
+      this.error = null;
       try {
         return await api.get(BASE_URL, `users/${id}`);
       } catch (e) {
         this.error = e.message;
         console.error("Error fetching user:", e);
+      } finally {
+        this.loading = false;
       }
     },
     async fetchLoggedUser() {
-      const loggedUserId = JSON.parse(
-        localStorage.getItem("user-session")
-      ).userId;
+      this.loading = true;
+      this.error = null;
 
-      return await this.fetchUserById(loggedUserId);
+      try {
+        // Test Skeleton
+        /* await new Promise((resolve) => setTimeout(resolve, 2000)); */
+        const session = JSON.parse(localStorage.getItem("user-session"));
+        if (!session) throw new Error("No session found");
+        const loggedUserId = session.userId;
+
+        return await this.fetchUserById(loggedUserId);
+      } catch (e) {
+        this.error = e.message;
+        console.error("Error fetching user:", e);
+      } finally {
+        this.loading = false;
+      }
     },
     async addUser(username, firstName, lastName, email, password) {
       try {
