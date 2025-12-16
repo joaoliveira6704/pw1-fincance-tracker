@@ -1,6 +1,8 @@
 <script>
 import router from "@/router";
 import { useAuthStore } from "@/stores/authStore";
+import RegisterInput from "@/components/RegisterInput.vue";
+import Button from "@/components/Button.vue";
 
 export default {
   setup() {
@@ -25,31 +27,48 @@ export default {
       }
     },
   },
+  components: {
+    RegisterInput,
+    Button,
+  },
 };
 </script>
 
 <template>
-  <h1>Login</h1>
+  <!-- WRAPPER -->
+  <div class="flex h-screen">
+    <h1>Login</h1>
 
-  <form @submit.prevent="handleLogin">
-    <div>
-      <label>Username: </label>
-      <input type="text" v-model="username" placeholder="joao" required />
-    </div>
+    <form
+      @submit.prevent="handleLogin"
+      class="m-auto bg-white text-black flex flex-col w-100 h-fit p-10 py-10 rounded-xl gap-5"
+    >
+      <div>
+        <RegisterInput
+          v-model="username"
+          label-text="Username"
+          :is-valid="null"
+          required
+        />
+        <RegisterInput
+          v-model="password"
+          label-text="Password"
+          :is-valid="null"
+          input-type="password"
+          required
+        />
+      </div>
 
-    <br />
+      <button
+        type="submit"
+        class="flex justify-center bg-stackrgreen-500 rounded-full hover:bg-stackrgreen-200 h-fit px-4 py-2 cursor-pointer transition-all duration-200 ease-in-out text-primary-color text-lg font-ProximaNova"
+      >
+        Entrar
+      </button>
+    </form>
 
-    <div>
-      <label>Password: </label>
-      <input type="password" v-model="password" placeholder="joao" required />
-    </div>
-
-    <br />
-
-    <button type="submit">Entrar</button>
-  </form>
-
-  <p v-if="error" style="color: red">{{ error }}</p>
+    <p v-if="error" style="color: red">{{ error }}</p>
+  </div>
 </template>
 
 <style lang="scss" scoped></style>

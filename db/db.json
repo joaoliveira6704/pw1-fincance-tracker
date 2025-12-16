@@ -9,9 +9,19 @@
       "createdAt": "2025-05-24",
       "isAdmin": true,
       "income": 12000,
-      "objectives": [1, 2],
-      "expenses": [1, 3, 4, 5],
-      "friends": ["miguel"]
+      "objectives": [
+        1,
+        2
+      ],
+      "expenses": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "friends": [
+        "miguel"
+      ]
     },
     {
       "id": "2",
@@ -22,8 +32,16 @@
       "createdAt": "2023-04-21",
       "isAdmin": false,
       "income": 18490,
-      "objectives": [10, 22],
-      "expenses": [12, 31, 41, 51]
+      "objectives": [
+        10,
+        22
+      ],
+      "expenses": [
+        12,
+        31,
+        41,
+        51
+      ]
     },
     {
       "id": "6ad8",
@@ -122,6 +140,21 @@
       "password": "",
       "email": "",
       "createdAt": "2025-11-29",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "currency": "EUR",
+        "theme": "light"
+      }
+    },
+    {
+      "id": "6629",
+      "firstName": "adwas",
+      "lastName": "adwas",
+      "username": "",
+      "password": "",
+      "email": "",
+      "createdAt": "2025-12-16",
       "isAdmin": false,
       "income": 0,
       "preferences": {
@@ -230,7 +263,7 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "48d04a4b-8bf1-4122-986f-3c046f61276e"
+      "token": "50dd7bd6-1ac8-4993-bd04-392e3153a8a8"
     },
     {
       "id": "92c6",
