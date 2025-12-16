@@ -104,42 +104,13 @@
       }
     },
     {
-      "id": "e717",
-      "firstName": "",
-      "lastName": "",
-      "username": "",
-      "password": "",
-      "email": "",
-      "createdAt": "2025-11-29",
-      "isAdmin": false,
-      "income": 0,
-      "preferences": {
-        "currency": "EUR",
-        "theme": "light"
-      }
-    },
-    {
-      "id": "a61e",
-      "lastName": "",
-      "username": "",
-      "password": "",
-      "email": "",
-      "createdAt": "2025-11-29",
-      "isAdmin": false,
-      "income": 0,
-      "preferences": {
-        "currency": "EUR",
-        "theme": "light"
-      }
-    },
-    {
-      "id": "1244",
-      "firstName": "",
-      "lastName": "",
-      "username": "",
-      "password": "",
-      "email": "",
-      "createdAt": "2025-11-29",
+      "id": "61b7",
+      "firstName": "Joao",
+      "lastName": "Oliveira",
+      "username": "diacidos",
+      "password": "jOAOPEDRO04*",
+      "email": "joaopedrooliveira6704@gmail.com",
+      "createdAt": "2025-12-04",
       "isAdmin": false,
       "income": 0,
       "preferences": {
@@ -214,12 +185,42 @@
       "categoryId": 2,
       "walletId": 1,
       "description": "compras na nike"
+    },
+    {
+      "id": "842b",
+      "userId": "1",
+      "name": "Compras",
+      "date": "2025-11-20",
+      "amount": 240,
+      "categoryId": 2,
+      "walletId": 1,
+      "description": "jwjdwdjwd"
+    },
+    {
+      "id": "8405",
+      "userId": "1",
+      "name": "Abc",
+      "date": "2025-12-09",
+      "amount": 240,
+      "categoryId": 2,
+      "walletId": 1,
+      "description": "gahb"
+    },
+    {
+      "id": "6936",
+      "userId": "61b7",
+      "name": "abc",
+      "date": "2025-12-04",
+      "amount": 154,
+      "categoryId": 2,
+      "walletId": 1,
+      "description": "efesfsfsef"
     }
   ],
   "logs": [],
   "friends": [
     {
-      "id": "37f4",
+      "id": "7c91",
       "userId": "1",
       "friendId": "6857",
       "friendUsername": "admin",
@@ -257,18 +258,42 @@
       "friendUsername": "joao123",
       "status": "accepted",
       "addedAt": "2025-11-24"
+    },
+    {
+      "id": "0d1f",
+      "userId": "61b7",
+      "friendId": "1",
+      "friendUsername": "joao",
+      "status": "accepted",
+      "addedAt": "2025-12-04"
+    },
+    {
+      "id": "03b3",
+      "userId": "61b7",
+      "friendId": "2",
+      "friendUsername": "miguel",
+      "status": "accepted",
+      "addedAt": "2025-12-04"
+    },
+    {
+      "id": "ed2e",
+      "userId": "61b7",
+      "friendId": "6ad8",
+      "friendUsername": "testeteste",
+      "status": "accepted",
+      "addedAt": "2025-12-04"
     }
   ],
   "userSessions": [
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "50dd7bd6-1ac8-4993-bd04-392e3153a8a8"
+      "token": "62b2982e-56c2-4f24-96a4-b5e408bdcfe1"
     },
     {
       "id": "92c6",
       "userId": "2",
-      "token": "fc98bb18-68eb-4473-ae59-66a888e883d0"
+      "token": "2a2687c0-9ab9-4160-944f-b922f10e7c76"
     },
     {
       "id": "a2ab",
@@ -289,6 +314,11 @@
       "id": "d0ac",
       "userId": "92df",
       "token": "4fd38099-5661-4f7f-a4ed-4c1caf5bc74a"
+    },
+    {
+      "id": "4d6e",
+      "userId": "61b7",
+      "token": "8d19afb4-65b4-412c-82a1-df83cb26e85e"
     }
   ],
   "objectives": [
