@@ -1,6 +1,7 @@
 <script>
 import Button from "@/components/Button.vue";
-import Skeleton from "@/components/Skeleton.vue";
+import Skeleton from "@/components/skeletons/ProfileSkeleton.vue";
+import ProfileCard from "@/components/cards/ProfileCard.vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useUsersStore } from "@/stores/userStore";
 import { mapStores } from "pinia";
@@ -9,6 +10,7 @@ export default {
   components: {
     Button,
     Skeleton,
+    ProfileCard,
   },
   data() {
     return {
@@ -31,31 +33,21 @@ export default {
 </script>
 
 <template>
-  <div v-if="usersStore.loading">
-    <Skeleton />
-  </div>
+  <div class="w-full min-h-screen">
+    <div v-if="usersStore.loading">
+      <Skeleton />
+    </div>
 
-  <div v-else-if="error" class="text-red-500 p-4">
-    {{ error }}
-  </div>
+    <div
+      v-else-if="error"
+      class="w-full max-w-3xl mx-auto p-4 rounded-lg bg-red-100 border border-red-300 text-red-700 text-center"
+    >
+      <i class="pi pi-exclamation-triangle mr-2"></i>
+      {{ error }}
+    </div>
 
-  <div v-else class="w-full shadow-md rounded-lg">
-    <h1 class="text-xl font-bold text-red-400 mb-4">User Profile</h1>
-
-    <div class="space-y-2 mb-6">
-      <p><strong>Username:</strong> @{{ user.username }}</p>
-      <p><strong>Nome:</strong> {{ user.firstName }} {{ user.lastName }}</p>
-      <p><strong>Entrou em:</strong> {{ user.createdAt }}</p>
-      <p><strong>Salário:</strong> {{ user.income }}€</p>
-
-      <div v-if="user.friends && user.friends.length">
-        <strong>Amigos:</strong>
-        <ul class="list-disc list-inside ml-2">
-          <li v-for="friend in user.friends" :key="friend">
-            {{ friend }}
-          </li>
-        </ul>
-      </div>
+    <div v-else class="flex justify-center">
+      <ProfileCard :user="user" />
     </div>
   </div>
 </template>
