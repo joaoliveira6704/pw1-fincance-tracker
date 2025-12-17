@@ -9,19 +9,9 @@
       "createdAt": "2025-05-24",
       "isAdmin": true,
       "income": 12000,
-      "objectives": [
-        1,
-        2
-      ],
-      "expenses": [
-        1,
-        3,
-        4,
-        5
-      ],
-      "friends": [
-        "miguel"
-      ]
+      "objectives": [1, 2],
+      "expenses": [1, 3, 4, 5],
+      "friends": ["miguel"]
     },
     {
       "id": "2",
@@ -32,16 +22,8 @@
       "createdAt": "2023-04-21",
       "isAdmin": false,
       "income": 18490,
-      "objectives": [
-        10,
-        22
-      ],
-      "expenses": [
-        12,
-        31,
-        41,
-        51
-      ]
+      "objectives": [10, 22],
+      "expenses": [12, 31, 41, 51]
     },
     {
       "id": "6ad8",
