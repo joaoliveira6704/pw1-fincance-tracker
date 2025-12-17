@@ -101,7 +101,14 @@
       }
     }
   ],
-  "wallets": [],
+  "wallets": [
+    {
+      "name": "Poupança",
+      "balance": 1200,
+      "color": "#0FA3B1",
+      "currency": "EUR"
+    }
+  ],
   "expenses": [
     {
       "id": "ae60",
@@ -255,7 +262,7 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "62b2982e-56c2-4f24-96a4-b5e408bdcfe1"
+      "token": "54bfc2f9-716b-4887-85ba-3162b6e24e76"
     },
     {
       "id": "92c6",
