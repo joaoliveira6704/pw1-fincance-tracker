@@ -6,7 +6,7 @@ export default {
 
 <template>
   <div
-    class="w-full max-w-3xl mx-auto rounded-2xl overflow-hidden border shadow-lg"
+    class="w-full mx-auto overflow-hidden border shadow-lg"
     style="
       background-color: var(--main-bg-color);
       border-color: var(--border-color);

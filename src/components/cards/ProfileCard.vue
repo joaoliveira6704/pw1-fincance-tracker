@@ -1,6 +1,7 @@
 <script>
 import { formattedDate, formattedIncome } from "@/utils/utils";
 import { Calendar, Wallet, User, Users } from "lucide-vue-next";
+import Button from "../Button.vue";
 
 export default {
   name: "ProfileCard",
@@ -9,6 +10,7 @@ export default {
     Wallet,
     User,
     Users,
+    Button,
   },
   props: {
     user: {
@@ -26,13 +28,16 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.user.username}&scale=70&b
   methods: {
     formattedDate,
     formattedIncome,
+    logout() {
+      this.$emit("logout");
+    },
   },
 };
 </script>
 
 <template>
   <div
-    class="w-full mx-auto overflow-hidden border shadow-lg transition-colors duration-200"
+    class="w-full mx-auto flex flex-col text-center items-center overflow-hidden border shadow-lg transition-colors duration-200"
     style="
       background-color: var(--main-bg-color);
       border-color: var(--border-color);
@@ -135,10 +140,14 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.user.username}&scale=70&b
             {{ friend }}
           </span>
         </div>
+
         <div v-else class="text-center py-4 opacity-60 italic text-sm">
           Sem amigos adicionados ainda.
         </div>
       </div>
+    </div>
+    <div class="max-w-3xl pb-6">
+      <Button variant="outline" @click="logout">Logout</Button>
     </div>
   </div>
 </template>
