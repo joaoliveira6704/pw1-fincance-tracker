@@ -36,12 +36,16 @@ export default {
 
 <template>
   <!-- WRAPPER -->
-  <div class="flex h-screen">
-    <h1>Login</h1>
-
+  <div
+    class="flex flex-col h-screen text-center mx-auto items-center justify-center gap-2.5"
+  >
+    <div class="flex flex-col">
+      <h1 class="text-3xl font-ProximaNova">Login</h1>
+      <p class="text-lg">@{{ username }}</p>
+    </div>
     <form
       @submit.prevent="handleLogin"
-      class="m-auto bg-white text-black flex flex-col w-100 h-fit p-10 py-10 rounded-xl gap-5"
+      class="bg-white text-black flex flex-col w-100 h-fit p-10 py-10 rounded-xl gap-5"
     >
       <div>
         <RegisterInput
