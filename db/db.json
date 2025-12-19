@@ -299,18 +299,34 @@
       "friendUsername": "",
       "status": "accepted",
       "addedAt": "2025-12-19"
+    },
+    {
+      "id": "d4db",
+      "userId": "2",
+      "friendId": "1",
+      "friendUsername": "joao",
+      "status": "accepted",
+      "addedAt": "2025-12-19"
+    },
+    {
+      "id": "43ca",
+      "userId": "2",
+      "friendId": "6857",
+      "friendUsername": "admin",
+      "status": "accepted",
+      "addedAt": "2025-12-19"
     }
   ],
   "userSessions": [
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "045df8e4-7786-47f6-ab13-4769787c7fbc"
+      "token": "da5124c4-5b19-4444-ad8f-ac2925b5f401"
     },
     {
       "id": "92c6",
       "userId": "2",
-      "token": "dba4c295-367f-4373-89f1-b5fdaed228c5"
+      "token": "565461b4-f517-406d-afe4-7611b02e2e46"
     },
     {
       "id": "a2ab",
