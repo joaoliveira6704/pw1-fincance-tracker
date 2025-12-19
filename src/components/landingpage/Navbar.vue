@@ -1,7 +1,7 @@
 <script>
 import { RouterLink } from "vue-router";
-import Button from "./Button.vue";
-import Logo from "./Logo.vue";
+import Button from "@/components/Button.vue";
+import Logo from "@/components/Logo.vue";
 import { useAuthStore } from "@/stores/authStore";
 import { mapActions, mapState } from "pinia";
 
@@ -39,6 +39,7 @@ export default {
     <div v-else class="flex space-x-2">
       <Button variant="outline" to="/login">Login</Button>
       <Button variant="fill" to="/register">Register</Button>
+      <router-link to="/login">Login</router-link>
     </div>
   </div>
 </template>

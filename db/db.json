@@ -20,7 +20,8 @@
         5
       ],
       "friends": [
-        "miguel"
+        "miguel",
+        "josé"
       ]
     },
     {
@@ -309,7 +310,7 @@
     {
       "id": "92c6",
       "userId": "2",
-      "token": "2a2687c0-9ab9-4160-944f-b922f10e7c76"
+      "token": "dba4c295-367f-4373-89f1-b5fdaed228c5"
     },
     {
       "id": "a2ab",
