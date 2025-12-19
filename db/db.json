@@ -118,6 +118,21 @@
         "currency": "EUR",
         "theme": "light"
       }
+    },
+    {
+      "id": "6629",
+      "firstName": "adwas",
+      "lastName": "adwas",
+      "username": "",
+      "password": "",
+      "email": "",
+      "createdAt": "2025-12-16",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "currency": "EUR",
+        "theme": "light"
+      }
     }
   ],
   "wallets": [],
@@ -270,43 +285,27 @@
       "addedAt": "2025-12-04"
     },
     {
-      "id": "4ca9",
+      "id": "2779",
       "userId": "1",
       "friendId": "2",
       "friendUsername": "miguel",
       "status": "accepted",
-      "addedAt": "2025-12-12"
+      "addedAt": "2025-12-19"
     },
     {
-      "id": "93b6",
-      "userId": "2",
-      "friendId": "1",
-      "friendUsername": "joao",
+      "id": "e811",
+      "userId": "1",
+      "friendId": "6629",
+      "friendUsername": "",
       "status": "accepted",
-      "addedAt": "2025-12-13"
-    },
-    {
-      "id": "69de",
-      "userId": "2",
-      "friendId": "6ad8",
-      "friendUsername": "testeteste",
-      "status": "accepted",
-      "addedAt": "2025-12-13"
-    },
-    {
-      "id": "df47",
-      "userId": "2",
-      "friendId": "d7b4",
-      "friendUsername": "teste2",
-      "status": "accepted",
-      "addedAt": "2025-12-13"
+      "addedAt": "2025-12-19"
     }
   ],
   "userSessions": [
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "e798f846-fce0-4b4f-b76c-119fd55cedd9"
+      "token": "045df8e4-7786-47f6-ab13-4769787c7fbc"
     },
     {
       "id": "92c6",

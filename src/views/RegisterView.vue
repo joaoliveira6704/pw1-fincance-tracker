@@ -20,7 +20,7 @@ export default {
       email: "",
       password: "",
       confirmPassword: "",
-      helpText: true,
+      helpText: false,
       inputValidation: {
         firstName: { valid: null },
         lastName: { valid: null },
@@ -125,9 +125,6 @@ export default {
       usernameObj.validLength = usernameValue.length >= minLength;
 
       usernameObj.valid = usernameObj.isUnique && usernameObj.validLength;
-      console.log(usernameObj.isUnique);
-      console.log(usernameObj.validLength);
-      console.log(usernameObj.valid);
     },
 
     helpTextHandler() {
@@ -199,15 +196,13 @@ export default {
         <RegisterInput
           v-model="firstName"
           label-text="First Name"
-          inputType="text"
-          length="12,"
+          length="12"
           :is-valid="inputValidation.firstName.valid"
         />
 
         <RegisterInput
           v-model="lastName"
           label-text="Last Name"
-          inputType="text"
           length="12"
           :is-valid="inputValidation.lastName.valid"
         />
@@ -221,7 +216,6 @@ export default {
         <RegisterInput
           v-model="username"
           label-text="Username"
-          inputType="text"
           length="20"
           variant="span"
           :is-valid="inputValidation.username.valid"
@@ -251,7 +245,9 @@ export default {
           a special character
         </p>
       </div>
-      <Button variant="full" @click="addNewUser()">Register</Button>
+      <Button variant="full" @click="addNewUser()" class="m-auto"
+        >Criar conta</Button
+      >
     </form>
   </div>
 </template>
