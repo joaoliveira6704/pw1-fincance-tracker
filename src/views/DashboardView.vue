@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen w-full text-gray-400 p-8 font-sans">
+  <div class="max-h-screen w-full text-gray-400 p-8 font-sans">
     <header class="flex justify-between items-center mb-8">
       <h1 class="text-white text-xl font-medium">Dashboard</h1>
       <button
