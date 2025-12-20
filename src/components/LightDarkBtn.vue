@@ -42,9 +42,9 @@ export default {
       html.style.colorScheme = this.darkMode ? "dark" : "light";
 
       if (this.darkMode) {
-        document.documentElement.style.colorScheme = "dark";
+        document.documentElement.setAttribute("data-theme", "dark");
       } else {
-        document.documentElement.style.colorScheme = "light";
+        document.documentElement.setAttribute("data-theme", "light");
       }
     },
   },
@@ -69,7 +69,7 @@ export default {
 
     <span
       class="z-10 h-6 w-6 rounded-full ball-landing shadow-md bg-stackrgreen-500 transition-transform duration-300 ease-in-out"
-      :class="darkMode ? 'translate-x-0' : 'translate-x-23'"
+      :class="darkMode ? 'translate-x-0' : 'translate-x-34'"
     ></span>
   </button>
 

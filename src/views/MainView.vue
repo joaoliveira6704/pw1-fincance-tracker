@@ -9,7 +9,9 @@ export default {
 </script>
 
 <template>
-  <div id="main-app" class="flex h-screen"><Sidebar /> <RouterView /></div>
+  <div id="main-app" class="flex h-screen">
+    <Sidebar /> <RouterView class="max-h-screen overflow-scroll" />
+  </div>
 </template>
 
 <style>

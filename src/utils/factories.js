@@ -115,3 +115,7 @@ export function createFriend(currentUserId, friendUserObj) {
     addedAt: todayDate(),
   };
 }
+
+export function createCountObject(date) {
+  return { date: date, count: 0 };
+}

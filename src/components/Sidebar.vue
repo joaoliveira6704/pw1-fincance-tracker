@@ -24,7 +24,11 @@ export default {
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
+  <div
+    class="flex flex-col h-full max-w-50 transition-[width] duration-300 ease-in-out overflow-hidden"
+    :class="isOpen ? 'w-50' : 'w-15'"
+    style="background-color: var(--navbar-bg)"
+  >
     <SidebarHeader :isOpen="isOpen" />
     <SidebarBody :isOpen="isOpen" />
     <SidebarFooter :isOpen="isOpen" />
@@ -38,7 +42,7 @@ export default {
 
 <style scoped>
 button {
-  background-color: var(--border-color);
+  background-color: var(--border);
 }
 button:hover {
   background-color: var(--color-stackrgreen-500);

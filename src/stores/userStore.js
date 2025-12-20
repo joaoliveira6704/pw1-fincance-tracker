@@ -75,5 +75,17 @@ export const useUsersStore = defineStore("users", {
         throw e;
       }
     },
+    async fetchUserLogs(userId) {
+      this.loading = true;
+      this.error = null;
+      try {
+        return await api.get(BASE_URL, `logs?userId=${userId}`);
+      } catch (e) {
+        this.error = e.message;
+        console.error("Error fetching users:", e);
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 });

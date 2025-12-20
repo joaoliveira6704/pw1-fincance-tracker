@@ -1,5 +1,5 @@
 <template>
-  <div class="text-7xl max-w-5xl text-center font-ProximaNova mt-30">
+  <div class="text-7xl max-w-5xl text-center font-ProximaNova-800 mt-30">
     <img src="/hero-image.png" class="mx-auto block" width="600"></img>
     <h1 class="mt-10">
       Managing <span class="text-stackrgreen-500">Finances</span><br />

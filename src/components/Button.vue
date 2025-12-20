@@ -14,7 +14,7 @@ export default {
   computed: {
     buttonClasses() {
       const base =
-        "items-center text-center h-fit px-4 py-2 cursor-pointer transition-all duration-200 ease-in-out text-primary-color text-lg font-ProximaNova";
+        "items-center text-center h-fit px-4 py-2 cursor-pointer transition-all duration-200 ease-in-out text-primary-color text-lg font-ProximaNova-400";
 
       const variants = {
         fill: "bg-stackrgreen-500 rounded-full  hover:bg-stackrgreen-200",

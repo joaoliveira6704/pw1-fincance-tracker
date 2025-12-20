@@ -29,8 +29,10 @@
     "@vue/test-utils": "^2.4.6",
     "jsdom": "^27.0.1",
     "sass-embedded": "^1.93.3",
+    "tippy.js": "^6.3.7",
     "vite": "^7.1.11",
     "vite-plugin-vue-devtools": "^8.0.3",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "vue3-calendar-heatmap": "^2.0.5"
   }
 }

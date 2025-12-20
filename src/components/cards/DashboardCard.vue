@@ -34,7 +34,8 @@ export default {
 
 <template>
   <div
-    class="bg-[#141414] border border-[#262626] rounded-2xl p-5 hover:border-gray-600 transition-colors"
+    class="border rounded-2xl p-5 transition-colors"
+    style="background-color: var(--navbar-bg); border-color: var(--border)"
   >
     <div class="flex justify-between items-start mb-4">
       <span class="text-sm text-gray-500 font-medium">{{ label }}</span>

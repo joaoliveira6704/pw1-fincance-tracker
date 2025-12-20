@@ -96,7 +96,10 @@ export default {
 </script>
 
 <template>
-  <div class="flex flex-col gap-y-15 text-center w-full">
+  <div
+    class="flex flex-col gap-y-15 text-center w-full"
+    style="background-color: var(--main-bg)"
+  >
     <h1 class="text-4xl mt-10 font-ProximaNova">Comunidade</h1>
     <div class="p-2 wrapper mx-50">
       <div class="mb-4">
@@ -147,9 +150,6 @@ export default {
 </template>
 
 <style scoped>
-.wrapper {
-  background-color: var(--main-bg-color);
-}
 button {
   padding: 8px 16px;
   border: none;
@@ -207,8 +207,7 @@ li {
 <style>
 /* POPUP */
 .stackr-swal-popup {
-  background-color: light-dark(#ffff, #0000) !important;
-  border: 1px solid #333;
+  background-color: var(--main-bg);
   border-radius: 16px !important;
   padding: 2rem !important;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
@@ -216,7 +215,7 @@ li {
 
 /* TITULO */
 .stackr-swal-title {
-  color: var(--primary-color) !important;
+  color: var(--primary-text) !important;
   font-family: var(--font-ProximaNova);
   font-size: 1.5rem !important;
   font-weight: 700 !important;
@@ -224,7 +223,7 @@ li {
 
 /* TEXTO */
 .stackr-swal-text {
-  color: var(--primary-color) !important; /* Gray text */
+  color: var(--primary-text) !important; /* Gray text */
   font-size: 1rem !important;
 }
 

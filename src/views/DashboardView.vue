@@ -1,5 +1,91 @@
+<script>
+import DashboardCard from "@/components/cards/DashboardCard.vue";
+import DashboardChart from "@/components/charts/DashboardChart.vue";
+import Heatmap from "@/components/charts/Heatmap.vue";
+import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton.vue";
+import { useUsersStore } from "@/stores/userStore";
+import { getDailyCount } from "@/utils/utils";
+import { Plus, LayoutPanelLeft } from "lucide-vue-next";
+import { mapActions, mapState } from "pinia";
+
+export default {
+  name: "Dashboard",
+  components: {
+    Plus,
+    LayoutPanelLeft,
+    DashboardCard,
+    DashboardChart,
+    Heatmap,
+    DashboardSkeleton,
+  },
+  data() {
+    return {
+      heatmapData: [],
+      activeTab: "Saldo",
+      columns: ["Section Type", "Status", "Target", "Limit", "Reviewer"],
+      tabs: [
+        { name: "Saldo", count: null },
+        { name: "Despesas", count: 32 },
+        { name: "Objetivos", count: 5 },
+      ],
+      metrics: [
+        {
+          label: "Saldo Total",
+          value: "€12.450,00",
+          trend: "+2.4%",
+          trendUp: true,
+          isGood: true,
+          subtext: "Soma de todas as carteiras",
+          footer: "Atualizado em tempo real",
+        },
+        {
+          label: "Despesas do Mês",
+          value: "€1.140,00",
+          trend: "-15%",
+          trendUp: false,
+          isGood: false,
+          subtext: "76% do orçamento utilizado",
+          footer: "Limite mensal: €1.500",
+        },
+        {
+          label: "Progresso dos Objetivos",
+          value: "28.5%",
+          trend: "+5.2%",
+          trendUp: true,
+          isGood: true,
+          subtext: "€1.200,00 guardados",
+          footer: "Quantidade de Objetivos Ativos: 5",
+        },
+      ],
+    };
+  },
+  methods: {
+    ...mapActions(useUsersStore, ["fetchUserLogs", "fetchLoggedUser"]),
+  },
+  computed: {
+    ...mapState(useUsersStore, ["loading"]),
+  },
+  async mounted() {
+    const loggedUser = await this.fetchLoggedUser();
+    const userData = await this.fetchUserLogs(loggedUser.id);
+    this.heatmapData = getDailyCount(userData);
+  },
+};
+</script>
+
 <template>
-  <div class="max-h-screen w-full text-gray-400 p-8 font-sans">
+  <div
+    v-if="loading"
+    class="max-h-screen w-full text-gray-400 p-8 font-sans"
+    style="background-color: var(--main-bg)"
+  >
+    <DashboardSkeleton />
+  </div>
+  <div
+    v-else
+    class="max-h-screen w-full text-gray-400 p-8 font-sans"
+    style="background-color: var(--main-bg)"
+  >
     <header class="flex justify-between items-center mb-8">
       <h1 class="text-white text-xl font-medium">Dashboard</h1>
       <button
@@ -18,6 +104,8 @@
     </div>
 
     <DashboardChart />
+
+    <Heatmap :heatmapData="heatmapData" />
 
     <div class="flex justify-between items-center mb-4">
       <div class="flex bg-[#141414] border border-[#262626] rounded-xl p-1">
@@ -58,56 +146,5 @@
     </div> -->
   </div>
 </template>
-
-<script>
-import DashboardCard from "@/components/cards/DashboardCard.vue";
-import DashboardChart from "@/components/charts/DashboardChart.vue";
-import { Plus, LayoutPanelLeft } from "lucide-vue-next";
-
-export default {
-  name: "Dashboard",
-  components: { Plus, LayoutPanelLeft, DashboardCard, DashboardChart },
-  data() {
-    return {
-      activeTab: "Saldo",
-      columns: ["Section Type", "Status", "Target", "Limit", "Reviewer"],
-      tabs: [
-        { name: "Saldo", count: null },
-        { name: "Despesas", count: 32 },
-        { name: "Objetivos", count: 5 },
-      ],
-      metrics: [
-        {
-          label: "Saldo Total",
-          value: "€12.450,00",
-          trend: "+2.4%",
-          trendUp: true,
-          isGood: true,
-          subtext: "Soma de todas as carteiras",
-          footer: "Atualizado em tempo real",
-        },
-        {
-          label: "Despesas do Mês",
-          value: "€1.140,00",
-          trend: "-15%",
-          trendUp: false,
-          isGood: false,
-          subtext: "76% do orçamento utilizado",
-          footer: "Limite mensal: €1.500",
-        },
-        {
-          label: "Progresso dos Objetivos",
-          value: "28.5%",
-          trend: "+5.2%",
-          trendUp: true,
-          isGood: true,
-          subtext: "€1.200,00 guardados",
-          footer: "Quantidade de Objetivos Ativos: 5",
-        },
-      ],
-    };
-  },
-};
-</script>
 
 <style scoped></style>
