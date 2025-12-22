@@ -34,6 +34,7 @@ export default {
     <div class="grid grid-cols-3 grid-rows-2 gap-4">
       <WalletCard
         v-for="wallet in this.walletsStore.wallets"
+        :id="wallet.id"
         :title="wallet.name"
         :balance="wallet.balance"
         :currency="wallet.currency"

@@ -44,5 +44,11 @@ export const useWalletStore = defineStore("wallets", {
         throw e;
       }
     },
+
+    async moveBalance(id, amount) {
+      const walletData = this.getWallet(id);
+      walletData.balance += amount;
+      return await api.patch(BASE_URL, `wallets?id=${id}`, walletData);
+    },
   },
 });
