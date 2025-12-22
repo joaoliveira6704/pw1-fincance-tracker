@@ -7,13 +7,13 @@
     <div
       class="flex flex-col justify-between bg-stackrgreen-500 p-5 rounded-md h-30 w-48"
     >
-      <h2>{{ title }}</h2>
+      <h2>{{ id }}</h2>
       <h2>{{ balance }} {{ currency }}</h2>
     </div>
     <div class="flex py-4 mx-auto gap-10 w-fit" v-show="isHovering">
-      <i class="pi pi-download" @click="console.log(`teste`)"></i>
+      <i class="pi pi-download" @click="openModal"></i>
       <i class="pi pi-upload"></i>
-      <i class="pi pi-trash"></i>
+      <i class="pi pi-trash" @click="deleteWallet"></i>
     </div>
   </div>
 </template>
@@ -21,7 +21,7 @@
 <script>
 export default {
   props: {
-    id: Number,
+    id: String,
     title: String,
     balance: Number,
     currency: String,
@@ -35,6 +35,10 @@ export default {
   methods: {
     openModal() {
       this.$emit("openModal", this.id);
+    },
+
+    deleteWallet() {
+      this.$emit("deleteWallet", this.id);
     },
   },
 };

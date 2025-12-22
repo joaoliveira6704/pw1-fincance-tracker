@@ -9,9 +9,19 @@
       "createdAt": "2025-05-24",
       "isAdmin": true,
       "income": 12000,
-      "objectives": [1, 2],
-      "expenses": [1, 3, 4, 5],
-      "friends": ["miguel"]
+      "objectives": [
+        1,
+        2
+      ],
+      "expenses": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "friends": [
+        "miguel"
+      ]
     },
     {
       "id": "2",
@@ -22,8 +32,16 @@
       "createdAt": "2023-04-21",
       "isAdmin": false,
       "income": 18490,
-      "objectives": [10, 22],
-      "expenses": [12, 31, 41, 51]
+      "objectives": [
+        10,
+        22
+      ],
+      "expenses": [
+        12,
+        31,
+        41,
+        51
+      ]
     },
     {
       "id": "6ad8",
@@ -106,7 +124,26 @@
       "name": "Poupança",
       "balance": 1200,
       "color": "#0FA3B1",
-      "currency": "EUR"
+      "currency": "EUR",
+      "id": "f475"
+    },
+    {
+      "id": "edb6bf10-76ee-45ff-92c1-4d2d8c0c6978",
+      "name": "carteira teste",
+      "balance": 0,
+      "currency": "EUR",
+      "color": "#ffffff",
+      "userId": "1",
+      "isArchived": false
+    },
+    {
+      "id": "ea314d91-7ced-473c-8a52-a97ca408733f",
+      "name": "carteira teste",
+      "balance": 0,
+      "currency": "EUR",
+      "color": "#ffffff",
+      "userId": "1",
+      "isArchived": false
     }
   ],
   "expenses": [

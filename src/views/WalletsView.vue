@@ -1,27 +1,35 @@
 <script>
 import { useWalletStore } from "@/stores/walletStore";
 import WalletCard from "@/components/WalletCard.vue";
+import movementModal from "@/components/movementModal.vue";
 import { mapStores } from "pinia";
+import { getUserId } from "@/utils/session";
 
 export default {
-  components: { WalletCard },
+  components: { WalletCard, movementModal },
 
   computed: {
     ...mapStores(useWalletStore),
   },
 
   methods: {
-    async teste() {
-      console.log(this.walletStore);
-    },
-
     async fetch() {
       await this.walletsStore.fetchWallets();
       console.log(...this.walletsStore.wallets);
     },
+
+    openMovementModal(id) {
+      console.log("open modal of wallet: ", id);
+    },
+
+    async deleteWallet(id) {
+      await this.walletsStore.removeWallet(id);
+    },
   },
 
-  mounted() {
+  async mounted() {
+    const userId = getUserId();
+    await this.walletsStore.addWallet("carteira teste", "#ffffff", userId);
     this.fetch();
   },
 };
@@ -38,9 +46,12 @@ export default {
         :title="wallet.name"
         :balance="wallet.balance"
         :currency="wallet.currency"
+        @open-modal="(id) => this.openMovementModal(id)"
+        @delete-wallet="(id) => deleteWallet(id)"
       />
     </div>
   </div>
+  <movementModal />
 </template>
 
 <style lang="scss" scoped></style>
