@@ -18,8 +18,10 @@ export default {
       console.log(...this.walletsStore.wallets);
     },
 
-    openMovementModal(id) {
-      console.log("open modal of wallet: ", id);
+    async walletMovement(data) {
+      const [id, amount] = data;
+      console.log(id, amount);
+      await this.walletsStore.moveBalance(id, amount);
     },
 
     async deleteWallet(id) {
@@ -44,14 +46,13 @@ export default {
         v-for="wallet in this.walletsStore.wallets"
         :id="wallet.id"
         :title="wallet.name"
-        :balance="wallet.balance"
+        :balance="Number(wallet.balance)"
         :currency="wallet.currency"
-        @open-modal="(id) => this.openMovementModal(id)"
+        @movement="(data) => this.walletMovement(data)"
         @delete-wallet="(id) => deleteWallet(id)"
       />
     </div>
   </div>
-  <movementModal />
 </template>
 
 <style lang="scss" scoped></style>

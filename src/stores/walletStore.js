@@ -25,8 +25,7 @@ export const useWalletStore = defineStore("wallets", {
       this.loading = true;
       this.error = null;
       try {
-        // use an empty array (not an empty string) to avoid UI layout or type issues
-        this.wallets = [];
+        this.wallets = "";
         const data = await api.get(BASE_URL, `wallets?userId=${userId}`);
         this.wallets = data;
       } catch (e) {
@@ -38,17 +37,12 @@ export const useWalletStore = defineStore("wallets", {
     },
 
     async removeWallet(id) {
-      // Optimistic update: remove locally first for a smooth UI
-      const index = this.wallets.findIndex((w) => w.id == id);
-      const removed = index !== -1 ? this.wallets.splice(index, 1)[0] : null;
       try {
         await api.remove(BASE_URL, `wallets/${id}`);
       } catch (e) {
-        // Revert local change if delete failed
-        if (removed) this.wallets.splice(index, 0, removed);
-        this.error = e.message;
         console.error("Error removing wallet", e);
-        throw e;
+      } finally {
+        this.fetchWallets();
       }
     },
 
@@ -64,6 +58,7 @@ export const useWalletStore = defineStore("wallets", {
 
     async moveBalance(id, amount) {
       const walletData = this.getWallet(id);
+
       walletData.balance += amount;
       return await api.patch(BASE_URL, `wallets/${id}`, walletData);
     },

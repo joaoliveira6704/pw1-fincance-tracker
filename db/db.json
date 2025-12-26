@@ -121,25 +121,9 @@
   ],
   "wallets": [
     {
-      "name": "Poupança",
-      "balance": 1200,
-      "color": "#0FA3B1",
-      "currency": "EUR",
-      "id": "f475"
-    },
-    {
-      "id": "edb6bf10-76ee-45ff-92c1-4d2d8c0c6978",
+      "id": "b9838b0d-935e-4ec3-bfca-6505e65776fc",
       "name": "carteira teste",
-      "balance": 0,
-      "currency": "EUR",
-      "color": "#ffffff",
-      "userId": "1",
-      "isArchived": false
-    },
-    {
-      "id": "ea314d91-7ced-473c-8a52-a97ca408733f",
-      "name": "carteira teste",
-      "balance": 0,
+      "balance": 1000,
       "currency": "EUR",
       "color": "#ffffff",
       "userId": "1",
