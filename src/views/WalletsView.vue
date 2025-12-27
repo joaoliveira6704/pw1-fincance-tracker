@@ -95,7 +95,6 @@ export default {
 </template>
 
 <style>
-/* ... SweetAlert CSS remains exactly the same ... */
 .stackr-swal-popup {
   background-color: var(--main-bg) !important;
   border: 1px solid var(--border) !important;
