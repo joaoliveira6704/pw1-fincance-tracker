@@ -1,29 +1,107 @@
 <script>
 import { useFriendStore } from "@/stores/friendStore";
 import Swal from "sweetalert2";
+// Import Fuse.js
+import Fuse from "fuse.js";
+// Import New Search Component
+import SearchInput from "@/components/SearchInput.vue";
+
+import {
+  Users,
+  Search, // Icon
+  UserPlus,
+  UserMinus,
+  Heart,
+  Eye,
+  UserCheck,
+} from "lucide-vue-next";
+import { useUsersStore } from "@/stores/userStore";
+import { mapActions, mapState } from "pinia";
 
 export default {
+  components: {
+    SearchInput, // Register component
+    Users,
+    Search,
+    UserPlus,
+    UserMinus,
+    Heart,
+    Eye,
+    UserCheck,
+  },
   data() {
     return {
-      friendStore: useFriendStore(),
-      activeTab: "friends",
-      friends: [],
-      discoverUsers: [],
+      activeTab: "discover",
+      currentUser: null,
+      searchQuery: "", // Add search query state
+
       alertIcon: `
         <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 16h.01"/><path d="M12 8v4"/>
-          <path d="M15.312 2a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586l-4.688-4.688A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2z"/>
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
       `,
     };
   },
+  computed: {
+    ...mapState(useFriendStore, ["availableUsers", "followers", "following"]),
+    filteredDisplayList() {
+      let sourceData = [];
+      let keys = [];
+
+      // 1. Determine Data Source and Search Keys based on Tab
+      if (this.activeTab === "discover") {
+        sourceData = this.availableUsers;
+        keys = ["firstName", "lastName", "username"];
+      } else if (this.activeTab === "following") {
+        sourceData = this.following;
+        keys = ["friendName", "friendUsername"];
+      } else if (this.activeTab === "followers") {
+        sourceData = this.followers;
+        keys = ["userName", "userUsername"];
+      }
+
+      // 2. If no search, return all data
+      if (!this.searchQuery.trim()) {
+        return sourceData;
+      }
+
+      // 3. Configure Fuse
+      const fuse = new Fuse(sourceData, {
+        keys: keys,
+        threshold: 0.3, // 0.0 = perfect match, 1.0 = match anything
+        includeScore: false,
+      });
+
+      // 4. Return mapped results
+      return fuse.search(this.searchQuery).map((result) => result.item);
+    },
+  },
   methods: {
+    ...mapActions(useUsersStore, ["fetchLoggedUser"]),
+    ...mapActions(useFriendStore, [
+      "fetchCommunity",
+      "fetchFollowing",
+      "fetchFollowers",
+      "addFollowing",
+      "removeFriendship",
+    ]),
+
+    // Reset search when switching tabs for better UX
+    setTab(tabName) {
+      this.activeTab = tabName;
+      this.searchQuery = "";
+    },
+
+    avatarQuery(username) {
+      return `https://api.dicebear.com/9.x/identicon/png?seed=${username}&scale=70&backgroundColor=#ffffff`;
+    },
     async updateInfo() {
       try {
-        await this.friendStore.fetchFriends();
-        await this.friendStore.fetchCommunity();
-        this.friends = this.friendStore.friends || [];
-        this.discoverUsers = this.friendStore.availableUsers || [];
+        await this.fetchFollowing();
+        await this.fetchFollowers();
+        await this.fetchCommunity();
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -52,7 +130,7 @@ export default {
 
     async addFriend(user) {
       try {
-        await this.friendStore.addFriend(user);
+        await this.addFollowing(this.currentUser, user);
         await this.updateInfo();
         Swal.fire({
           ...this.getSwalConfig("Sucesso", "Amigo adicionado!"),
@@ -60,6 +138,7 @@ export default {
           iconHtml: undefined,
         });
       } catch (error) {
+        console.log(error);
         Swal.fire({
           ...this.getSwalConfig("Erro", "Erro ao adicionar amigo."),
           icon: "error",
@@ -77,7 +156,7 @@ export default {
         )
       ).then(async (result) => {
         if (result.isConfirmed) {
-          await this.friendStore.removeFriend(id);
+          await this.removeFriendship(id);
           await this.updateInfo();
           Swal.fire({
             ...this.getSwalConfig("Removido!", "O utilizador foi removido."),
@@ -91,156 +170,292 @@ export default {
 
   async created() {
     await this.updateInfo();
+
+    try {
+      this.currentUser = await this.fetchLoggedUser();
+    } catch (e) {
+      this.error = "Failed to load profile.";
+      console.error(e);
+    }
   },
 };
 </script>
 
 <template>
-  <div class="flex flex-col gap-y-15 text-center w-full">
-    <h1 class="text-4xl mt-10 font-ProximaNova">Comunidade</h1>
-    <div class="p-2 wrapper mx-50">
-      <div class="mb-4">
+  <div
+    class="min-h-screen w-full flex flex-col items-center pb-20 bg-(--main-bg) text-(--primary-text) transition-colors duration-300"
+  >
+    <div class="mt-12 mb-8 text-center px-4">
+      <h1
+        class="text-4xl md:text-5xl font-ProximaNova font-bold tracking-tight mb-2"
+      >
+        Comunidade
+      </h1>
+      <p class="text-(--secondary-text) text-lg">
+        Gere as tuas conexões e descobre novas pessoas.
+      </p>
+    </div>
+
+    <div class="w-full max-w-4xl px-4 md:px-6">
+      <div
+        class="flex flex-wrap items-center justify-center gap-2 mb-6 p-1.5 rounded-xl bg-(--secondary-bg) border border-(--border) shadow-sm"
+      >
         <button
-          @click="activeTab = 'friends'"
-          :class="{ active: activeTab === 'friends' }"
+          @click="setTab('discover')"
+          class="flex items-center gap-2 flex-1 justify-center min-w-[110px] py-2.5 px-4 rounded-lg text-sm font-bold transition-all duration-200 ease-out"
+          :class="
+            activeTab === 'discover'
+              ? 'bg-stackrgreen-500 text-stackrblack shadow-md transform scale-[1.02]'
+              : 'text-(--secondary-text) hover:text-(--primary-text) hover:bg-(--main-bg)'
+          "
         >
-          Amigos
+          <Search class="w-4 h-4" />
+          Descobrir
         </button>
 
         <button
-          @click="activeTab = 'discover'"
-          :class="{ active: activeTab === 'discover' }"
+          @click="setTab('following')"
+          class="flex items-center gap-2 flex-1 justify-center min-w-[110px] py-2.5 px-4 rounded-lg text-sm font-bold transition-all duration-200 ease-out"
+          :class="
+            activeTab === 'following'
+              ? 'bg-stackrgreen-500 text-stackrblack shadow-md transform scale-[1.02]'
+              : 'text-(--secondary-text) hover:text-(--primary-text) hover:bg-(--main-bg)'
+          "
         >
-          Descobrir Pessoas
+          <Eye class="w-4 h-4" />
+          A Seguir
+        </button>
+
+        <button
+          @click="setTab('followers')"
+          class="flex items-center gap-2 flex-1 justify-center min-w-[110px] py-2.5 px-4 rounded-lg text-sm font-bold transition-all duration-200 ease-out"
+          :class="
+            activeTab === 'followers'
+              ? 'bg-stackrgreen-500 text-stackrblack shadow-md transform scale-[1.02]'
+              : 'text-(--secondary-text) hover:text-(--primary-text) hover:bg-(--main-bg)'
+          "
+        >
+          <Heart class="w-4 h-4" />
+          Seguidores
         </button>
       </div>
 
-      <hr />
+      <SearchInput
+        v-model="searchQuery"
+        :placeholder="
+          activeTab === 'discover'
+            ? 'Procurar novos utilizadores...'
+            : 'Pesquisar nas tuas conexões...'
+        "
+      />
 
-      <div v-if="activeTab === 'friends'">
-        <h3>A tua lista ({{ friends.length }})</h3>
-        <ul>
-          <li v-for="friend in friends" :key="friend.id">
-            {{ friend.friendUsername }}
-            <button class="action-btn remove" @click="removeFriend(friend.id)">
-              Remover
-            </button>
-          </li>
-        </ul>
-        <p v-if="friends.length === 0">Ainda não tens amigos.</p>
-      </div>
+      <div v-if="activeTab === 'discover'" class="space-y-4">
+        <div class="flex items-center justify-between mb-4 px-2">
+          <h3 class="text-xl font-bold font-ProximaNova">
+            Pessoas Novas
+            <span class="text-(--secondary-text) text-base font-normal"
+              >({{ filteredDisplayList.length }})</span
+            >
+          </h3>
+        </div>
 
-      <div v-if="activeTab === 'discover'">
-        <h3>Pessoas novas ({{ discoverUsers.length }})</h3>
-        <ul>
-          <li v-for="user in discoverUsers" :key="user.id">
-            {{ user.name }} ({{ user.username }})
-            <button class="action-btn add" @click="addFriend(user)">
+        <div
+          v-if="filteredDisplayList.length > 0"
+          class="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
+          <div
+            v-for="user in filteredDisplayList"
+            :key="user.id"
+            class="flex items-center justify-between p-4 rounded-xl bg-(--secondary-bg) border border-(--border) hover:border-stackrgreen-500/50 transition-colors"
+          >
+            <div class="flex items-center gap-3">
+              <img
+                class="w-10 h-10 rounded-full border-border border-2"
+                :src="avatarQuery(user.username)"
+                :alt="user.username"
+              />
+              <div class="flex flex-col">
+                <span class="font-semibold text-(--primary-text)">{{
+                  user.firstName + " " + user.lastName
+                }}</span>
+                <span class="text-xs text-(--secondary-text)"
+                  >@{{ user.username }}</span
+                >
+              </div>
+            </div>
+            <button
+              class="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg text-green-600 bg-green-500/10 hover:bg-green-600 hover:text-white transition-colors"
+              @click="addFriend(user)"
+            >
+              <UserPlus class="w-4 h-4" />
               Adicionar
             </button>
-          </li>
-        </ul>
-        <p v-if="discoverUsers.length === 0">Ninguém novo para adicionar.</p>
+          </div>
+        </div>
+
+        <div
+          v-else
+          class="flex flex-col items-center justify-center py-12 bg-(--secondary-bg) rounded-xl border border-(--border) border-dashed"
+        >
+          <Search class="w-12 h-12 text-(--secondary-text) mb-3 opacity-50" />
+          <p class="text-(--secondary-text)">
+            {{
+              searchQuery
+                ? "Nenhum utilizador encontrado."
+                : "Não há ninguém novo por agora."
+            }}
+          </p>
+        </div>
+      </div>
+
+      <div v-if="activeTab === 'following'" class="space-y-4">
+        <div class="flex items-center justify-between mb-4 px-2">
+          <h3 class="text-xl font-bold font-ProximaNova">
+            A Seguir
+            <span class="text-(--secondary-text) text-base font-normal"
+              >({{ filteredDisplayList.length }})</span
+            >
+          </h3>
+        </div>
+        <div
+          v-if="filteredDisplayList.length > 0"
+          class="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
+          <div
+            v-for="user in filteredDisplayList"
+            :key="user.id"
+            class="flex items-center justify-between p-4 rounded-xl bg-(--secondary-bg) border border-(--border) hover:border-stackrgreen-500/50 transition-colors group"
+          >
+            <div class="flex items-center gap-3">
+              <img
+                class="w-10 h-10 rounded-full border-border border-2"
+                :src="avatarQuery(user.friendUsername)"
+                :alt="user.friendUsername"
+              />
+              <div class="flex flex-col">
+                <span class="font-semibold text-(--primary-text)">{{
+                  user.friendName
+                }}</span>
+                <span class="text-xs text-(--secondary-text)"
+                  >@{{ user.friendUsername }}</span
+                >
+              </div>
+            </div>
+            <button
+              class="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg text-red-500 bg-red-500/10 hover:bg-red-500 hover:text-white transition-colors"
+              @click="removeFriend(user.id)"
+            >
+              <UserMinus class="w-4 h-4" />
+              Remover
+            </button>
+          </div>
+        </div>
+
+        <div
+          v-else
+          class="flex flex-col items-center justify-center py-12 bg-(--secondary-bg) rounded-xl border border-(--border) border-dashed"
+        >
+          <Users
+            class="w-12 h-12 text-(--secondary-text) mb-3 opacity-50"
+          />
+          <p class="text-(--secondary-text)">
+            {{
+              searchQuery
+                ? "Nenhum amigo encontrado."
+                : "Ainda não segues ninguém."
+            }}
+          </p>
+        </div>
+      </div>
+
+      <div v-if="activeTab === 'followers'" class="space-y-4">
+        <div class="flex items-center justify-between mb-4 px-2">
+          <h3 class="text-xl font-bold font-ProximaNova">
+            Seguidores
+            <span class="text-(--secondary-text) text-base font-normal"
+              >({{ filteredDisplayList.length }})</span
+            >
+          </h3>
+        </div>
+        <div
+          v-if="filteredDisplayList.length > 0"
+          class="grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
+          <div
+            v-for="user in filteredDisplayList"
+            :key="user.id"
+            class="flex items-center justify-between p-4 rounded-xl bg-(--secondary-bg) border border-(--border) hover:border-stackrgreen-500/50 transition-colors group"
+          >
+            <div class="flex items-center gap-3">
+              <img
+                class="w-10 h-10 rounded-full border-border border-2"
+                :src="avatarQuery(user.userName)"
+                :alt="user.userName"
+              />
+              <div class="flex flex-col">
+                <span class="font-semibold text-(--primary-text)">{{
+                  user.userName
+                }}</span>
+                <span class="text-xs text-secondary-text)"
+                  >@{{ user.userUsername }}</span
+                >
+              </div>
+            </div>
+            <button
+              class="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg text-red-500 bg-red-500/10 hover:bg-red-500 hover:text-white transition-colors"
+              @click="removeFriend(user.id)"
+            >
+              <UserMinus class="w-4 h-4" />
+              Remover
+            </button>
+          </div>
+        </div>
+
+        <div
+          v-else
+          class="flex flex-col items-center justify-center py-12 bg-(--secondary-bg) rounded-xl border border-(--border) border-dashed"
+        >
+          <Users class="w-12 h-12 text-(--secondary-text) mb-3 opacity-50" />
+          <p class="text-(--secondary-text)">
+            {{
+              searchQuery
+                ? "Nenhum seguidor encontrado."
+                : "Ainda não tens seguidores."
+            }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-.wrapper {
-  background-color: var(--main-bg-color);
-}
-button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-
-button:hover {
-  background-color: var(--color-stackrgreen-200);
-  color: var(--color-stackrblack);
-  cursor: pointer;
-}
-button.active {
-  background-color: var(--color-stackrgreen-500);
-  color: var(--color-stackrblack);
-}
-
-/* List Action Buttons */
-.action-btn {
-  font-size: 0.9rem;
-  padding: 5px 10px;
-}
-.action-btn.remove {
-  background-color: #fee2e2;
-  color: #ef4444;
-}
-.action-btn.remove:hover {
-  background-color: #ef4444;
-  color: white;
-}
-.action-btn.add {
-  background-color: #dcfce7;
-  color: #16a34a;
-}
-.action-btn.add:hover {
-  background-color: #16a34a;
-  color: white;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-}
-li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #eee;
-  padding: 10px;
-}
-</style>
-
 <style>
-/* POPUP */
+/* ... SweetAlert CSS remains exactly the same ... */
 .stackr-swal-popup {
-  background-color: light-dark(#ffff, #0000) !important;
-  border: 1px solid #333;
+  background-color: var(--main-bg) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 16px !important;
   padding: 2rem !important;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
 }
-
-/* TITULO */
 .stackr-swal-title {
-  color: var(--primary-color) !important;
+  color: var(--primary-text) !important;
   font-family: var(--font-ProximaNova);
   font-size: 1.5rem !important;
   font-weight: 700 !important;
 }
-
-/* TEXTO */
 .stackr-swal-text {
-  color: var(--primary-color) !important; /* Gray text */
+  color: var(--secondary-text) !important;
   font-size: 1rem !important;
 }
-
-/* ICON */
 .stackr-swal-icon {
-  border: none !important; /* Removes the default circle border */
+  border: none !important;
   margin-bottom: 1rem !important;
 }
-
-/* CONTAINER BTNS */
 .stackr-swal-actions {
   gap: 12px;
   width: 100%;
 }
-
-/* BTN CONFIRMAR */
 .stackr-swal-confirm {
   background-color: var(--color-stackrgreen-500) !important;
   color: #000 !important;
@@ -256,11 +471,10 @@ li {
   filter: brightness(1.1);
   transform: scale(1.02);
 }
-
 .stackr-swal-cancel {
   background-color: transparent !important;
-  border: 1px solid #4b5563 !important;
-  color: #d1d5db !important;
+  border: 1px solid var(--border) !important;
+  color: var(--secondary-text) !important;
   padding: 12px 24px !important;
   border-radius: 8px !important;
   font-weight: 500 !important;
@@ -269,7 +483,7 @@ li {
   transition: all 0.2s;
 }
 .stackr-swal-cancel:hover {
-  background-color: #374151 !important;
-  color: #fff !important;
+  background-color: var(--secondary-bg) !important;
+  color: var(--primary-text) !important;
 }
 </style>

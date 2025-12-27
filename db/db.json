@@ -9,20 +9,9 @@
       "createdAt": "2025-05-24",
       "isAdmin": true,
       "income": 12000,
-      "objectives": [
-        1,
-        2
-      ],
-      "expenses": [
-        1,
-        3,
-        4,
-        5
-      ],
-      "friends": [
-        "miguel",
-        "josé"
-      ]
+      "objectives": [1, 2],
+      "expenses": [1, 3, 4, 5],
+      "friends": ["miguel", "josé"]
     },
     {
       "id": "2",
@@ -33,16 +22,8 @@
       "createdAt": "2023-04-21",
       "isAdmin": false,
       "income": 18490,
-      "objectives": [
-        10,
-        22
-      ],
-      "expenses": [
-        12,
-        31,
-        41,
-        51
-      ]
+      "objectives": [10, 22],
+      "expenses": [12, 31, 41, 51]
     },
     {
       "id": "6ad8",
@@ -235,117 +216,100 @@
       "categoryId": 2,
       "walletId": 1,
       "description": "efesfsfsef"
+    },
+    {
+      "id": "be33",
+      "userId": "1",
+      "name": "Compras",
+      "date": "2025-10-14",
+      "amount": 14000,
+      "categoryId": 2,
+      "walletId": 1,
+      "description": "Carro"
+    },
+    {
+      "id": "28ce",
+      "userId": "1",
+      "name": "123",
+      "date": "1998-03-04",
+      "amount": 123394949,
+      "categoryId": 2,
+      "walletId": 1,
+      "description": "abc"
     }
   ],
-  "logs": [],
   "friends": [
     {
-      "id": "7c91",
+      "id": "d48f",
       "userId": "1",
-      "friendId": "6857",
-      "friendUsername": "admin",
-      "status": "accepted",
-      "addedAt": "2025-11-24"
-    },
-    {
-      "id": "70d5",
-      "userId": "1",
+      "userName": "João Oliveira",
+      "userUsername": "joao",
       "friendId": "6ad8",
-      "friendUsername": "teste",
-      "status": "accepted",
-      "addedAt": "2025-11-24"
-    },
-    {
-      "id": "2b27",
-      "userId": "1",
-      "friendId": "d7b4",
-      "friendUsername": "teste2",
-      "status": "accepted",
-      "addedAt": "2025-11-24"
-    },
-    {
-      "id": "5234",
-      "userId": "1",
-      "friendId": "92df",
-      "friendUsername": "acb",
-      "status": "accepted",
-      "addedAt": "2025-11-24"
-    },
-    {
-      "id": "a84b",
-      "userId": "1",
-      "friendId": "38e59c19-50e1-4b18-affc-49f82932ffef",
-      "friendUsername": "joao123",
-      "status": "accepted",
-      "addedAt": "2025-11-24"
-    },
-    {
-      "id": "0d1f",
-      "userId": "61b7",
-      "friendId": "1",
-      "friendUsername": "joao",
-      "status": "accepted",
-      "addedAt": "2025-12-04"
-    },
-    {
-      "id": "03b3",
-      "userId": "61b7",
-      "friendId": "2",
-      "friendUsername": "miguel",
-      "status": "accepted",
-      "addedAt": "2025-12-04"
-    },
-    {
-      "id": "ed2e",
-      "userId": "61b7",
-      "friendId": "6ad8",
+      "friendName": "Teste Ultimo",
       "friendUsername": "testeteste",
-      "status": "accepted",
-      "addedAt": "2025-12-04"
+      "addedAt": "2025-12-23"
     },
     {
-      "id": "2779",
+      "id": "6ede",
       "userId": "1",
-      "friendId": "2",
-      "friendUsername": "miguel",
-      "status": "accepted",
-      "addedAt": "2025-12-19"
-    },
-    {
-      "id": "e811",
-      "userId": "1",
-      "friendId": "6629",
-      "friendUsername": "",
-      "status": "accepted",
-      "addedAt": "2025-12-19"
-    },
-    {
-      "id": "d4db",
-      "userId": "2",
-      "friendId": "1",
-      "friendUsername": "joao",
-      "status": "accepted",
-      "addedAt": "2025-12-19"
-    },
-    {
-      "id": "43ca",
-      "userId": "2",
+      "userName": "João Oliveira",
+      "userUsername": "joao",
       "friendId": "6857",
+      "friendName": "admin admin",
       "friendUsername": "admin",
-      "status": "accepted",
-      "addedAt": "2025-12-19"
+      "addedAt": "2025-12-23"
+    },
+    {
+      "id": "d77f",
+      "userId": "2",
+      "userName": "Miguel Neto",
+      "userUsername": "miguel",
+      "friendId": "1",
+      "friendName": "João Oliveira",
+      "friendUsername": "joao",
+      "addedAt": "2025-12-23"
+    },
+    {
+      "id": "55b2",
+      "userId": "2",
+      "userName": "Miguel Neto",
+      "userUsername": "miguel",
+      "friendId": "6ad8",
+      "friendName": "Teste Ultimo",
+      "friendUsername": "testeteste",
+      "addedAt": "2025-12-23"
+    },
+    {
+      "id": "cfca",
+      "userId": "1",
+      "userName": "João Oliveira",
+      "userUsername": "joao",
+      "friendId": "2",
+      "friendName": "Miguel Neto",
+      "friendUsername": "miguel",
+      "addedAt": "2025-12-23"
+    },
+    {
+      "id": "6d7b",
+      "userId": "1",
+      "userName": "João Oliveira",
+      "userUsername": "joao",
+      "friendId": "d7b4",
+      "friendName": "Teste Segundo",
+      "friendUsername": "teste2",
+      "addedAt": "2025-12-23"
     }
   ],
   "userSessions": [
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "8d39c8c9-c613-4aec-aa1e-1c1fcd94f5ef"
+      "token": "61b50e2b-2d86-4091-b2b5-f374a0091df2"
     },
     {
       "id": "92c6",
       "userId": "2",
-      "token": "565461b4-f517-406d-afe4-7611b02e2e46"
+      "token": "7a6d2cb5-e0c2-4faf-b334-fb7489dc0e52"
     },
     {
       "id": "a2ab",
@@ -395,6 +359,249 @@
       "hasFixedContribution": true,
       "fixedContribution": 20,
       "id": "20e5"
+    }
+  ],
+  "logs": [
+    {
+      "userId": 1,
+      "category": "wallet",
+      "type": "create",
+      "amount": null,
+      "date": "2025-12-01",
+      "id": "df6a"
+    },
+    {
+      "userId": 1,
+      "category": "wallet",
+      "type": "add",
+      "amount": 2500,
+      "date": "2025-12-01",
+      "id": "9501"
+    },
+    {
+      "userId": 1,
+      "category": "expense",
+      "type": "add",
+      "amount": 15,
+      "date": "2025-12-01",
+      "id": "a82d"
+    },
+    {
+      "userId": 1,
+      "category": "objective",
+      "type": "create",
+      "amount": null,
+      "date": "2025-12-02",
+      "id": "f00f"
+    },
+    {
+      "userId": 1,
+      "category": "expense",
+      "type": "add",
+      "amount": 45,
+      "date": "2025-12-03",
+      "id": "bb59"
+    },
+    {
+      "userId": 1,
+      "category": "expense",
+      "type": "add",
+      "amount": 12,
+      "date": "2025-12-03",
+      "id": "963d"
+    },
+    {
+      "userId": 1,
+      "category": "objective",
+      "type": "add",
+      "amount": 200,
+      "date": "2025-12-03",
+      "id": "2936"
+    },
+    {
+      "userId": 1,
+      "category": "wallet",
+      "type": "add",
+      "amount": 500,
+      "date": "2025-12-05",
+      "id": "add1"
+    },
+    {
+      "userId": 1,
+      "category": "expense",
+      "type": "add",
+      "amount": 100,
+      "date": "2025-12-05",
+      "id": "1f5b"
+    },
+    {
+      "userId": 1,
+      "category": "expense",
+      "type": "remove",
+      "amount": 20,
+      "date": "2025-12-05",
+      "id": "4ca0"
+    },
+    {
+      "userId": 1,
+      "category": "expense",
+      "type": "add",
+      "amount": 300,
+      "date": "2025-12-08",
+      "id": "exp1"
+    },
+    {
+      "userId": 1,
+      "category": "expense",
+      "type": "add",
+      "amount": 50,
+      "date": "2025-12-10",
+      "id": "5d37"
+    },
+    {
+      "userId": 1,
+      "category": "objective",
+      "type": "add",
+      "amount": 400,
+      "date": "2025-12-12",
+      "id": "obj2"
+    },
+    {
+      "userId": 1,
+      "category": "wallet",
+      "type": "add",
+      "amount": 300,
+      "date": "2025-12-15",
+      "id": "6d37"
+    },
+    {
+      "userId": 1,
+      "category": "expense",
+      "type": "add",
+      "amount": 60,
+      "date": "2025-12-15",
+      "id": "6d43"
+    },
+    {
+      "userId": 1,
+      "category": "expense",
+      "type": "add",
+      "amount": 120,
+      "date": "2025-12-18",
+      "id": "exp3"
+    },
+    {
+      "userId": 1,
+      "category": "objective",
+      "type": "add",
+      "amount": 500,
+      "date": "2025-12-20",
+      "id": "7b55"
+    },
+    {
+      "userId": 1,
+      "category": "expense",
+      "type": "add",
+      "amount": 250,
+      "date": "2025-12-22",
+      "id": "exp4"
+    },
+    {
+      "userId": 1,
+      "category": "wallet",
+      "type": "add",
+      "amount": 1000,
+      "date": "2025-12-24",
+      "id": "wal2"
+    },
+    {
+      "userId": 1,
+      "category": "expense",
+      "type": "add",
+      "amount": 800,
+      "date": "2025-12-25",
+      "id": "exp5"
+    },
+    {
+      "userId": 1,
+      "category": "objective",
+      "type": "add",
+      "amount": 100,
+      "date": "2025-12-28",
+      "id": "obj3"
+    },
+    {
+      "userId": 1,
+      "category": "expense",
+      "type": "add",
+      "amount": 50,
+      "date": "2025-12-30",
+      "id": "exp6"
+    },
+    {
+      "userId": 2,
+      "category": "wallet",
+      "type": "create",
+      "amount": null,
+      "date": "2025-12-05",
+      "id": "f694"
+    },
+    {
+      "userId": 2,
+      "category": "expense",
+      "type": "add",
+      "amount": 120,
+      "date": "2025-12-20",
+      "id": "8775"
+    },
+    {
+      "userId": 2,
+      "category": "objective",
+      "type": "create",
+      "amount": null,
+      "date": "2025-12-02",
+      "id": "a49a"
+    },
+    {
+      "userId": 2,
+      "category": "wallet",
+      "type": "add",
+      "amount": 5000,
+      "date": "2025-12-03",
+      "id": "48a7"
+    },
+    {
+      "userId": 2,
+      "category": "expense",
+      "type": "remove",
+      "amount": 50,
+      "date": "2025-12-03",
+      "id": "2499"
+    },
+    {
+      "userId": 2,
+      "category": "objective",
+      "type": "add",
+      "amount": 1200,
+      "date": "2025-12-10",
+      "id": "1516"
+    },
+    {
+      "userId": 2,
+      "category": "expense",
+      "type": "add",
+      "amount": 800,
+      "date": "2025-12-20",
+      "id": "9a19"
+    },
+    {
+      "id": "71a4",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": 12,
+      "date": "2025-12-23"
     }
   ]
 }

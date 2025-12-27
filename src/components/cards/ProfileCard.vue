@@ -37,14 +37,11 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.user.username}&scale=70&b
 
 <template>
   <div
-    class="w-full mx-auto flex flex-col text-center items-center overflow-hidden border shadow-lg transition-colors duration-200"
-    style="
-      background-color: var(--main-bg-color);
-      border-color: var(--border-color);
-    "
+    class="w-full mx-auto flex flex-col text-center overflow-hidden h-screen transition-colors duration-200"
+    style="background-color: var(--main-bg); border-color: var(--border)"
   >
     <div
-      class="h-32 w-full bg-gradient-to-r from-[var(--color-stackrgreen-500)] to-emerald-700"
+      class="h-32 w-full bg-linear-to-r from-stackrgreen-500 to-emerald-700"
     ></div>
 
     <div class="px-6 sm:px-12 pb-6 pt-3">
@@ -63,7 +60,7 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.user.username}&scale=70&b
 
         <div class="mt-6 sm:mt-0 sm:ml-4 text-center sm:text-left flex-1">
           <h2
-            class="text-2xl font-bold font-ProximaNova-Bold flex items-center justify-center sm:justify-start gap-2"
+            class="text-2xl font-bold font-ProximaNova-800 flex items-center justify-center sm:justify-start gap-2"
           >
             {{ user.firstName }} {{ user.lastName }}
           </h2>
@@ -87,16 +84,18 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.user.username}&scale=70&b
         </div>
       </div>
 
-      <hr class="border-t my-4" style="border-color: var(--border-color)" />
+      <hr class="border-t my-4" style="border-color: var(--border)" />
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
         <div
           class="p-4 rounded-xl border flex items-center gap-3"
-          style="border-color: var(--border-color)"
+          style="border-color: var(--border)"
         >
           <Calendar :size="24" color="var(--color-stackrgreen-500)" />
           <div>
-            <p class="text-xs opacity-60 uppercase font-bold tracking-wider">
+            <p
+              class="text-xs opacity-60 text-left uppercase font-bold tracking-wider"
+            >
               Entrou em
             </p>
             <p class="font-medium">{{ formattedDate(user.createdAt) }}</p>
@@ -105,11 +104,13 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.user.username}&scale=70&b
 
         <div
           class="p-4 rounded-xl border flex items-center gap-3"
-          style="border-color: var(--border-color)"
+          style="border-color: var(--border)"
         >
           <Wallet :size="24" color="var(--color-stackrgreen-500)" />
           <div>
-            <p class="text-xs opacity-60 uppercase font-bold tracking-wider">
+            <p
+              class="text-xs text-left opacity-60 uppercase font-bold tracking-wider"
+            >
               Salário
             </p>
             <p class="font-medium">{{ formattedIncome(user.income) }}</p>
@@ -146,14 +147,10 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.user.username}&scale=70&b
         </div>
       </div>
     </div>
-    <div class="max-w-3xl pb-6">
+    <div class="max-w-lg pb-6">
       <Button variant="outline" @click="logout">Logout</Button>
     </div>
   </div>
 </template>
 
-<style scoped>
-.font-ProximaNova-Bold {
-  font-family: var(--font-ProximaNova-Bold), sans-serif;
-}
-</style>
+<style scoped></style>

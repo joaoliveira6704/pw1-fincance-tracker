@@ -7,9 +7,6 @@ export default {
     ExpenseCard,
     ExpensesList,
   },
-  async created() {
-    await this.expenseStore.fetchExpenses();
-  },
 };
 </script>
 

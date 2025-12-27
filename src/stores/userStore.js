@@ -45,7 +45,7 @@ export const useUsersStore = defineStore("users", {
       this.error = null;
 
       try {
-        // Test Skeleton
+        // Uncomment to test Skeleton
         await new Promise((resolve) => setTimeout(resolve, 500));
         const session = JSON.parse(localStorage.getItem("user-session"));
         if (!session) throw new Error("No session found");
@@ -73,6 +73,18 @@ export const useUsersStore = defineStore("users", {
         this.error = e.message;
         console.error("Error adding user:", e);
         throw e;
+      }
+    },
+    async fetchUserLogs(userId) {
+      this.loading = true;
+      this.error = null;
+      try {
+        return await api.get(BASE_URL, `logs?userId=${userId}`);
+      } catch (e) {
+        this.error = e.message;
+        console.error("Error fetching users:", e);
+      } finally {
+        this.loading = false;
       }
     },
   },

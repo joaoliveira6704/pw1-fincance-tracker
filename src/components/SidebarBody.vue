@@ -41,7 +41,8 @@ export default {
 
 <template>
   <div
-    class="flex flex-col justify-between px-1 py-1 w-full h-full text-center items-center border-b-4 border-t-4"
+    class="flex flex-col justify-between px-1 py-3 w-full h-full text-center border-b-2 border-t-2"
+    :class="isOpen ? 'items-left' : 'items-center'"
   >
     <nav class="flex flex-col">
       <SidebarLink
@@ -83,6 +84,6 @@ export default {
 <style scoped>
 div {
   background-color: var(--navbar-bg-color);
-  border-color: var(--border-color);
+  border-color: var(--border);
 }
 </style>

@@ -94,25 +94,36 @@ export function createGoal(
 }
 
 // Cria um Log
-export function createLog() {
+export function createLog(
+  userId,
+  category,
+  walletID = null,
+  type,
+  amount = null
+) {
   return {
-    id: generateId(),
-    timestamp: todayDateTime(),
-    actionType: "",
-    entity: "system",
-    description: "",
-    userId: null,
+    userId: userId,
+    category: category,
+    walletID: walletID,
+    type: type,
+    amount: amount,
+    date: todayDateTime(),
   };
 }
 
 //Cria objeto de amigo
-export function createFriend(currentUserId, friendUserObj) {
+export function createFriend(currentUserObj, friendUserObj) {
   return {
-    userId: currentUserId,
+    userId: currentUserObj.id,
+    userName: currentUserObj.firstName + " " + currentUserObj.lastName,
+    userUsername: currentUserObj.username,
     friendId: friendUserObj.id,
-    friendName: friendUserObj.name,
+    friendName: friendUserObj.firstName + " " + friendUserObj.lastName,
     friendUsername: friendUserObj.username,
-    status: "accepted", // 'accepted' 'pending'
     addedAt: todayDate(),
   };
+}
+
+export function createCountObject(date) {
+  return { date: date, count: 0 };
 }

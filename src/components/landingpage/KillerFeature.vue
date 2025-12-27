@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mt-50 items-center text-center"><div class="text-6xl max-w-2xl text-center font-ProximaNova">
+  <div class="flex mt-50 items-center text-center"><div class="text-6xl max-w-2xl text-center font-ProximaNova-800">
     <h1 >
       Spot Your<br/>Spending Patterns<br /> <span class="text-stackrgreen-500">Instantly.</span>
     </h1>

@@ -2,80 +2,125 @@
 @import "tailwindcss";
 @import "primeicons/primeicons.css";
 
-:root {
-  --primary-bg-color: #212121;
-  --primary-color: #ffffff;
-  --secondary-bg-color: #f6f6f6;
-  --secondary-border-color: #e3e3e3;
-  color-scheme: dark;
-}
-
-::-moz-selection {
-  background-color: var(--color-stackrgreen-500);
-  color: var(--color-stackrblack);
-}
-
-::selection {
-  background-color: var(--color-stackrgreen-500);
-  color: var(--color-stackrblack);
+/* Font Faces */
+@font-face {
+  font-family: ProximaNova;
+  src: url("/fonts/proximanova_extrabold.otf");
+  font-weight: 800;
+  font-display: swap;
 }
 
 @font-face {
   font-family: ProximaNova;
-  src: url("/fonts/proximanova_extrabold.otf");
-}
-
-@font-face {
-  font-family: ProximaNova-Reg;
   src: url("/fonts/proximanova_regular.ttf");
+  font-weight: 400;
+  font-display: swap;
 }
 
 @font-face {
-  font-family: ProximaNova-Bold;
+  font-family: ProximaNova;
   src: url("/fonts/proximanova_bold.otf");
+  font-weight: 700;
+  font-display: swap;
 }
 
+/* Tailwind Theme Configuration (v4) */
 @theme {
   --color-stackrgreen-500: #4ddf7b;
   --color-stackrgreen-200: #86ffac;
   --color-stackrblack: #212121;
   --color-deepblack: #0a0a0a;
   --color-bordergray: #2e2e2e;
-  --font-ProximaNova: "ProximaNova";
+  --color-stackrgrey-light: #9e9e9e;
+
+  /* Mapeamento para classes utilitárias (ex: bg-navbar-bg) */
+  --color-navbar-bg: var(--navbar-bg);
+  --color-main-bg: var(--main-bg);
+  --color-primary-text: var(--primary-text);
+  --color-secondary-text: var(--secondary-text);
+  --color-secondary-bg: var(--secondary-bg);
+  --color-border: var(--border);
+
+  --font-ProximaNova: ProximaNova, sans-serif;
+  --font-Roboto: Roboto, sans-serif;
 }
 
-body {
-  font-family: "Roboto", sans-serif;
-  background-color: var(--primary-bg-color);
-  color: var(--primary-color);
-  --color-stackrgrey-light: #9e9e9e;
-  --font-Roboto: Roboto, "sans";
-  --font-ProximaNova: ProximaNova, "sans";
-  --font-ProximaNova-Reg: ProximaNova-Reg, "sans";
-  --font-ProximaNova-Bold: ProximaNova-Bold, "sans";
-  --inner-circle-color: light-dark(
-    var(--color-stackrgreen-500),
-    rgb(190, 83, 83)
-  );
-  --outer-circle-color: light-dark(
-    var(--primary-color),
-    var(--color-stackrblack)
-  );
-  --primary-bg-color: light-dark(
-    var(--primary-color),
-    var(--color-stackrblack)
-  );
-  --primary-color: light-dark(var(--color-stackrblack), var(--primary-color));
-  --navbar-bg-color: light-dark(
-    var(--secondary-bg-color),
-    var(--color-stackrblack)
-  );
-  --border-color: light-dark(
-    var(--secondary-border-color),
-    var(--color-bordergray)
-  );
-  --main-bg-color: light-dark(var(--primary-color), var(--color-deepblack));
-  transition: all 0.2s ease-out;
-  font-family: "Roboto", sans-serif;
-  background-color: var(--primary-bg-color);
+/* Root Theme Variables */
+:root {
+  color-scheme: light dark;
+
+  /* Brand Colors */
+  --stackr-green: #4ddf7b;
+  --stackr-green-light: #86ffac;
+  --stackr-black: #212121;
+  --deep-black: #0a0a0a;
+  --border-gray: #2e2e2e;
+  --stackr-grey-light: #9e9e9e;
+
+  /* Light Mode (Default) */
+  --primary-bg: #ffffff;
+  --primary-text: #212121;
+  --secondary-text: #666666; /* Adicionado fallback */
+  --secondary-bg: #f6f6f6;
+  --secondary-border: #e3e3e3;
+  --main-bg: #ffffff;
+  --navbar-bg: #f6f6f6;
+  --border: #e3e3e3;
+  --inner-circle: #4ddf7b;
+  --outer-circle: #ffffff;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-bg: #212121;
+    --primary-text: #ffffff;
+    --secondary-text: #cecece; /* Adicionado para contraste */
+    --secondary-bg: #212121;
+    --secondary-border: #2e2e2e;
+    --main-bg: #0a0a0a;
+    --navbar-bg: #141414;
+    --border: #2e2e2e;
+    --inner-circle: #be5353;
+    --outer-circle: #212121;
+  }
+}
+
+/* Manual Theme Override Classes */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --primary-bg: #ffffff;
+  --primary-text: #212121;
+  --secondary-bg: #f6f6f6;
+  --secondary-border: #e3e3e3;
+  --main-bg: #ffffff;
+  --navbar-bg: #f6f6f6;
+  --border: #e3e3e3;
+  --inner-circle: #4ddf7b;
+  --outer-circle: #ffffff;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --primary-bg: #212121;
+  --primary-text: #ffffff;
+  --secondary-text: #cecece;
+  --secondary-bg: #212121;
+  --secondary-border: #2e2e2e;
+  --main-bg: #0a0a0a;
+  --navbar-bg: #141414;
+  --border: #2e2e2e;
+  --inner-circle: #be5353;
+  --outer-circle: #212121;
+}
+
+/* Text Selection */
+::selection {
+  background-color: var(--stackr-green);
+  color: var(--stackr-black);
+}
+
+::-moz-selection {
+  background-color: var(--stackr-green);
+  color: var(--stackr-black);
 }

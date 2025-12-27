@@ -12,7 +12,8 @@ export default {
 
 <template>
   <div
-    class="flex flex-col px-1 py-1 w-full text-center items-center border-t-2"
+    class="flex flex-col px-1 py-1 w-full text-center"
+    :class="isOpen ? 'items-left' : 'items-center'"
   >
     <RouterLink
       to="/"

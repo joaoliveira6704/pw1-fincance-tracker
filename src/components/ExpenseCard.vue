@@ -1,5 +1,8 @@
 <script>
 import { useExpenseStore } from "@/stores/expenseStore";
+import { useLogStore } from "@/stores/logStore";
+import { getUserId } from "@/utils/session";
+import { mapActions } from "pinia";
 
 export default {
   setup() {
@@ -16,25 +19,22 @@ export default {
     };
   },
   methods: {
+    ...mapActions(useLogStore, ["addNewLog"]),
     async createExpense() {
-      try {
-        this.error = null;
-        await this.expenseStore.addExpense(
-          this.date,
-          this.name,
-          this.amount,
-          this.description
-        );
+      await this.expenseStore.addExpense(
+        this.date,
+        this.name,
+        this.amount,
+        this.description
+      );
+      await this.addNewLog(getUserId(), "expense", null, "add", this.amount);
 
-        // Limpar formulário
-        this.name = "";
-        this.amount = 0;
-        this.description = "";
+      // Limpar formulário
+      this.name = "";
+      this.amount = 0;
+      this.description = "";
 
-        alert("Despesa criada");
-      } catch (err) {
-        this.error = "Erro ao criar despesa.";
-      }
+      alert("Despesa criada");
     },
   },
   async created() {
