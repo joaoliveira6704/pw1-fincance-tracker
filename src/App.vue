@@ -1,18 +1,24 @@
 <script>
 import LandingView from "@/views/LandingView.vue";
+import { useThemeStore } from "@/stores/themeStore";
+
 import { RouterView } from "vue-router";
+import { mapActions } from "pinia";
+
 export default {
   data() {
     return {};
   },
-  components: {
-    LandingView,
+  methods: {
+    ...mapActions(useThemeStore, ["initTheme"]),
+  },
+  mounted() {
+    this.initTheme();
   },
 };
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold underline text-red-400">Tailwind!</h1>
   <RouterView />
 </template>
 
