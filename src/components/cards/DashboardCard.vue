@@ -9,21 +9,20 @@ export default {
     value: String,
     trend: String,
     trendUp: Boolean,
-    isGood: { type: Boolean, default: true }, // Se true, "Up" é verde. Se false, "Up" é vermelho.
+    isGood: { type: Boolean, default: true },
     subtext: String,
     footer: String,
   },
   computed: {
-    // Lógica: Se for positivo (isGood) e estiver subindo, verde.
-    // Se for negativo (isGood: false, ex: despesas) e estiver descendo, verde.
     isPositiveTrend() {
       return this.isGood ? this.trendUp : !this.trendUp;
     },
     trendClass() {
-      const base = "flex items-center text-xs px-2 py-1 rounded-full border ";
+      const base =
+        "flex items-center text-primary-text text-xs px-2 py-1 rounded-full border ";
       return this.isPositiveTrend
-        ? base + "text-green-400 border-green-900/50 bg-green-950/20"
-        : base + "text-red-400 border-red-900/50 bg-red-950/20";
+        ? base + "border-green-900/50 bg-green-500/20"
+        : base + "border-red-900/50 bg-red-500/20";
     },
     trendIcon() {
       return this.trendUp ? "ArrowUpRight" : "ArrowDownRight";
@@ -34,20 +33,21 @@ export default {
 
 <template>
   <div
-    class="border rounded-2xl p-5 transition-colors"
-    style="background-color: var(--navbar-bg); border-color: var(--border)"
+    class="border rounded-2xl p-5 bg-navbar-bg border-border transition-colors"
   >
     <div class="flex justify-between items-start mb-4">
-      <span class="text-sm text-gray-500 font-medium">{{ label }}</span>
+      <span class="text-sm font-medium text-primary-text">{{ label }}</span>
       <span :class="trendClass">
         <component :is="trendIcon" :size="14" class="mr-1" />
         {{ trend }}
       </span>
     </div>
-    <div class="text-3xl font-bold text-white mb-6">{{ value }}</div>
-    <div class="flex items-center gap-2 text-sm text-white mb-1">
-      <span class="opacity-80">{{ subtext }}</span>
+    <div class="text-3xl font-bold text-primary-text mb-6">{{ value }}</div>
+    <div class="flex items-center gap-2 text-sm mb-1">
+      <span class="text-primary-text">{{ subtext }}</span>
     </div>
-    <div class="text-xs text-gray-500">{{ footer }}</div>
+    <div class="text-xs" id="footer">{{ footer }}</div>
   </div>
 </template>
+
+<style scoped></style>

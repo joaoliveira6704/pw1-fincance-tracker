@@ -4,20 +4,16 @@
     style="background-color: var(--navbar-bg); border-color: var(--border)"
   >
     <CalendarHeatmap
-      class="w-4xl"
-      v-if="selectedYear > 0"
+      :key="selectedYear"
+      class="w-4xl heatmap-custom"
+      :dark-mode="darkMode"
+      :tooltip-formatter="(v) => (v.count + v.count === 1 ? ' ação' : ' ações')"
       :values="heatmapData"
       :start-date="selectedYear + '-01-01'"
       :end-date="selectedYear + '-12-31'"
-      :range-color="[
-        '#ebedf0',
-        '#9be9a8',
-        '#40c463',
-        '#30a14e',
-        '#216e39',
-        '#216e39',
-      ]"
+      no-data-text="Sem dados neste dia"
     />
+
     <div class="flex items-center gap-4 mb-4">
       <button
         class="px-3 py-1 border rounded hover:bg-bg-secondary"
@@ -53,6 +49,7 @@ export default {
       required: true,
       default: () => [],
     },
+    darkMode: Boolean,
   },
   data() {
     return {

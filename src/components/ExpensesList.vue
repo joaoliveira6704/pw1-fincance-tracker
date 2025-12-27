@@ -1,12 +1,9 @@
 <script>
 import { useExpenseStore } from "@/stores/expenseStore";
 import { ScrollText } from "lucide-vue-next";
+import { mapActions, mapState } from "pinia";
 
 export default {
-  setup() {
-    const expenseStore = useExpenseStore();
-    return { expenseStore };
-  },
   data() {
     return {};
   },
@@ -14,9 +11,7 @@ export default {
     ScrollText,
   },
   computed: {
-    expenses() {
-      return this.expenseStore.expenses;
-    },
+    ...mapState(useExpenseStore, ["expenses"]),
     hasExpenses() {
       return this.expenses && this.expenses.length > 0;
     },
@@ -26,6 +21,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions(useExpenseStore, ["fetchExpenses"]),
     formatCurrency(value) {
       if (!value) return "0,00 €";
       return new Intl.NumberFormat("pt-PT", {
@@ -35,7 +31,7 @@ export default {
     },
   },
   async created() {
-    await this.expenseStore.fetchExpenses();
+    await this.fetchExpenses();
   },
 };
 </script>

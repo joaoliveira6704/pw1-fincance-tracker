@@ -1,8 +1,11 @@
 <script>
+import Button from "@/components/Button.vue";
 import DashboardCard from "@/components/cards/DashboardCard.vue";
 import DashboardChart from "@/components/charts/DashboardChart.vue";
 import Heatmap from "@/components/charts/Heatmap.vue";
 import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton.vue";
+import { useLogStore } from "@/stores/logStore";
+import { useThemeStore } from "@/stores/themeStore";
 import { useUsersStore } from "@/stores/userStore";
 import { getDailyCount } from "@/utils/utils";
 import { Plus, LayoutPanelLeft } from "lucide-vue-next";
@@ -17,10 +20,12 @@ export default {
     DashboardChart,
     Heatmap,
     DashboardSkeleton,
+    Button,
   },
   data() {
     return {
       heatmapData: [],
+      userData: [],
       activeTab: "Saldo",
       columns: ["Section Type", "Status", "Target", "Limit", "Reviewer"],
       tabs: [
@@ -60,15 +65,17 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useUsersStore, ["fetchUserLogs", "fetchLoggedUser"]),
+    ...mapActions(useUsersStore, ["fetchLoggedUser"]),
+    ...mapActions(useLogStore, ["fetchUserLogs"]),
   },
   computed: {
     ...mapState(useUsersStore, ["loading"]),
+    ...mapState(useThemeStore, ["darkMode"]),
   },
   async mounted() {
     const loggedUser = await this.fetchLoggedUser();
-    const userData = await this.fetchUserLogs(loggedUser.id);
-    this.heatmapData = getDailyCount(userData);
+    this.userData = await this.fetchUserLogs(loggedUser.id);
+    this.heatmapData = getDailyCount(this.userData);
   },
 };
 </script>
@@ -87,12 +94,11 @@ export default {
     style="background-color: var(--main-bg)"
   >
     <header class="flex justify-between items-center mb-8">
-      <h1 class="text-white text-xl font-medium">Dashboard</h1>
-      <button
-        class="flex items-center gap-2 bg-white text-black px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition"
+      <h1 class="text-xl text-primary-text font-medium">Dashboard</h1>
+      <Button variant="outline"
+        ><Plus class="text-primary-text" />
+        <p class="text-primary-text">Adicionar</p></Button
       >
-        <Plus :size="18" /> Adicionar
-      </button>
     </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
@@ -103,9 +109,9 @@ export default {
       />
     </div>
 
-    <DashboardChart />
+    <DashboardChart :logs="userData" />
 
-    <Heatmap :heatmapData="heatmapData" />
+    <Heatmap :heatmapData="heatmapData" :darkMode="darkMode" />
 
     <div class="flex justify-between items-center mb-4">
       <div class="flex bg-[#141414] border border-[#262626] rounded-xl p-1">

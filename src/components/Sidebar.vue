@@ -25,7 +25,7 @@ export default {
 
 <template>
   <div
-    class="flex flex-col h-full max-w-50 transition-[width] duration-300 ease-in-out overflow-hidden"
+    class="flex flex-col h-full max-w-50 transition-all duration-300 ease-in-out overflow-hidden"
     :class="isOpen ? 'w-50' : 'w-15'"
     style="background-color: var(--navbar-bg)"
   >

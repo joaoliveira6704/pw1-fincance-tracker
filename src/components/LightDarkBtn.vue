@@ -1,52 +1,25 @@
 <script>
+import { useThemeStore } from "@/stores/themeStore";
 import { Sun, Moon } from "lucide-vue-next";
+import { mapActions, mapState } from "pinia";
 
 export default {
-  components: {
-    Sun,
-    Moon,
-  },
+  components: { Sun, Moon },
   props: {
     variant: {
       type: String,
       default: "navbar",
     },
   },
-  data() {
-    return {
-      darkMode: true,
-    };
-  },
   computed: {
+    ...mapState(useThemeStore, ["darkMode"]),
     isLanding() {
       return this.variant === "landing";
     },
   },
-  mounted() {
-    const savedMode = localStorage.getItem("darkMode");
-    if (savedMode !== null) {
-      this.darkMode = savedMode === "true";
-    } else {
-      this.darkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    }
-    this.applyColorMode();
-  },
   methods: {
-    toggleColorMode() {
-      this.darkMode = !this.darkMode;
-      this.applyColorMode();
-      localStorage.setItem("darkMode", this.darkMode);
-    },
-    applyColorMode() {
-      const html = document.documentElement;
-      html.style.colorScheme = this.darkMode ? "dark" : "light";
-
-      if (this.darkMode) {
-        document.documentElement.setAttribute("data-theme", "dark");
-      } else {
-        document.documentElement.setAttribute("data-theme", "light");
-      }
-    },
+    // We only map the action. The store handles the rest.
+    ...mapActions(useThemeStore, ["toggleColorMode"]),
   },
 };
 </script>
@@ -55,28 +28,28 @@ export default {
   <button
     v-if="!isLanding && variant === 'navbarOpen'"
     @click="toggleColorMode"
-    class="relative notLanding flex h-8 w-full cursor-pointer items-center rounded-full bg-gray-200 p-1 shadow-inner transition-colors duration-300 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+    class="relative notLanding flex h-8 w-16 cursor-pointer items-center rounded-full bg-gray-200 p-1 shadow-inner transition-colors duration-300 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
   >
-    <span class="absolute left-2 flex items-center justify-center text-primary">
+    <span
+      class="absolute left-1.5 flex items-center justify-center text-primary"
+    >
       <Sun class="h-4 w-4" />
     </span>
-
     <span
-      class="absolute right-2 flex items-center justify-center text-primary"
+      class="absolute right-1.5 flex items-center justify-center text-primary"
     >
       <Moon class="h-4 w-4" />
     </span>
-
     <span
-      class="z-10 h-6 w-6 rounded-full ball-landing shadow-md bg-stackrgreen-500 transition-transform duration-300 ease-in-out"
-      :class="darkMode ? 'translate-x-0' : 'translate-x-34'"
+      class="z-10 h-6 w-6 rounded-full shadow-md bg-stackrgreen-500 transition-transform duration-300 ease-in-out"
+      :class="darkMode ? 'translate-x-8' : 'translate-x-0'"
     ></span>
   </button>
 
   <button
     v-if="!isLanding && variant === 'navbarClosed'"
     @click="toggleColorMode"
-    class="relative flex cursor-pointer h-8"
+    class="relative flex cursor-pointer h-8 items-center"
   >
     <span class="flex items-center justify-center text-primary">
       <Moon v-if="darkMode" class="h-5 w-5" />
@@ -99,5 +72,8 @@ export default {
 .notLanding {
   background-color: var(--primary-bg-color);
   border: solid 1px var(--border-color);
+}
+.bg-stackrgreen-500 {
+  background-color: #22c55e;
 }
 </style>
