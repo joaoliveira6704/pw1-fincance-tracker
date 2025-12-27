@@ -9,9 +9,20 @@
       "createdAt": "2025-05-24",
       "isAdmin": true,
       "income": 12000,
-      "objectives": [1, 2],
-      "expenses": [1, 3, 4, 5],
-      "friends": ["miguel", "josé"]
+      "objectives": [
+        1,
+        2
+      ],
+      "expenses": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "friends": [
+        "miguel",
+        "josé"
+      ]
     },
     {
       "id": "2",
@@ -22,8 +33,16 @@
       "createdAt": "2023-04-21",
       "isAdmin": false,
       "income": 18490,
-      "objectives": [10, 22],
-      "expenses": [12, 31, 41, 51]
+      "objectives": [
+        10,
+        22
+      ],
+      "expenses": [
+        12,
+        31,
+        41,
+        51
+      ]
     },
     {
       "id": "6ad8",
@@ -118,20 +137,38 @@
   ],
   "wallets": [
     {
-      "id": "b9838b0d-935e-4ec3-bfca-6505e65776fc",
-      "name": "carteira teste",
-      "balance": 1000,
+      "id": "bad1",
+      "name": "abc",
+      "balance": 111,
       "currency": "EUR",
-      "color": "#ffffff",
+      "color": "#4ddf7b",
       "userId": "1",
       "isArchived": false
     },
     {
-      "id": "a375a481-d14a-4031-9dfa-7bc9bb37628b",
-      "name": "carteira teste",
-      "balance": 320,
+      "id": "3feb",
+      "name": "Fundo de Emergência",
+      "balance": 13000,
       "currency": "EUR",
-      "color": "#ffffff",
+      "color": "#e04ddb",
+      "userId": "1",
+      "isArchived": false
+    },
+    {
+      "id": "15de",
+      "name": "1230",
+      "balance": 22,
+      "currency": "EUR",
+      "color": "#00c244",
+      "userId": "1",
+      "isArchived": false
+    },
+    {
+      "id": "4cce",
+      "name": "abc",
+      "balance": 1122,
+      "currency": "EUR",
+      "color": "#4ddf7b",
       "userId": "1",
       "isArchived": false
     }
@@ -298,13 +335,23 @@
       "friendName": "Teste Segundo",
       "friendUsername": "teste2",
       "addedAt": "2025-12-23"
+    },
+    {
+      "id": "f0f1",
+      "userId": "1",
+      "userName": "João Oliveira",
+      "userUsername": "joao",
+      "friendId": "38e59c19-50e1-4b18-affc-49f82932ffef",
+      "friendName": "joao joao",
+      "friendUsername": "joao123",
+      "addedAt": "2025-12-27"
     }
   ],
   "userSessions": [
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "61b50e2b-2d86-4091-b2b5-f374a0091df2"
+      "token": "f8c89b4c-4608-42ed-a0c6-ea98240d3f55"
     },
     {
       "id": "92c6",

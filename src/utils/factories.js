@@ -57,11 +57,10 @@ export function createExpense(userId, name, date, amount, description) {
 } */
 
 // Cria uma nova Carteira (Wallet)
-export function createWallet(name, color, userId) {
+export function createWallet(name, color, userId, amount) {
   return {
-    id: generateId(),
     name: name,
-    balance: 0,
+    balance: Number(amount),
     currency: "EUR",
     color: color,
     userId: userId,

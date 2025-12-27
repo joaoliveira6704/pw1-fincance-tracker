@@ -7,7 +7,16 @@
       :key="selectedYear"
       class="w-4xl heatmap-custom"
       :dark-mode="darkMode"
-      :tooltip-formatter="(v) => (v.count + v.count === 1 ? ' ação' : ' ações')"
+      :tooltip-formatter="
+        (v) =>
+          `${v.count} ${
+            v.count === 1 ? 'ação' : 'ações'
+          } no dia ${v.date.toLocaleDateString('pt-PT', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })}`
+      "
       :values="heatmapData"
       :start-date="selectedYear + '-01-01'"
       :end-date="selectedYear + '-12-31'"
