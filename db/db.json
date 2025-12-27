@@ -135,7 +135,17 @@
       }
     }
   ],
-  "wallets": [],
+  "wallets": [
+    {
+      "id": "b9838b0d-935e-4ec3-bfca-6505e65776fc",
+      "name": "carteira teste",
+      "balance": 1000,
+      "currency": "EUR",
+      "color": "#ffffff",
+      "userId": "1",
+      "isArchived": false
+    }
+  ],
   "expenses": [
     {
       "id": "ae60",
@@ -321,7 +331,7 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "da5124c4-5b19-4444-ad8f-ac2925b5f401"
+      "token": "54bfc2f9-716b-4887-85ba-3162b6e24e76"
     },
     {
       "id": "92c6",
