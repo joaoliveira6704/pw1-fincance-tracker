@@ -16,7 +16,8 @@
 
 <script>
 import { RouterLink } from "vue-router";
-import Button from "./Button.vue";
+import Button from "@/components/Button.vue";
+
 
 export default {
   components: {

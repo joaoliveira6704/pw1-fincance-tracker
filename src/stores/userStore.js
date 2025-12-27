@@ -46,7 +46,7 @@ export const useUsersStore = defineStore("users", {
 
       try {
         // Test Skeleton
-        /* await new Promise((resolve) => setTimeout(resolve, 2000)); */
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const session = JSON.parse(localStorage.getItem("user-session"));
         if (!session) throw new Error("No session found");
         const loggedUserId = session.userId;

@@ -20,7 +20,8 @@
         5
       ],
       "friends": [
-        "miguel"
+        "miguel",
+        "josé"
       ]
     },
     {
@@ -111,6 +112,21 @@
       "password": "jOAOPEDRO04*",
       "email": "joaopedrooliveira6704@gmail.com",
       "createdAt": "2025-12-04",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "currency": "EUR",
+        "theme": "light"
+      }
+    },
+    {
+      "id": "6629",
+      "firstName": "adwas",
+      "lastName": "adwas",
+      "username": "",
+      "password": "",
+      "email": "",
+      "createdAt": "2025-12-16",
       "isAdmin": false,
       "income": 0,
       "preferences": {
@@ -277,6 +293,38 @@
       "friendUsername": "testeteste",
       "status": "accepted",
       "addedAt": "2025-12-04"
+    },
+    {
+      "id": "2779",
+      "userId": "1",
+      "friendId": "2",
+      "friendUsername": "miguel",
+      "status": "accepted",
+      "addedAt": "2025-12-19"
+    },
+    {
+      "id": "e811",
+      "userId": "1",
+      "friendId": "6629",
+      "friendUsername": "",
+      "status": "accepted",
+      "addedAt": "2025-12-19"
+    },
+    {
+      "id": "d4db",
+      "userId": "2",
+      "friendId": "1",
+      "friendUsername": "joao",
+      "status": "accepted",
+      "addedAt": "2025-12-19"
+    },
+    {
+      "id": "43ca",
+      "userId": "2",
+      "friendId": "6857",
+      "friendUsername": "admin",
+      "status": "accepted",
+      "addedAt": "2025-12-19"
     }
   ],
   "userSessions": [
@@ -288,7 +336,7 @@
     {
       "id": "92c6",
       "userId": "2",
-      "token": "2a2687c0-9ab9-4160-944f-b922f10e7c76"
+      "token": "565461b4-f517-406d-afe4-7611b02e2e46"
     },
     {
       "id": "a2ab",
