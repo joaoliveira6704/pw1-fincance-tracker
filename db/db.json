@@ -144,6 +144,15 @@
       "color": "#ffffff",
       "userId": "1",
       "isArchived": false
+    },
+    {
+      "id": "a375a481-d14a-4031-9dfa-7bc9bb37628b",
+      "name": "carteira teste",
+      "balance": 320,
+      "currency": "EUR",
+      "color": "#ffffff",
+      "userId": "1",
+      "isArchived": false
     }
   ],
   "expenses": [
@@ -331,7 +340,7 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "54bfc2f9-716b-4887-85ba-3162b6e24e76"
+      "token": "8d39c8c9-c613-4aec-aa1e-1c1fcd94f5ef"
     },
     {
       "id": "92c6",
