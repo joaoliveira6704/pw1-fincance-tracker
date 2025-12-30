@@ -198,14 +198,14 @@ export default {
 
     <div class="w-full max-w-4xl px-4 md:px-6">
       <div
-        class="flex flex-wrap items-center justify-center gap-2 mb-6 p-1.5 rounded-xl bg-(--secondary-bg) border border-(--border) shadow-sm"
+        class="flex flex-wrap items-center justify-center gap-2 mb-6 py-1.5 px-2 rounded-xl bg-(--secondary-bg) border border-(--border) shadow-sm"
       >
         <button
           @click="setTab('discover')"
           class="flex items-center gap-2 flex-1 justify-center min-w-[110px] py-2.5 px-4 rounded-lg text-sm font-bold transition-all duration-200 ease-out"
           :class="
             activeTab === 'discover'
-              ? 'bg-stackrgreen-500 text-stackrblack shadow-md transform scale-[1.02]'
+              ? 'bg-stackrgreen-500 text-stackrblack shadow-md transform scale-[1.0]'
               : 'text-(--secondary-text) hover:text-(--primary-text) hover:bg-(--main-bg)'
           "
         >
@@ -218,7 +218,7 @@ export default {
           class="flex items-center gap-2 flex-1 justify-center min-w-[110px] py-2.5 px-4 rounded-lg text-sm font-bold transition-all duration-200 ease-out"
           :class="
             activeTab === 'following'
-              ? 'bg-stackrgreen-500 text-stackrblack shadow-md transform scale-[1.02]'
+              ? 'bg-stackrgreen-500 text-stackrblack shadow-md transform scale-[1.0]'
               : 'text-(--secondary-text) hover:text-(--primary-text) hover:bg-(--main-bg)'
           "
         >
@@ -231,7 +231,7 @@ export default {
           class="flex items-center gap-2 flex-1 justify-center min-w-[110px] py-2.5 px-4 rounded-lg text-sm font-bold transition-all duration-200 ease-out"
           :class="
             activeTab === 'followers'
-              ? 'bg-stackrgreen-500 text-stackrblack shadow-md transform scale-[1.02]'
+              ? 'bg-stackrgreen-500 text-stackrblack shadow-md transform scale-[1.0]'
               : 'text-(--secondary-text) hover:text-(--primary-text) hover:bg-(--main-bg)'
           "
         >
@@ -355,9 +355,7 @@ export default {
           v-else
           class="flex flex-col items-center justify-center py-12 bg-(--secondary-bg) rounded-xl border border-(--border) border-dashed"
         >
-          <Users
-            class="w-12 h-12 text-(--secondary-text) mb-3 opacity-50"
-          />
+          <Users class="w-12 h-12 text-(--secondary-text) mb-3 opacity-50" />
           <p class="text-(--secondary-text)">
             {{
               searchQuery

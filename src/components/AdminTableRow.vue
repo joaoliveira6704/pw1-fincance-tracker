@@ -1,11 +1,11 @@
 <template>
   <tr class="border-b dark:border-neutral-600">
-    <td class="px-12 py-4">{{ firstName }}</td>
-    <td class="px-12 py-4">{{ lastName }}</td>
-    <td class="px-12 py-4">{{ username }}</td>
-    <td class="px-12 py-4">{{ createdAt }}</td>
-    <td class="px-6 py-4">{{ isAdmin }}</td>
-    <td class="px-12 py-4"><i class="pi pi-trash" @click="deleteUser"></i></td>
+    <td class="py-4">{{ firstName }}</td>
+    <td class="py-4">{{ lastName }}</td>
+    <td class="py-4">{{ username }}</td>
+    <td class="py-4">{{ createdAt }}</td>
+    <td class="py-4">{{ isAdmin }}</td>
+    <td class="py-4"><i class="pi pi-trash" @click="deleteUser"></i></td>
   </tr>
 </template>
 
