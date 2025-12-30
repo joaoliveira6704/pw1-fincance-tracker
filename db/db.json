@@ -9,20 +9,9 @@
       "createdAt": "2025-05-24",
       "isAdmin": true,
       "income": 12000,
-      "objectives": [
-        1,
-        2
-      ],
-      "expenses": [
-        1,
-        3,
-        4,
-        5
-      ],
-      "friends": [
-        "miguel",
-        "josé"
-      ]
+      "objectives": [1, 2],
+      "expenses": [1, 3, 4, 5],
+      "friends": ["miguel", "josé"]
     },
     {
       "id": "2",
@@ -33,16 +22,8 @@
       "createdAt": "2023-04-21",
       "isAdmin": false,
       "income": 18490,
-      "objectives": [
-        10,
-        22
-      ],
-      "expenses": [
-        12,
-        31,
-        41,
-        51
-      ]
+      "objectives": [10, 22],
+      "expenses": [12, 31, 41, 51]
     },
     {
       "id": "6ad8",
@@ -51,6 +32,7 @@
       "lastName": "Ultimo",
       "createdAt": "2025-11-24",
       "income": 0,
+      "isAdmin": false,
       "objectives": [],
       "expenses": []
     },
@@ -61,6 +43,8 @@
       "lastName": "Segundo",
       "createdAt": "2025-11-24",
       "income": 0,
+      "isAdmin": false,
+
       "objectives": [],
       "expenses": []
     },
@@ -71,6 +55,8 @@
       "lastName": "admin",
       "createdAt": "2025-11-24",
       "income": 0,
+      "isAdmin": false,
+
       "objectives": [],
       "expenses": []
     },
@@ -351,12 +337,12 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "f8c89b4c-4608-42ed-a0c6-ea98240d3f55"
+      "token": "abe37601-3609-447a-9b12-143c0e72aafe"
     },
     {
       "id": "92c6",
       "userId": "2",
-      "token": "7a6d2cb5-e0c2-4faf-b334-fb7489dc0e52"
+      "token": "1263e978-4c8b-4e27-a89c-aae68d3ddc6d"
     },
     {
       "id": "a2ab",
@@ -381,7 +367,7 @@
     {
       "id": "4d6e",
       "userId": "61b7",
-      "token": "8d19afb4-65b4-412c-82a1-df83cb26e85e"
+      "token": "96dfa1db-d0e9-43c4-b70f-052a0c38ee75"
     }
   ],
   "objectives": [

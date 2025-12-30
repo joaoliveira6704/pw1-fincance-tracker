@@ -75,6 +75,7 @@ export default {
         :isOpen="isOpen"
         :icon="Users"
       />
+      <SidebarLink page="admin" name="Admin" :isOpen="isOpen" :icon="Users" />
     </nav>
 
     <LightDarkBtn :variant="isOpen ? 'navbarOpen' : 'navbarClosed'" />
