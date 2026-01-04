@@ -40,6 +40,7 @@
     </div>
 
     <div
+      v-if="activeTab == `users`"
       class="m-auto h-fit w-fit bg-(--main-bg) text-(--primary-text) transition-colors duration-300"
     >
       <!-- Table -->
