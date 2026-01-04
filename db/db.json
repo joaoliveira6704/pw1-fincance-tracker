@@ -9,9 +9,20 @@
       "createdAt": "2025-05-24",
       "isAdmin": true,
       "income": 12000,
-      "objectives": [1, 2],
-      "expenses": [1, 3, 4, 5],
-      "friends": ["miguel", "josé"]
+      "objectives": [
+        1,
+        2
+      ],
+      "expenses": [
+        1,
+        3,
+        4,
+        5
+      ],
+      "friends": [
+        "miguel",
+        "josé"
+      ]
     },
     {
       "id": "2",
@@ -22,8 +33,16 @@
       "createdAt": "2023-04-21",
       "isAdmin": false,
       "income": 18490,
-      "objectives": [10, 22],
-      "expenses": [12, 31, 41, 51]
+      "objectives": [
+        10,
+        22
+      ],
+      "expenses": [
+        12,
+        31,
+        41,
+        51
+      ]
     },
     {
       "id": "6ad8",
@@ -44,7 +63,6 @@
       "createdAt": "2025-11-24",
       "income": 0,
       "isAdmin": false,
-
       "objectives": [],
       "expenses": []
     },
@@ -56,7 +74,6 @@
       "createdAt": "2025-11-24",
       "income": 0,
       "isAdmin": false,
-
       "objectives": [],
       "expenses": []
     },
@@ -68,51 +85,6 @@
       "password": "joao",
       "email": "joao",
       "createdAt": "2025-11-24",
-      "isAdmin": false,
-      "income": 0,
-      "preferences": {
-        "currency": "EUR",
-        "theme": "light"
-      }
-    },
-    {
-      "id": "92df",
-      "firstName": "Abc",
-      "lastName": "abc",
-      "username": "acb",
-      "password": "acb",
-      "email": "abc",
-      "createdAt": "2025-11-24",
-      "isAdmin": false,
-      "income": 0,
-      "preferences": {
-        "currency": "EUR",
-        "theme": "light"
-      }
-    },
-    {
-      "id": "61b7",
-      "firstName": "Joao",
-      "lastName": "Oliveira",
-      "username": "diacidos",
-      "password": "jOAOPEDRO04*",
-      "email": "joaopedrooliveira6704@gmail.com",
-      "createdAt": "2025-12-04",
-      "isAdmin": false,
-      "income": 0,
-      "preferences": {
-        "currency": "EUR",
-        "theme": "light"
-      }
-    },
-    {
-      "id": "6629",
-      "firstName": "adwas",
-      "lastName": "adwas",
-      "username": "",
-      "password": "",
-      "email": "",
-      "createdAt": "2025-12-16",
       "isAdmin": false,
       "income": 0,
       "preferences": {
@@ -157,12 +129,21 @@
       "color": "#4ddf7b",
       "userId": "1",
       "isArchived": false
+    },
+    {
+      "id": "4d4f",
+      "name": "qwe",
+      "balance": 12,
+      "currency": "EUR",
+      "color": "#f536bc",
+      "userId": "1",
+      "isArchived": false
     }
   ],
   "expenses": [
     {
       "id": "ae60",
-      "userId": "92df",
+      "userId": null,
       "date": "1932-12-03",
       "name": "abc",
       "amount": 34242,
@@ -172,7 +153,7 @@
     },
     {
       "id": "9b22",
-      "userId": "92df",
+      "userId": null,
       "name": "abc",
       "date": "1993-12-02",
       "amount": 12,
@@ -182,7 +163,7 @@
     },
     {
       "id": "da23",
-      "userId": "92df",
+      "userId": null,
       "name": "compra",
       "date": "1992-12-02",
       "amount": 2,
@@ -192,7 +173,7 @@
     },
     {
       "id": "1c8b",
-      "userId": "92df",
+      "userId": null,
       "name": "ab",
       "date": "1992-12-02",
       "amount": 2,
@@ -232,7 +213,7 @@
     },
     {
       "id": "6936",
-      "userId": "61b7",
+      "userId": null,
       "name": "abc",
       "date": "2025-12-04",
       "amount": 154,
@@ -361,12 +342,12 @@
     },
     {
       "id": "d0ac",
-      "userId": "92df",
+      "userId": null,
       "token": "4fd38099-5661-4f7f-a4ed-4c1caf5bc74a"
     },
     {
       "id": "4d6e",
-      "userId": "61b7",
+      "userId": null,
       "token": "96dfa1db-d0e9-43c4-b70f-052a0c38ee75"
     }
   ],

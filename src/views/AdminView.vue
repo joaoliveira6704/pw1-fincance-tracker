@@ -68,6 +68,7 @@
             :created-at="user.createdAt"
             :is-admin="user.isAdmin"
             :user-id="user.id"
+            @remove-user="handleRemoveUser"
           />
         </tbody>
       </table>
@@ -80,11 +81,11 @@ import { getUserId } from "@/utils/session";
 import * as api from "@/api/api.js";
 import { useUsersStore } from "@/stores/userStore";
 import { mapActions, mapState } from "pinia";
-import AdminTableRow from "@/components/adminTableRow.vue";
+import AdminTableRow from "@/components/AdminTableRow.vue";
 
 import {
   Users,
-  Search, // Icon
+  Search,
   UserPlus,
   UserMinus,
   Heart,
@@ -96,9 +97,10 @@ const BASE_URL = "http://localhost:3000";
 
 export default {
   data() {
-    return {};
-    activeTab: "users";
-    searchQuery: "";
+    return {
+      activeTab: "users",
+      searchQuery: "",
+    };
   },
 
   components: {
@@ -109,10 +111,15 @@ export default {
     ...mapState(useUsersStore, ["users"]),
   },
   methods: {
-    ...mapActions(useUsersStore, ["fetchUsers"]),
+    ...mapActions(useUsersStore, ["fetchUsers", "removeUser"]),
 
     async fetch() {
-      await this.fetchUsers;
+      await this.fetchUsers();
+    },
+
+    async handleRemoveUser(userId) {
+      console.log(userId);
+      await this.removeUser(userId);
     },
 
     setTab(tabName) {

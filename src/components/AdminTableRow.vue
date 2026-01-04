@@ -5,7 +5,7 @@
     <td class="py-4">{{ username }}</td>
     <td class="py-4">{{ createdAt }}</td>
     <td class="py-4">{{ isAdmin }}</td>
-    <td class="py-4"><i class="pi pi-trash" @click="deleteUser"></i></td>
+    <td class="py-4"><i class="pi pi-trash" @click="removeUser"></i></td>
   </tr>
 </template>
 
@@ -84,12 +84,12 @@ export default {
       };
     },
 
-    deleteUser() {
+    removeUser() {
       Swal.fire(
         this.getSwalConfig("Tens a certeza?", "Esta ação é irreversível!", true)
       ).then(async (result) => {
         if (result.isConfirmed) {
-          this.$emit("deleteUser", this.userId);
+          this.$emit("removeUser", this.userId);
           Swal.fire({
             ...this.getSwalConfig(
               "Sucesso",

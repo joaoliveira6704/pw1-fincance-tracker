@@ -15,6 +15,7 @@ export const useUsersStore = defineStore("users", {
     getUser: (state) => (username) =>
       state.users.find((user) => user.username === username),
   },
+
   actions: {
     async fetchUsers() {
       this.loading = true;
@@ -28,6 +29,7 @@ export const useUsersStore = defineStore("users", {
         this.loading = false;
       }
     },
+
     async fetchUserById(id) {
       this.loading = true;
       this.error = null;
@@ -40,6 +42,7 @@ export const useUsersStore = defineStore("users", {
         this.loading = false;
       }
     },
+
     async fetchLoggedUser() {
       this.loading = true;
       this.error = null;
@@ -59,6 +62,7 @@ export const useUsersStore = defineStore("users", {
         this.loading = false;
       }
     },
+
     async addUser(username, firstName, lastName, email, password) {
       try {
         const userData = factory.createUser(
@@ -75,6 +79,7 @@ export const useUsersStore = defineStore("users", {
         throw e;
       }
     },
+
     async fetchUserLogs(userId) {
       this.loading = true;
       this.error = null;
@@ -85,6 +90,17 @@ export const useUsersStore = defineStore("users", {
         console.error("Error fetching users:", e);
       } finally {
         this.loading = false;
+      }
+    },
+
+    async removeUser(userId) {
+      const userIndex = this.users.findIndex((user) => (user.id = userId));
+      try {
+        await api.remove(BASE_URL, `users/${userId}`);
+        this.users.splice(userIndex, 1);
+      } catch (e) {
+        this.error = e.message;
+        console.error("Error deleting user", e);
       }
     },
   },
