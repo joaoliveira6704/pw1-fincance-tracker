@@ -51,33 +51,55 @@
         class="h-fit w-full bg-(--secondary-bg) rounded-xl border border-(--border) text-(--primary-text) transition-colors duration-300"
       >
         <!-- Table -->
-        <table class="w-full text-center text-sm whitespace-nowrap">
-          <thead class="uppercase border-b-2 dark:border-neutral-600">
-            <tr>
-              <th class="px-6 py-4" @click="sortList">
-                First Name <i class="pi pi-sort-down-fill mx-1 mt-1"></i>
-              </th>
-              <th class="">Last Name</th>
-              <th class="px-6 py-4">Username</th>
-              <th class="px-6 py-4">Created at</th>
-              <th class="px-6 py-4">Admin</th>
-              <th class="px-6 py-4">Delete</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <AdminTableRow
-              v-for="user in users"
-              :first-name="user.firstName"
-              :last-name="user.lastName"
-              :username="user.username"
-              :created-at="user.createdAt"
-              :is-admin="user.isAdmin"
-              :user-id="user.id"
-              @remove-user="handleRemoveUser"
-            />
-          </tbody>
-        </table>
+        <div class="h-75 rounded-t-xl overflow-auto">
+          <table
+            class="w-full text-center text-sm whitespace-nowrap border-separate border-spacing-0"
+          >
+            <!-- head -->
+            <thead class="sticky top-0 uppercase bg-(--secondary-bg)">
+              <tr class="">
+                <th :class="headerClass">
+                  <span class="cursor-pointer" @click="toggleSort(`firstName`)"
+                    >First Name</span
+                  >
+                </th>
+                <th :class="headerClass">
+                  <span class="cursor-pointer" @click="toggleSort(`lastName`)"
+                    >Last Name</span
+                  >
+                </th>
+                <th :class="headerClass">
+                  <span class="cursor-pointer" @click="toggleSort(`username`)"
+                    >Username</span
+                  >
+                </th>
+                <th :class="headerClass">
+                  <span class="cursor-pointer" @click="toggleSort(`createdAt`)"
+                    >Created at</span
+                  >
+                </th>
+                <th :class="headerClass">
+                  <span class="cursor-pointer" @click="toggleSort(`isAdmin`)"
+                    >Admin</span
+                  >
+                </th>
+                <th :class="headerClass">Delete</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y">
+              <AdminTableRow
+                v-for="user in sortedUsers"
+                :first-name="user.firstName"
+                :last-name="user.lastName"
+                :username="user.username"
+                :created-at="user.createdAt"
+                :is-admin="user.isAdmin"
+                :user-id="user.id"
+                @remove-user="handleRemoveUser"
+              />
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -108,6 +130,9 @@ export default {
     return {
       activeTab: "users",
       searchQuery: "",
+      sortDir: "asc",
+      sortKey: "firstName",
+      sortedUsers: [],
     };
   },
 
@@ -118,12 +143,43 @@ export default {
 
   computed: {
     ...mapState(useUsersStore, ["users"]),
+
+    sortedUsers() {
+      const key = this.sortKey;
+      if (this.sortKey !== "createdAt" && this.sortKey !== "isAdmin") {
+        return [...this.users].sort((a, b) => {
+          const av = a[key];
+          const bv = b[key];
+          const comp = av.localeCompare(bv);
+          return this.sortDir === "asc" ? comp : -comp;
+        });
+      } else if (this.sortKey === "isAdmin") {
+        return [...this.users].sort((a, b) => {
+          const av = a[key];
+          const bv = b[key];
+          const comp = av === bv ? 0 : av ? -1 : 1;
+          return this.sortDir === "asc" ? comp : -comp;
+        });
+      }
+    },
+    headerClass() {
+      return "sticky top-0 px-6 py-4 border-b-2 border-green-500";
+    },
   },
   methods: {
     ...mapActions(useUsersStore, ["fetchUsers", "removeUser"]),
 
     async fetch() {
       await this.fetchUsers();
+    },
+
+    toggleSort(key) {
+      if (this.sortKey === key) {
+        this.sortDir = this.sortDir === "asc" ? "desc" : "asc";
+      } else {
+        this.sortKey = key;
+        this.sortDir = "asc";
+      }
     },
 
     async handleRemoveUser(userId) {

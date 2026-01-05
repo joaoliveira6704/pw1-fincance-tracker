@@ -1,5 +1,5 @@
 <template>
-  <tr class="border-b dark:border-neutral-600">
+  <tr>
     <td class="py-4">{{ firstName }}</td>
     <td class="py-4">{{ lastName }}</td>
     <td class="py-4">{{ username }}</td>
