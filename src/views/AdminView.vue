@@ -60,27 +60,27 @@
               <tr class="">
                 <th :class="headerClass">
                   <span class="cursor-pointer" @click="toggleSort(`firstName`)"
-                    >First Name</span
+                    >Primeiro nome</span
                   >
                 </th>
                 <th :class="headerClass">
                   <span class="cursor-pointer" @click="toggleSort(`lastName`)"
-                    >Last Name</span
+                    >Ultimo nome</span
                   >
                 </th>
                 <th :class="headerClass">
                   <span class="cursor-pointer" @click="toggleSort(`username`)"
-                    >Username</span
+                    >Nome utilizador</span
                   >
                 </th>
                 <th :class="headerClass">
                   <span class="cursor-pointer" @click="toggleSort(`createdAt`)"
-                    >Created at</span
+                    >Data</span
                   >
                 </th>
                 <th :class="headerClass">
                   <span class="cursor-pointer" @click="toggleSort(`isAdmin`)"
-                    >Admin</span
+                    >Administrador</span
                   >
                 </th>
                 <th :class="headerClass">Delete</th>
@@ -89,6 +89,7 @@
             <tbody class="divide-y">
               <AdminTableRow
                 v-for="user in sortedUsers"
+                :key="user.id"
                 :first-name="user.firstName"
                 :last-name="user.lastName"
                 :username="user.username"
@@ -132,7 +133,6 @@ export default {
       searchQuery: "",
       sortDir: "asc",
       sortKey: "firstName",
-      sortedUsers: [],
     };
   },
 
@@ -144,24 +144,45 @@ export default {
   computed: {
     ...mapState(useUsersStore, ["users"]),
 
+    filteredUsers() {
+      if (!this.searchQuery) {
+        return this.users;
+      }
+
+      const query = new RegExp(`^${this.searchQuery}`, "i");
+
+      return this.users.filter((user) => {
+        return query.test(user.firstName);
+      });
+    },
     sortedUsers() {
       const key = this.sortKey;
+
       if (this.sortKey !== "createdAt" && this.sortKey !== "isAdmin") {
-        return [...this.users].sort((a, b) => {
+        return [...this.filteredUsers].sort((a, b) => {
           const av = a[key];
           const bv = b[key];
           const comp = av.localeCompare(bv);
           return this.sortDir === "asc" ? comp : -comp;
         });
       } else if (this.sortKey === "isAdmin") {
-        return [...this.users].sort((a, b) => {
+        return [...this.filteredUsers].sort((a, b) => {
           const av = a[key];
           const bv = b[key];
           const comp = av === bv ? 0 : av ? -1 : 1;
           return this.sortDir === "asc" ? comp : -comp;
         });
+      } else {
+        return [...this.filteredUsers].sort((a, b) => {
+          const av = Date.parse(a[key]);
+          const bv = Date.parse(b[key]);
+
+          const comp = av - bv;
+          return this.sortDir === "asc" ? comp : -comp;
+        });
       }
     },
+
     headerClass() {
       return "sticky top-0 px-6 py-4 border-b-2 border-green-500";
     },
