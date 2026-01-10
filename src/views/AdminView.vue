@@ -8,7 +8,10 @@
       >
         Administração
       </h1>
-      <p class="text-(--secondary-text) text-lg">Gerir utilizadores</p>
+      <p v-if="activeTab === `users`" class="text-(--secondary-text) text-lg">
+        Gerir utilizadores
+      </p>
+      <p v-else class="text-(--secondary-text) text-lg">Gerir Categorias</p>
     </div>
 
     <div class="w-full max-w-4xl px-4 md:px-6">
@@ -46,6 +49,7 @@
         v-model="searchQuery"
         placeholder="Pesquisar utilizadores"
       />
+      <!-- Users table -->
       <div
         v-if="activeTab == `users`"
         class="h-fit w-full bg-(--secondary-bg) rounded-xl border border-(--border) text-(--primary-text) transition-colors duration-300"
@@ -87,7 +91,7 @@
               </tr>
             </thead>
             <tbody class="divide-y">
-              <AdminTableRow
+              <UserTableRow
                 v-for="user in sortedUsers"
                 :key="user.id"
                 :first-name="user.firstName"
@@ -102,7 +106,56 @@
           </table>
         </div>
       </div>
+
+      <!-- Category table -->
+      <div
+        v-if="activeTab == `category`"
+        class="h-fit w-full bg-(--secondary-bg) rounded-xl border border-(--border) text-(--primary-text) transition-colors duration-300"
+      >
+        <!-- Table -->
+        <div class="h-75 rounded-t-xl overflow-auto">
+          <table
+            class="w-full text-center text-sm whitespace-nowrap border-separate border-spacing-0"
+          >
+            <!-- head -->
+            <thead class="sticky top-0 uppercase bg-(--secondary-bg)">
+              <tr class="">
+                <th :class="headerClass">
+                  <span class="cursor-pointer" @click="toggleSort(`categoria`)"
+                    >Categoria</span
+                  >
+                </th>
+                <th :class="headerClass">
+                  <span class="cursor-pointer">Icon</span>
+                </th>
+                <th :class="headerClass">
+                  <span class="cursor-pointer">Editar</span>
+                </th>
+                <th :class="headerClass">
+                  <span class="cursor-pointer">Apagar</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y">
+              <CategoryTableRow
+                v-for="category in categories"
+                :key="category.id"
+                :id="category.id"
+                :category="category.label"
+                :icon="category.icon"
+                @init-edit="defineEditObj"
+              />
+            </tbody>
+          </table>
+        </div>
+        <EditCategoryModal
+          v-if="isOpen"
+          @close-modal="this.isOpen = false"
+          :category="catObj"
+        />
+      </div>
     </div>
+    <button @click="console.log(iconList[1000])">test</button>
   </div>
 </template>
 
@@ -110,35 +163,34 @@
 import { getUserId } from "@/utils/session";
 import * as api from "@/api/api.js";
 import { useUsersStore } from "@/stores/userStore";
+import { useCategoryStore } from "@/stores/categoryStore";
 import { mapActions, mapState } from "pinia";
-import AdminTableRow from "@/components/AdminTableRow.vue";
+import UserTableRow from "@/components/UserTableRow.vue";
+import CategoryTableRow from "@/components/CategoryTableRow.vue";
 import SearchInput from "@/components/SearchInput.vue";
+import EditCategoryModal from "@/components/modal/EditCategoryModal.vue";
 
-import {
-  Users,
-  Search,
-  UserPlus,
-  UserMinus,
-  Heart,
-  Eye,
-  UserCheck,
-} from "lucide-vue-next";
+import { library } from "@fortawesome/fontawesome-svg-core";
 
 const BASE_URL = "http://localhost:3000";
 
 export default {
   data() {
     return {
-      activeTab: "users",
+      activeTab: "category",
       searchQuery: "",
       sortDir: "asc",
       sortKey: "firstName",
+      isOpen: false,
+      catObj: {},
     };
   },
 
   components: {
-    AdminTableRow,
+    UserTableRow,
+    CategoryTableRow,
     SearchInput,
+    EditCategoryModal,
   },
 
   computed: {
@@ -186,12 +238,21 @@ export default {
     headerClass() {
       return "sticky top-0 px-6 py-4 border-b-2 border-green-500";
     },
+
+    ...mapState(useCategoryStore, ["categories", "getCategoryById"]),
   },
   methods: {
     ...mapActions(useUsersStore, ["fetchUsers", "removeUser"]),
+    ...mapActions(useCategoryStore, ["fetchCategories"]),
 
     async fetch() {
       await this.fetchUsers();
+      await this.fetchCategories();
+    },
+
+    async defineEditObj(id) {
+      this.catObj = await this.getCategoryById(id);
+      this.isOpen = true;
     },
 
     toggleSort(key) {
@@ -217,6 +278,7 @@ export default {
 
   async mounted() {
     await this.fetch();
+    console.log(library.definitions.fas);
   },
 };
 </script>

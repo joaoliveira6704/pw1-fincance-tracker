@@ -20,20 +20,9 @@
       "createdAt": "2025-05-24",
       "isAdmin": true,
       "income": 12000,
-      "objectives": [
-        1,
-        2
-      ],
-      "expenses": [
-        1,
-        3,
-        4,
-        5
-      ],
-      "friends": [
-        "miguel",
-        "josé"
-      ]
+      "objectives": [1, 2],
+      "expenses": [1, 3, 4, 5],
+      "friends": ["miguel", "josé"]
     },
     {
       "id": "2",
@@ -44,16 +33,8 @@
       "createdAt": "2023-04-21",
       "isAdmin": true,
       "income": 18490,
-      "objectives": [
-        10,
-        22
-      ],
-      "expenses": [
-        12,
-        31,
-        41,
-        51
-      ]
+      "objectives": [10, 22],
+      "expenses": [12, 31, 41, 51]
     },
     {
       "id": "6ad8",
@@ -329,7 +310,7 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "2702e83c-a694-4b1e-9669-c26c4f2f161e"
+      "token": "424184ea-7130-4d7e-9f26-0972bc50c90a"
     },
     {
       "id": "92c6",
@@ -627,6 +608,58 @@
       "type": "add",
       "amount": 12,
       "date": "2025-12-23"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "icon": "fa-burger",
+      "label": "Alimentação"
+    },
+    {
+      "id": "2",
+      "icon": "fa-bus-simple",
+      "label": "Transporte"
+    },
+    {
+      "id": "3",
+      "icon": "fa-file-invoice-dollar",
+      "label": "Contas & Utilidades"
+    },
+    {
+      "id": "4",
+      "icon": "fa-masks-theater",
+      "label": "Lazer & Entretenimento"
+    },
+    {
+      "id": "5",
+      "icon": "fa-file-medical",
+      "label": "Saúde"
+    },
+    {
+      "id": "6",
+      "icon": "fa-cart-shopping",
+      "label": "Compras"
+    },
+    {
+      "id": "7",
+      "icon": "fa-graduation-cap",
+      "label": "Educação"
+    },
+    {
+      "id": "8",
+      "icon": "fa-hand-holding-hand",
+      "label": "Cuidados Pessoais"
+    },
+    {
+      "id": "9",
+      "icon": "fa-plane",
+      "label": "Viagens"
+    },
+    {
+      "id": "10",
+      "icon": "fa-globe",
+      "label": "Outros"
     }
   ]
 }

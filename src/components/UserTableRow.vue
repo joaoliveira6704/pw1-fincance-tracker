@@ -5,7 +5,13 @@
     <td class="py-4">{{ username }}</td>
     <td class="py-4">{{ createdAt }}</td>
     <td class="py-4">{{ isAdmin }}</td>
-    <td class="py-4"><i class="pi pi-trash" @click="removeUser"></i></td>
+    <td class="py-4">
+      <font-awesome-icon
+        icon="fa-solid fa-trash"
+        @click="removeUser"
+        class="cursor-pointer"
+      />
+    </td>
   </tr>
 </template>
 
