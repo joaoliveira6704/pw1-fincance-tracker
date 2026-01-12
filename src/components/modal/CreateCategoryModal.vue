@@ -22,7 +22,7 @@
         </svg>
       </button>
 
-      <h2 class="text-xl font-bold mb-6">Editar Categoria</h2>
+      <h2 class="text-xl font-bold mb-6">Criar categoria</h2>
 
       <form @submit.prevent="submitForm" class="flex flex-col gap-4">
         <div class="flex gap-5">
@@ -32,11 +32,12 @@
             >
             <input
               id="categoryName"
-              :placeholder="this.category.label"
+              placeholder="Insira nome da cateoria"
               v-model="label"
               @focus="this.errorClass = ``"
               type="text"
-              class="border border-gray-300 rounded-md p-2 w-fill focus:ring-2 focus:ring-inner-circle focus:border-white-500 outline-none"
+              required
+              class="border border-gray-300 rounded-md p-2 w-fill focus:ring-2 focus:ring-inner-circle focus:border-stackr-green outline-none"
               :class="errorClass"
             />
           </div>
@@ -92,9 +93,9 @@
           <Button variant="outline" @click="closeModal"> Cancelar </Button>
           <button
             type="submit"
-            class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+            class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
           >
-            Salvar alterações
+            Criar
           </button>
         </div>
       </form>
@@ -103,23 +104,22 @@
 </template>
 
 <script>
+import IconCard from "../IconCard.vue";
 import * as swal from "@/utils/swal.js";
 import Fuse from "fuse.js";
-
-import IconCard from "../IconCard.vue";
 import { useCategoryStore } from "@/stores/categoryStore";
 import { mapActions } from "pinia";
 
 export default {
   data() {
     return {
-      defaultIcon: this.category.icon,
+      defaultIcon: "fa-globe",
       icon: "fa-globe",
       label: "",
       iconQuery: "",
-      isEmpty: false,
       activeIcon: null,
       errorClass: "",
+      isEmpty: false,
     };
   },
 
@@ -141,8 +141,7 @@ export default {
     },
 
     setDefaultIcon() {
-      (this.activeIcon = null), (this.icon = this.category.icon);
-      console.log("setDefaultIcon");
+      (this.activeIcon = null), (this.icon = this.defaultIcon);
     },
 
     submitForm() {
@@ -151,14 +150,13 @@ export default {
       } else {
         swal
           .confirmAction(
-            "Editar Categoria",
-            "Tem a certeza que pretende salvar mudanças?"
+            "Criar Categoria",
+            "Tem a certeza que pretende criar uma nova categoria?"
           )
           .then((result) => {
             if (result.isConfirmed) {
-              if (this.label == "") this.label = this.category.label;
-              this.$emit("submitData", {
-                id: this.category.id,
+              this.$emit("submitCreate", {
+                id: crypto.randomUUID(),
                 icon: `fa-solid fa-${this.icon}`,
                 label: this.label,
               });
@@ -167,20 +165,14 @@ export default {
           });
       }
     },
-
     closeModal() {
       this.$emit("closeModal");
     },
   },
 
   props: {
-    isOpen: {
+    isCreateOpen: {
       type: String,
-      required: true,
-    },
-
-    category: {
-      type: Object,
       required: true,
     },
 
@@ -194,16 +186,6 @@ export default {
     iconQuery() {
       if (this.iconQuery == "") this.isEmpty = false;
       console.log(this.filteredIconList);
-    },
-
-    category: {
-      handler(category) {
-        if (category) {
-          this.icon = this.category.icon;
-        }
-      },
-      immediate: true,
-      deep: true,
     },
   },
 

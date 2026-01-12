@@ -22,5 +22,32 @@ export const useCategoryStore = defineStore("categories", {
         console.error("Erro ao buscar categorias:", e);
       }
     },
+
+    async createCategory(data) {
+      try {
+        await api.post(BASE_URL, "categories", data);
+      } catch (e) {
+        console.error("Erro ao criar categorias:", e);
+      } finally {
+        this.categories.push(data);
+      }
+    },
+
+    async removeCategory(id) {
+      try {
+        await api.remove(BASE_URL, `categories/${id}`);
+      } catch (e) {
+        console.error("Erro ao criar categorias:", e);
+      } finally {
+        this.categories = this.categories.filter(
+          (category) => category.id !== id
+        );
+      }
+    },
+
+    checkDuplicate(string) {
+      console.log(this.categories.some((item) => item.label == string));
+      return this.categories.some((item) => item.label == string);
+    },
   },
 });

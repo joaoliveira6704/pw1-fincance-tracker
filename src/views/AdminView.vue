@@ -40,7 +40,6 @@
               : 'text-(--secondary-text) hover:text-(--primary-text) hover:bg-(--main-bg)'
           "
         >
-          <Eye class="w-4 h-4" />
           Categorias
         </button>
       </div>
@@ -121,9 +120,7 @@
             <thead class="sticky top-0 uppercase bg-(--secondary-bg)">
               <tr class="">
                 <th :class="headerClass">
-                  <span class="cursor-pointer" @click="toggleSort(`categoria`)"
-                    >Categoria</span
-                  >
+                  <span class="cursor-pointer">Categoria</span>
                 </th>
                 <th :class="headerClass">
                   <span class="cursor-pointer">Icon</span>
@@ -144,6 +141,7 @@
                 :category="category.label"
                 :icon="category.icon"
                 @init-edit="defineEditObj"
+                @init-removal="callRemove"
               />
             </tbody>
           </table>
@@ -151,11 +149,26 @@
         <EditCategoryModal
           v-if="isOpen"
           @close-modal="this.isOpen = false"
+          @submit-data="submitEdit"
           :category="catObj"
+          :iconsLibrary="iconList"
+        />
+        <CreateCategoryModal
+          v-if="isCreateOpen"
+          @close-modal="this.isCreateOpen = false"
+          :iconsLibrary="iconList"
+          @submit-create="submitCreate"
         />
       </div>
+      <div class="w-full h-fit p-2 flex justify-end">
+        <button
+          @click="initCreate"
+          class="mt-5 px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 cursor-pointer"
+        >
+          Criar categoria
+        </button>
+      </div>
     </div>
-    <button @click="console.log(iconList[1000])">test</button>
   </div>
 </template>
 
@@ -169,6 +182,7 @@ import UserTableRow from "@/components/UserTableRow.vue";
 import CategoryTableRow from "@/components/CategoryTableRow.vue";
 import SearchInput from "@/components/SearchInput.vue";
 import EditCategoryModal from "@/components/modal/EditCategoryModal.vue";
+import CreateCategoryModal from "@/components/modal/CreateCategoryModal.vue";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 
@@ -182,6 +196,7 @@ export default {
       sortDir: "asc",
       sortKey: "firstName",
       isOpen: false,
+      isCreateOpen: false,
       catObj: {},
     };
   },
@@ -191,6 +206,7 @@ export default {
     CategoryTableRow,
     SearchInput,
     EditCategoryModal,
+    CreateCategoryModal,
   },
 
   computed: {
@@ -240,19 +256,56 @@ export default {
     },
 
     ...mapState(useCategoryStore, ["categories", "getCategoryById"]),
+
+    iconList() {
+      let list = [];
+
+      for (const [key, value] of Object.entries(library.definitions.fas)) {
+        list.push(key);
+      }
+      const listLength = list.length / 2;
+
+      const trimmedList = list.splice(0, listLength);
+      return [...trimmedList];
+    },
   },
   methods: {
     ...mapActions(useUsersStore, ["fetchUsers", "removeUser"]),
-    ...mapActions(useCategoryStore, ["fetchCategories"]),
+    ...mapActions(useCategoryStore, [
+      "fetchCategories",
+      "createCategory",
+      "removeCategory",
+    ]),
 
     async fetch() {
       await this.fetchUsers();
       await this.fetchCategories();
     },
 
+    initCreate() {
+      this.isCreateOpen = true;
+    },
+
     async defineEditObj(id) {
       this.catObj = await this.getCategoryById(id);
       this.isOpen = true;
+      console.log(this.iconList);
+    },
+
+    async submitEdit(data) {
+      console.log(data);
+      await api.patch(BASE_URL, `categories/${data.id}`, data);
+      await this.fetchCategories();
+    },
+
+    async submitCreate(data) {
+      console.log("submitCreate");
+      this.createCategory(data);
+    },
+
+    async callRemove(id) {
+      console.log("removeCategory");
+      await this.removeCategory(id);
     },
 
     toggleSort(key) {
@@ -278,7 +331,6 @@ export default {
 
   async mounted() {
     await this.fetch();
-    console.log(library.definitions.fas);
   },
 };
 </script>

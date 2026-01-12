@@ -2,7 +2,7 @@
   <tr>
     <td class="py-4">{{ category }}</td>
     <td class="py-4">
-      <font-awesome-icon :icon="`fa-solid ` + icon" />
+      <font-awesome-icon :icon="icon" />
     </td>
     <td class="py-4">
       <font-awesome-icon
@@ -12,15 +12,18 @@
       />
     </td>
     <td class="py-4">
-      <font-awesome-icon icon="fa-solid fa-trash" class="cursor-pointer" />
+      <font-awesome-icon
+        icon="fa-solid fa-trash"
+        class="cursor-pointer"
+        @click="initRemove"
+      />
     </td>
   </tr>
 </template>
 
 <script>
 import { icon } from "@fortawesome/fontawesome-svg-core";
-import EditCategoryModal from "./modal/EditCategoryModal.vue";
-import * as api from "@/api/api.js";
+import * as swal from "@/utils/swal.js";
 
 export default {
   data() {
@@ -49,6 +52,21 @@ export default {
 
     initEdit() {
       this.$emit("initEdit", this.id);
+    },
+
+    initRemove() {
+      if (this.category !== "Outros") {
+        swal
+          .confirmAction(
+            "Remover Categoria",
+            "Tem a certeza que pretende apagar esta categoria? (categorias associadas serão transferidas para `Outros`)"
+          )
+          .then((result) => {
+            if (result.isConfirmed) {
+              this.$emit("initRemoval", this.id);
+            }
+          });
+      }
     },
   },
 };

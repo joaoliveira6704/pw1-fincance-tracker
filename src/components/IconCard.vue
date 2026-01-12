@@ -4,7 +4,7 @@
     @mouseenter="isHovering = true"
     @mouseleave="isHovering = false"
     class="flex w-fill h-15 py-2 px-3 items-center justify-center gap-4 rounded-md border cursor-pointer"
-    :class="{ [activeClass]: isActive, [disableClass]: !isActive }"
+    :class="{ [activeClass]: isActive }"
   >
     <font-awesome-icon v-if="!isHovering" :icon="icon" class="fa-lg" />
     <label v-if="!isHovering" class="pb-2 truncate cursor-pointer">{{
@@ -22,8 +22,8 @@
 export default {
   data() {
     return {
+      defaultIcon: this.icon,
       isHovering: false,
-      isActive: false,
       activeClass: "border-green-500",
       disableClass: "border-gray-500",
     };
@@ -33,11 +33,18 @@ export default {
       type: String,
       required: true,
     },
+
+    isActive: {
+      type: Boolean,
+    },
   },
   methods: {
     setIcon() {
-      this.isActive = true;
-      this.$emit("setIcon", this.icon);
+      if (!this.isActive) {
+        this.$emit("setIcon", this.icon);
+      } else {
+        this.$emit("setDefault");
+      }
     },
   },
 
