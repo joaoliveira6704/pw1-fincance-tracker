@@ -1,40 +1,29 @@
 <script>
-import { useFriendStore } from "@/stores/friendStore";
-import Swal from "sweetalert2";
-// Import Fuse.js
-import Fuse from "fuse.js";
-// Import New Search Component
-import SearchInput from "@/components/SearchInput.vue";
-
-import {
-  Users,
-  Search, // Icon
-  UserPlus,
-  UserMinus,
-  Heart,
-  Eye,
-  UserCheck,
-} from "lucide-vue-next";
-import { useUsersStore } from "@/stores/userStore";
 import { mapActions, mapState } from "pinia";
+import { useFriendStore } from "@/stores/friendStore";
+import { useUsersStore } from "@/stores/userStore";
+import Swal from "sweetalert2";
+import Fuse from "fuse.js";
+import { Users, Search } from "lucide-vue-next";
+
+// Components
+import SearchInput from "@/components/SearchInput.vue";
+import CommunityTab from "@/components/CommunityTab.vue";
+import UserCard from "@/components/cards/CommunityCard.vue";
 
 export default {
   components: {
-    SearchInput, // Register component
+    SearchInput,
+    CommunityTab,
+    UserCard,
     Users,
     Search,
-    UserPlus,
-    UserMinus,
-    Heart,
-    Eye,
-    UserCheck,
   },
   data() {
     return {
       activeTab: "discover",
       currentUser: null,
-      searchQuery: "", // Add search query state
-
+      searchQuery: "",
       alertIcon: `
         <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"/>
@@ -46,11 +35,13 @@ export default {
   },
   computed: {
     ...mapState(useFriendStore, ["availableUsers", "followers", "following"]),
+
+    // Returns data formatted correctly for display based on active tab
     filteredDisplayList() {
       let sourceData = [];
       let keys = [];
 
-      // 1. Determine Data Source and Search Keys based on Tab
+      // 1. Determine Data Source
       if (this.activeTab === "discover") {
         sourceData = this.availableUsers;
         keys = ["firstName", "lastName", "username"];
@@ -62,20 +53,18 @@ export default {
         keys = ["userName", "userUsername"];
       }
 
-      // 2. If no search, return all data
-      if (!this.searchQuery.trim()) {
-        return sourceData;
+      // 2. Search Logic
+      let results = sourceData;
+      if (this.searchQuery.trim()) {
+        const fuse = new Fuse(sourceData, {
+          keys: keys,
+          threshold: 0.3,
+          includeScore: false,
+        });
+        results = fuse.search(this.searchQuery).map((result) => result.item);
       }
 
-      // 3. Configure Fuse
-      const fuse = new Fuse(sourceData, {
-        keys: keys,
-        threshold: 0.3, // 0.0 = perfect match, 1.0 = match anything
-        includeScore: false,
-      });
-
-      // 4. Return mapped results
-      return fuse.search(this.searchQuery).map((result) => result.item);
+      return results;
     },
   },
   methods: {
@@ -88,7 +77,6 @@ export default {
       "removeFriendship",
     ]),
 
-    // Reset search when switching tabs for better UX
     setTab(tabName) {
       this.activeTab = tabName;
       this.searchQuery = "";
@@ -97,20 +85,48 @@ export default {
     avatarQuery(username) {
       return `https://api.dicebear.com/9.x/identicon/png?seed=${username}&scale=70&backgroundColor=#ffffff`;
     },
+
+    // Helper to normalize data for the UserCard component
+    getUserProps(user) {
+      if (this.activeTab === "discover") {
+        return {
+          name: `${user.firstName} ${user.lastName}`,
+          username: user.username,
+          id: user.id,
+        };
+      } else if (this.activeTab === "following") {
+        return {
+          name: user.friendName,
+          username: user.friendUsername,
+          id: user.id,
+        };
+      } else {
+        // followers
+        return {
+          name: user.userName,
+          username: user.userUsername,
+          id: user.id,
+        };
+      }
+    },
+
     async updateInfo() {
       try {
-        await this.fetchFollowing();
-        await this.fetchFollowers();
-        await this.fetchCommunity();
+        await Promise.all([
+          this.fetchFollowing(),
+          this.fetchFollowers(),
+          this.fetchCommunity(),
+        ]);
       } catch (error) {
         console.error("Error fetching data", error);
       }
     },
 
+    // SweetAlert Logic
     getSwalConfig(title, text, showCancel = false) {
       return {
-        title: title,
-        text: text,
+        title,
+        text,
         iconHtml: this.alertIcon,
         buttonsStyling: false,
         showCancelButton: showCancel,
@@ -138,7 +154,6 @@ export default {
           iconHtml: undefined,
         });
       } catch (error) {
-        console.log(error);
         Swal.fire({
           ...this.getSwalConfig("Erro", "Erro ao adicionar amigo."),
           icon: "error",
@@ -170,11 +185,9 @@ export default {
 
   async created() {
     await this.updateInfo();
-
     try {
       this.currentUser = await this.fetchLoggedUser();
     } catch (e) {
-      this.error = "Failed to load profile.";
       console.error(e);
     }
   },
@@ -249,106 +262,37 @@ export default {
         "
       />
 
-      <div v-if="activeTab === 'discover'" class="space-y-4">
+      <div class="space-y-4 mt-6">
         <div class="flex items-center justify-between mb-4 px-2">
           <h3 class="text-xl font-bold font-ProximaNova">
-            Pessoas Novas
-            <span class="text-(--secondary-text) text-base font-normal"
-              >({{ filteredDisplayList.length }})</span
-            >
-          </h3>
-        </div>
-
-        <div
-          v-if="filteredDisplayList.length > 0"
-          class="grid grid-cols-1 md:grid-cols-2 gap-4"
-        >
-          <div
-            v-for="user in filteredDisplayList"
-            :key="user.id"
-            class="flex items-center justify-between p-4 rounded-xl bg-(--secondary-bg) border border-(--border) hover:border-stackrgreen-500/50 transition-colors"
-          >
-            <div class="flex items-center gap-3">
-              <img
-                class="w-10 h-10 rounded-full border-border border-2"
-                :src="avatarQuery(user.username)"
-                :alt="user.username"
-              />
-              <div class="flex flex-col">
-                <span class="font-semibold text-(--primary-text)">{{
-                  user.firstName + " " + user.lastName
-                }}</span>
-                <span class="text-xs text-(--secondary-text)"
-                  >@{{ user.username }}</span
-                >
-              </div>
-            </div>
-            <button
-              class="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg text-green-600 bg-green-500/10 hover:bg-green-600 hover:text-white transition-colors"
-              @click="addFriend(user)"
-            >
-              <UserPlus class="w-4 h-4" />
-              Adicionar
-            </button>
-          </div>
-        </div>
-
-        <div
-          v-else
-          class="flex flex-col items-center justify-center py-12 bg-(--secondary-bg) rounded-xl border border-(--border) border-dashed"
-        >
-          <Search class="w-12 h-12 text-(--secondary-text) mb-3 opacity-50" />
-          <p class="text-(--secondary-text)">
             {{
-              searchQuery
-                ? "Nenhum utilizador encontrado."
-                : "Não há ninguém novo por agora."
+              activeTab === "discover"
+                ? "Pessoas Novas"
+                : activeTab === "following"
+                ? "A Seguir"
+                : "Seguidores"
             }}
-          </p>
-        </div>
-      </div>
-
-      <div v-if="activeTab === 'following'" class="space-y-4">
-        <div class="flex items-center justify-between mb-4 px-2">
-          <h3 class="text-xl font-bold font-ProximaNova">
-            A Seguir
             <span class="text-(--secondary-text) text-base font-normal"
               >({{ filteredDisplayList.length }})</span
             >
           </h3>
         </div>
+
         <div
           v-if="filteredDisplayList.length > 0"
           class="grid grid-cols-1 md:grid-cols-2 gap-4"
         >
-          <div
+          <UserCard
             v-for="user in filteredDisplayList"
             :key="user.id"
-            class="flex items-center justify-between p-4 rounded-xl bg-(--secondary-bg) border border-(--border) hover:border-stackrgreen-500/50 transition-colors group"
-          >
-            <div class="flex items-center gap-3">
-              <img
-                class="w-10 h-10 rounded-full border-border border-2"
-                :src="avatarQuery(user.friendUsername)"
-                :alt="user.friendUsername"
-              />
-              <div class="flex flex-col">
-                <span class="font-semibold text-(--primary-text)">{{
-                  user.friendName
-                }}</span>
-                <span class="text-xs text-(--secondary-text)"
-                  >@{{ user.friendUsername }}</span
-                >
-              </div>
-            </div>
-            <button
-              class="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg text-red-500 bg-red-500/10 hover:bg-red-500 hover:text-white transition-colors"
-              @click="removeFriend(user.id)"
-            >
-              <UserMinus class="w-4 h-4" />
-              Remover
-            </button>
-          </div>
+            :name="getUserProps(user).name"
+            :username="getUserProps(user).username"
+            :avatar-url="avatarQuery(getUserProps(user).username)"
+            :action-type="activeTab === 'discover' ? 'add' : 'remove'"
+            @action="
+              activeTab === 'discover' ? addFriend(user) : removeFriend(user.id)
+            "
+          />
         </div>
 
         <div
@@ -357,69 +301,14 @@ export default {
         >
           <Users class="w-12 h-12 text-(--secondary-text) mb-3 opacity-50" />
           <p class="text-(--secondary-text)">
-            {{
-              searchQuery
-                ? "Nenhum amigo encontrado."
-                : "Ainda não segues ninguém."
-            }}
-          </p>
-        </div>
-      </div>
-
-      <div v-if="activeTab === 'followers'" class="space-y-4">
-        <div class="flex items-center justify-between mb-4 px-2">
-          <h3 class="text-xl font-bold font-ProximaNova">
-            Seguidores
-            <span class="text-(--secondary-text) text-base font-normal"
-              >({{ filteredDisplayList.length }})</span
+            <span v-if="searchQuery">Nenhum resultado encontrado.</span>
+            <span v-else-if="activeTab === 'discover'"
+              >Não há ninguém novo por agora.</span
             >
-          </h3>
-        </div>
-        <div
-          v-if="filteredDisplayList.length > 0"
-          class="grid grid-cols-1 md:grid-cols-2 gap-4"
-        >
-          <div
-            v-for="user in filteredDisplayList"
-            :key="user.id"
-            class="flex items-center justify-between p-4 rounded-xl bg-(--secondary-bg) border border-(--border) hover:border-stackrgreen-500/50 transition-colors group"
-          >
-            <div class="flex items-center gap-3">
-              <img
-                class="w-10 h-10 rounded-full border-border border-2"
-                :src="avatarQuery(user.userName)"
-                :alt="user.userName"
-              />
-              <div class="flex flex-col">
-                <span class="font-semibold text-(--primary-text)">{{
-                  user.userName
-                }}</span>
-                <span class="text-xs text-secondary-text)"
-                  >@{{ user.userUsername }}</span
-                >
-              </div>
-            </div>
-            <button
-              class="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg text-red-500 bg-red-500/10 hover:bg-red-500 hover:text-white transition-colors"
-              @click="removeFriend(user.id)"
+            <span v-else-if="activeTab === 'following'"
+              >Ainda não segues ninguém.</span
             >
-              <UserMinus class="w-4 h-4" />
-              Remover
-            </button>
-          </div>
-        </div>
-
-        <div
-          v-else
-          class="flex flex-col items-center justify-center py-12 bg-(--secondary-bg) rounded-xl border border-(--border) border-dashed"
-        >
-          <Users class="w-12 h-12 text-(--secondary-text) mb-3 opacity-50" />
-          <p class="text-(--secondary-text)">
-            {{
-              searchQuery
-                ? "Nenhum seguidor encontrado."
-                : "Ainda não tens seguidores."
-            }}
+            <span v-else>Ainda não tens seguidores.</span>
           </p>
         </div>
       </div>
@@ -428,7 +317,7 @@ export default {
 </template>
 
 <style>
-/* ... SweetAlert CSS remains exactly the same ... */
+/* ... SweetAlert CSS remains exactly the same as provided ... */
 .stackr-swal-popup {
   background-color: var(--main-bg) !important;
   border: 1px solid var(--border) !important;

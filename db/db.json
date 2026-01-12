@@ -251,6 +251,16 @@
       "categoryId": 2,
       "walletId": 1,
       "description": "abc"
+    },
+    {
+      "id": "997f",
+      "userId": "1",
+      "name": "Compras de natal",
+      "date": "2026-01-03",
+      "amount": 340,
+      "categoryId": 2,
+      "walletId": 1,
+      "description": "Compras de natal"
     }
   ],
   "friends": [
@@ -627,6 +637,15 @@
       "type": "add",
       "amount": 12,
       "date": "2025-12-23"
+    },
+    {
+      "id": "1a31",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": 340,
+      "date": "2026-01-03T12:31:42.589Z"
     }
   ],
   "categories": [
