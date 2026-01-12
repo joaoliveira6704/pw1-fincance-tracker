@@ -1,6 +1,17 @@
 {
   "users": [
     {
+      "id": "aa6ad8",
+      "username": "testeteste",
+      "firstName": "Teste",
+      "lastName": "Ultimo",
+      "createdAt": "2024-11-24",
+      "income": 0,
+      "isAdmin": false,
+      "objectives": [],
+      "expenses": []
+    },
+    {
       "id": "1",
       "username": "joao",
       "password": "joao",
@@ -31,7 +42,7 @@
       "firstName": "Miguel",
       "lastName": "Neto",
       "createdAt": "2023-04-21",
-      "isAdmin": false,
+      "isAdmin": true,
       "income": 18490,
       "objectives": [
         10,
@@ -47,20 +58,22 @@
     {
       "id": "6ad8",
       "username": "testeteste",
-      "firstName": "Teste",
+      "firstName": "Taste",
       "lastName": "Ultimo",
       "createdAt": "2025-11-24",
       "income": 0,
+      "isAdmin": false,
       "objectives": [],
       "expenses": []
     },
     {
       "id": "d7b4",
       "username": "teste2",
-      "firstName": "Teste",
+      "firstName": "teste",
       "lastName": "Segundo",
       "createdAt": "2025-11-24",
       "income": 0,
+      "isAdmin": false,
       "objectives": [],
       "expenses": []
     },
@@ -71,6 +84,7 @@
       "lastName": "admin",
       "createdAt": "2025-11-24",
       "income": 0,
+      "isAdmin": false,
       "objectives": [],
       "expenses": []
     },
@@ -82,51 +96,6 @@
       "password": "joao",
       "email": "joao",
       "createdAt": "2025-11-24",
-      "isAdmin": false,
-      "income": 0,
-      "preferences": {
-        "currency": "EUR",
-        "theme": "light"
-      }
-    },
-    {
-      "id": "92df",
-      "firstName": "Abc",
-      "lastName": "abc",
-      "username": "acb",
-      "password": "acb",
-      "email": "abc",
-      "createdAt": "2025-11-24",
-      "isAdmin": false,
-      "income": 0,
-      "preferences": {
-        "currency": "EUR",
-        "theme": "light"
-      }
-    },
-    {
-      "id": "61b7",
-      "firstName": "Joao",
-      "lastName": "Oliveira",
-      "username": "diacidos",
-      "password": "jOAOPEDRO04*",
-      "email": "joaopedrooliveira6704@gmail.com",
-      "createdAt": "2025-12-04",
-      "isAdmin": false,
-      "income": 0,
-      "preferences": {
-        "currency": "EUR",
-        "theme": "light"
-      }
-    },
-    {
-      "id": "6629",
-      "firstName": "adwas",
-      "lastName": "adwas",
-      "username": "",
-      "password": "",
-      "email": "",
-      "createdAt": "2025-12-16",
       "isAdmin": false,
       "income": 0,
       "preferences": {
@@ -162,12 +131,30 @@
       "color": "#00c244",
       "userId": "1",
       "isArchived": false
+    },
+    {
+      "id": "4cce",
+      "name": "abc",
+      "balance": 1122,
+      "currency": "EUR",
+      "color": "#4ddf7b",
+      "userId": "1",
+      "isArchived": false
+    },
+    {
+      "id": "4d4f",
+      "name": "qwe",
+      "balance": 12,
+      "currency": "EUR",
+      "color": "#f536bc",
+      "userId": "1",
+      "isArchived": false
     }
   ],
   "expenses": [
     {
       "id": "ae60",
-      "userId": "92df",
+      "userId": null,
       "date": "1932-12-03",
       "name": "abc",
       "amount": 34242,
@@ -177,7 +164,7 @@
     },
     {
       "id": "9b22",
-      "userId": "92df",
+      "userId": null,
       "name": "abc",
       "date": "1993-12-02",
       "amount": 12,
@@ -187,7 +174,7 @@
     },
     {
       "id": "da23",
-      "userId": "92df",
+      "userId": null,
       "name": "compra",
       "date": "1992-12-02",
       "amount": 2,
@@ -197,7 +184,7 @@
     },
     {
       "id": "1c8b",
-      "userId": "92df",
+      "userId": null,
       "name": "ab",
       "date": "1992-12-02",
       "amount": 2,
@@ -237,7 +224,7 @@
     },
     {
       "id": "6936",
-      "userId": "61b7",
+      "userId": null,
       "name": "abc",
       "date": "2025-12-04",
       "amount": 154,
@@ -352,12 +339,12 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "16da8768-95c5-43e4-9b87-b920665e5b8a"
+      "token": "424184ea-7130-4d7e-9f26-0972bc50c90a"
     },
     {
       "id": "92c6",
       "userId": "2",
-      "token": "7a6d2cb5-e0c2-4faf-b334-fb7489dc0e52"
+      "token": "1263e978-4c8b-4e27-a89c-aae68d3ddc6d"
     },
     {
       "id": "a2ab",
@@ -376,13 +363,13 @@
     },
     {
       "id": "d0ac",
-      "userId": "92df",
+      "userId": null,
       "token": "4fd38099-5661-4f7f-a4ed-4c1caf5bc74a"
     },
     {
       "id": "4d6e",
-      "userId": "61b7",
-      "token": "8d19afb4-65b4-412c-82a1-df83cb26e85e"
+      "userId": null,
+      "token": "96dfa1db-d0e9-43c4-b70f-052a0c38ee75"
     }
   ],
   "objectives": [
@@ -659,6 +646,58 @@
       "type": "add",
       "amount": 340,
       "date": "2026-01-03T12:31:42.589Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "icon": "fa-solid fa-burger",
+      "label": "Alimentação"
+    },
+    {
+      "id": "2",
+      "icon": "fa-solid fa-bus-simple",
+      "label": "Transporte"
+    },
+    {
+      "id": "3",
+      "icon": "fa-solid fa-file-invoice-dollar",
+      "label": "Contas & Utilidades"
+    },
+    {
+      "id": "4",
+      "icon": "fa-solid fa-masks-theater",
+      "label": "Lazer & Entretenimento"
+    },
+    {
+      "id": "5",
+      "icon": "fa-solid fa-file-medical",
+      "label": "Saúde"
+    },
+    {
+      "id": "6",
+      "icon": "fa-solid fa-cart-shopping",
+      "label": "Compras"
+    },
+    {
+      "id": "7",
+      "icon": "fa-solid fa-graduation-cap",
+      "label": "Educação"
+    },
+    {
+      "id": "8",
+      "icon": "fa-solid fa-hand-holding-hand",
+      "label": "Cuidados Pessoais"
+    },
+    {
+      "id": "9",
+      "icon": "fa-solid fa-plane",
+      "label": "Viagens"
+    },
+    {
+      "id": "10",
+      "icon": "fa-solid fa-globe",
+      "label": "Outros"
     }
   ]
 }

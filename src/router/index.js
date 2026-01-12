@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
+import { getUserId } from "@/utils/session";
+import * as api from "@/api/api.js";
+
+const BASE_URL = "http://localhost:3000";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -78,6 +82,15 @@ const router = createRouter({
           },
           component: () => import("@/views/FriendsView.vue"),
         },
+        {
+          path: "admin",
+          name: "admin",
+          meta: {
+            title: "Admin - Stackr",
+            requiresAdmin: true,
+          },
+          component: () => import("@/views/AdminView.vue"),
+        },
       ],
     },
     {
@@ -118,6 +131,16 @@ router.beforeEach(async (to, from, next) => {
       if (isValid) {
         return next({ path: "/main" });
       }
+    }
+  }
+
+  if (to.meta.requiresAdmin) {
+    const userId = getUserId();
+    const user = await api.get(BASE_URL, `users/${userId}`);
+    const isAdmin = user.isAdmin;
+
+    if (!isAdmin) {
+      return next({ path: "/main" });
     }
   }
   document.title = to.meta.title;
