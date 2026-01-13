@@ -7,7 +7,6 @@ const BASE_URL = "http://localhost:3000";
 export const useCategoryStore = defineStore("categories", {
   state: () => ({
     categories: [],
-    loading: false,
   }),
   getters: {
     getCategories: (state) => state.categories,
@@ -16,15 +15,39 @@ export const useCategoryStore = defineStore("categories", {
   },
   actions: {
     async fetchCategories() {
-      this.loading = true;
       try {
         const data = await api.get(BASE_URL, "categories");
         this.categories = data;
       } catch (e) {
         console.error("Erro ao buscar categorias:", e);
-      } finally {
-        this.loading = false;
       }
+    },
+
+    async createCategory(data) {
+      try {
+        await api.post(BASE_URL, "categories", data);
+      } catch (e) {
+        console.error("Erro ao criar categorias:", e);
+      } finally {
+        this.categories.push(data);
+      }
+    },
+
+    async removeCategory(id) {
+      try {
+        await api.remove(BASE_URL, `categories/${id}`);
+      } catch (e) {
+        console.error("Erro ao criar categorias:", e);
+      } finally {
+        this.categories = this.categories.filter(
+          (category) => category.id !== id
+        );
+      }
+    },
+
+    checkDuplicate(string) {
+      console.log(this.categories.some((item) => item.label == string));
+      return this.categories.some((item) => item.label == string);
     },
   },
 });

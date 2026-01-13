@@ -58,16 +58,10 @@ export const confirmAction = async (title, text) => {
  * Alerta de Input de Quantia (Depósito/Levantamento)
  */
 export const inputAmountAlert = async (moveType, actionText) => {
-  const actionMap = {
-    contribute: "Contribuir",
-    deposit: "Depositar",
-    withdraw: "Levantar",
-  };
-
   return Swal.fire({
     ...baseConfig,
-    title: actionMap[moveType],
-    text: `Insira a quantia a ${actionText}:`,
+    title: moveType === "deposit" ? "Depósito" : "Levantamento",
+    text: `Insira a quantia a ${actionText}`,
     input: "number",
     inputAttributes: {
       min: "0",
