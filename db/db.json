@@ -13,8 +13,8 @@
     },
     {
       "id": "1",
-      "username": "joao888",
-      "password": "joao",
+      "username": "joao",
+      "password": "",
       "firstName": "João",
       "lastName": "Oliveira",
       "createdAt": "2025-05-24",
@@ -90,14 +90,6 @@
   ],
   "wallets": [
     {
-      "id": "85a1fa03-1f98-41b4-a9d3-e1b50dc71356",
-      "name": "abc",
-      "balance": 31,
-      "color": "#4ddf7b",
-      "userId": "1",
-      "isArchived": false
-    },
-    {
       "id": "449b95db-f0de-4f7f-9205-c69eaf037857",
       "name": "Fundo de Emergência",
       "balance": 60,
@@ -120,6 +112,14 @@
       "balance": 12,
       "currency": "EUR",
       "color": "#f536bc",
+      "userId": "1",
+      "isArchived": false
+    },
+    {
+      "id": "fde9bcf8-5d32-4dcf-a6e4-da80c23a8e76",
+      "name": "teste",
+      "balance": 12,
+      "color": "#3dff7b",
       "userId": "1",
       "isArchived": false
     }
@@ -334,7 +334,7 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "424184ea-7130-4d7e-9f26-0972bc50c90a"
+      "token": "42bd6d54-3550-4fd7-bd19-b5d662a47bd7"
     },
     {
       "id": "92c6",
@@ -371,13 +371,12 @@
     {
       "id": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
       "name": "Teste",
-      "targetAmount": "14",
-      "deadline": "2026-01-20",
+      "targetAmount": 150,
+      "deadline": "2029-01-20",
       "description": "Teste!",
       "ownerId": "1",
       "isShared": false,
       "memberIds": [
-        "ea15",
         "4dbb"
       ],
       "contributions": [
@@ -385,30 +384,16 @@
           "userId": "2",
           "amount": 20,
           "timestamp": "2026-01-12T03:08:51.745Z"
-        }
-      ]
-    },
-    {
-      "id": "a2efd77d-968f-493e-8c57-50b4083ef246",
-      "name": "Teste",
-      "targetAmount": 90,
-      "deadline": "2026-01-15",
-      "description": "teste",
-      "ownerId": "1",
-      "memberIds": [
-        "ea15",
-        "4dbb"
-      ],
-      "contributions": [
-        {
-          "userId": "1",
-          "amount": 50,
-          "timestamp": "2026-01-12T01:52:47.079Z"
         },
         {
-          "userId": "2",
-          "amount": 200,
-          "timestamp": "2026-01-12T03:08:36.922Z"
+          "userId": "1",
+          "amount": 2,
+          "timestamp": "2026-01-13T15:42:39.954Z"
+        },
+        {
+          "userId": "1",
+          "amount": 12,
+          "timestamp": "2026-01-13T15:42:59.511Z"
         }
       ]
     }
@@ -1617,48 +1602,132 @@
       "type": "deposit",
       "amount": 20,
       "date": "2026-01-13T14:41:13.037Z"
-    }
-  ],
-  "categories": [
-    {
-      "id": "1",
-      "label": "Alimentação"
     },
     {
-      "id": "2",
-      "label": "Transporte"
+      "id": "b479",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "85a1fa03-1f98-41b4-a9d3-e1b50dc71356",
+      "type": "deposit",
+      "amount": 2,
+      "date": "2026-01-13T15:34:39.981Z"
     },
     {
-      "id": "3",
-      "label": "Contas & Utilidades"
+      "id": "d101",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "85a1fa03-1f98-41b4-a9d3-e1b50dc71356",
+      "type": "withdraw",
+      "amount": 2,
+      "date": "2026-01-13T15:34:42.410Z"
     },
     {
-      "id": "4",
-      "label": "Lazer & Entretenimento"
+      "id": "d374",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "449b95db-f0de-4f7f-9205-c69eaf037857",
+      "type": "deposit",
+      "amount": 2,
+      "date": "2026-01-13T15:34:43.862Z"
     },
     {
-      "id": "5",
-      "label": "Saúde"
+      "id": "27a8",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "449b95db-f0de-4f7f-9205-c69eaf037857",
+      "type": "withdraw",
+      "amount": 2,
+      "date": "2026-01-13T15:34:45.091Z"
     },
     {
-      "id": "6",
-      "label": "Compras"
+      "id": "d0e1",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "4cce",
+      "type": "deposit",
+      "amount": 1,
+      "date": "2026-01-13T15:34:46.925Z"
     },
     {
-      "id": "7",
-      "label": "Educação"
+      "id": "40a5",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "4cce",
+      "type": "withdraw",
+      "amount": 1,
+      "date": "2026-01-13T15:34:48.031Z"
     },
     {
-      "id": "8",
-      "label": "Cuidados Pessoais"
+      "id": "c4f8",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "85a1fa03-1f98-41b4-a9d3-e1b50dc71356",
+      "type": "remove",
+      "amount": 0,
+      "date": "2026-01-13T15:34:51.313Z"
     },
     {
-      "id": "9",
-      "label": "Viagens"
+      "id": "aa90",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "fde9bcf8-5d32-4dcf-a6e4-da80c23a8e76",
+      "type": "create",
+      "amount": 12,
+      "date": "2026-01-13T15:41:12.618Z"
     },
     {
-      "id": "10",
-      "label": "Outros"
+      "id": "4af5",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-13T15:42:29.260Z"
+    },
+    {
+      "id": "6a94",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "contribute",
+      "amount": 2,
+      "date": "2026-01-13T15:42:39.974Z"
+    },
+    {
+      "id": "04e8",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-13T15:42:53.018Z"
+    },
+    {
+      "id": "08bc",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "contribute",
+      "amount": 12,
+      "date": "2026-01-13T15:42:59.552Z"
+    },
+    {
+      "id": "fcfa",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "a2efd77d-968f-493e-8c57-50b4083ef246",
+      "type": "remove",
+      "amount": 0,
+      "date": "2026-01-13T15:43:08.792Z"
+    },
+    {
+      "id": "b362",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-13T15:50:57.003Z"
     }
   ],
   "categories": [

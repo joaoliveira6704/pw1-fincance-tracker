@@ -1,94 +1,199 @@
 <script>
+import Button from "../Button.vue";
+import RegisterInput from "../RegisterInput.vue";
+import { X, Wallet, Palette, PlusCircle, AlertCircle } from "lucide-vue-next";
+import { toast } from "@/utils/swal";
+
 export default {
-  name: "EditCategoryModal",
-  props: {
-    isOpen: {
-      type: Boolean,
-      required: true,
+  name: "CreateWalletModal",
+  components: {
+    Button,
+    RegisterInput,
+    X,
+    Wallet,
+    Palette,
+    PlusCircle,
+    AlertCircle,
+  },
+  emits: ["create-wallet"],
+  data() {
+    return {
+      isOpen: false,
+      isSubmitted: false,
+      error: null,
+
+      // Dados do formulário centralizados
+      form: {
+        name: "",
+        initialAmount: "",
+        color: "#4ddf7b", // Cor stackrgreen padrão
+      },
+    };
+  },
+  computed: {
+    nameValid() {
+      if (!this.isSubmitted && !this.form.name) return null;
+      return this.form.name.length > 0;
+    },
+    amountValid() {
+      if (!this.isSubmitted && this.form.initialAmount === "") return null;
+      return this.form.initialAmount >= 0;
     },
   },
-  components: {},
-  data() {
-    return {};
+  methods: {
+    openModal() {
+      this.isOpen = true;
+      this.error = null;
+    },
+
+    closeModal() {
+      this.isOpen = false;
+      this.resetForm();
+    },
+
+    resetForm() {
+      this.form = {
+        name: "",
+        initialAmount: "",
+        color: "#4ddf7b",
+      };
+      this.isSubmitted = false;
+      this.error = null;
+    },
+
+    submitForm() {
+      this.isSubmitted = true;
+
+      if (!this.form.name || this.form.initialAmount === "") {
+        this.error = "Por favor, preencha os campos obrigatórios.";
+        return;
+      }
+
+      // Emitir os dados para o componente pai
+      this.$emit("create-wallet", { ...this.form });
+
+      toast.fire({
+        icon: "success",
+        title: "Carteira criada com sucesso!",
+      });
+
+      this.closeModal();
+    },
   },
-  methods: {},
 };
 </script>
 
 <template>
-  <Transition name="fade">
-    <div
-      v-if="isOpen"
-      class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-      @click.self="closeModal"
-    >
-      <button @click="" class="absolute top-4 right-4">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+  <div>
+    <Button @click="openModal" variant="fill" class="gap-2">
+      <PlusCircle class="w-5 h-5" />
+      Nova Carteira
+    </Button>
+
+    <Transition name="fade">
+      <div
+        v-if="isOpen"
+        class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+        @click.self="closeModal"
+      >
+        <div
+          class="relative w-full max-w-md bg-secondary-bg rounded-3xl shadow-2xl border border-border overflow-hidden animate-scale-in"
         >
-          <div class="flex items-center gap-2">
-            <div class="p-2 bg-stackrgreen-500/10 rounded-lg">
-              <Wallet class="w-5 h-5 text-stackrgreen-500" />
+          <div
+            class="flex justify-between items-center p-6 border-b border-border bg-main-bg"
+          >
+            <div class="flex items-center gap-2">
+              <div class="p-2 bg-stackrgreen-500/10 rounded-lg">
+                <Wallet class="w-5 h-5 text-stackrgreen-500" />
+              </div>
+              <h2 class="text-xl font-ProximaNova font-bold text-primary-text">
+                Nova Carteira
+              </h2>
             </div>
-            <h2 class="text-xl font-ProximaNova font-bold text-primary-text">
-              Nova Carteira
-            </h2>
-          </div>
-          <button
-            @click="closeModal"
-            class="p-2 text-secondary-text hover:text-primary-text hover:bg-main-bg rounded-full transition-colors"
-          >
-          <input
-            id="walletName"
-            type="text"
-            class="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-inner-circle focus:border-stackr-green outline-none"
-            required
-          />
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <label for="initialAmount" class="text-sm font-medium"
-            >Quantidade Inicial</label
-          >
-          <input
-            id="initialAmount"
-            type="number"
-            step="0.01"
-            min="0"
-            class="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-          />
-        </div>
-
-        <div class="flex flex-col gap-1">
-          <label for="walletColor" class="text-sm font-medium"
-            >Cor da Carteira</label
-          >
-          <div class="flex items-center gap-3">
-            <input
-              id="walletColor"
-              type="color"
-              v-model="form.color"
-              class="h-10 w-20 rounded cursor-pointer"
-            />
+            <button
+              @click="closeModal"
+              class="p-2 text-secondary-text hover:text-primary-text hover:bg-black/5 rounded-full transition-colors"
+            >
+              <X class="w-6 h-6" />
+            </button>
           </div>
 
-        <div class="flex justify-end gap-3 mt-4">
-          <Button variant="outline" @click=""> Cancelar </Button>
-          <Button
-            variant="fill"
-            type="submit"
-            class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
-          >
-            Criar Carteira
-          </Button>
+          <form @submit.prevent="submitForm" class="p-8 space-y-6">
+            <div class="space-y-4">
+              <RegisterInput
+                label-text="Nome da Carteira"
+                input-type="text"
+                v-model="form.name"
+                placeholder="Ex: Minha conta, Cofre..."
+                id="walletName"
+                :is-valid="nameValid"
+              />
+
+              <RegisterInput
+                label-text="Saldo Inicial (€)"
+                input-type="number"
+                v-model="form.initialAmount"
+                id="initialAmount"
+                placeholder="0.00"
+                step="0.01"
+                :is-valid="amountValid"
+              />
+
+              <div class="flex flex-col gap-2">
+                <label
+                  class="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-secondary-text ml-1"
+                >
+                  <Palette class="w-3 h-3" /> Cor de Identificação
+                </label>
+                <div
+                  class="flex items-center gap-4 bg-main-bg p-3 rounded-xl border border-border"
+                >
+                  <input
+                    id="walletColor"
+                    type="color"
+                    v-model="form.color"
+                    class="h-10 w-10 rounded-lg cursor-pointer bg-transparent border-none"
+                  />
+                  <span
+                    class="text-sm font-mono font-bold text-primary-text uppercase"
+                  >
+                    {{ form.color }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div
+              v-if="error"
+              class="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 text-red-500 rounded-lg text-sm font-bold font-ProximaNova"
+            >
+              <AlertCircle class="w-4 h-4" />
+              <span>{{ error }}</span>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-border">
+              <Button
+                variant="outline"
+                type="button"
+                @click="closeModal"
+                class="flex-1"
+              >
+                Cancelar
+              </Button>
+              <Button
+                variant="fill"
+                type="submit"
+                class="flex-[2]"
+                :disabled="!form.name"
+              >
+                Criar Carteira
+              </Button>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
-  </Transition>
+      </div>
+    </Transition>
+  </div>
 </template>
 
 <style scoped>
@@ -113,5 +218,14 @@ export default {
 }
 .animate-scale-in {
   animation: scale-in 0.2s ease-out forwards;
+}
+
+/* Garante que o input color não tenha bordas feias em alguns browsers */
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 8px;
 }
 </style>
