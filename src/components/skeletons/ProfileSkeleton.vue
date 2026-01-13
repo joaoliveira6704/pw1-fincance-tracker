@@ -6,7 +6,7 @@ export default {
 
 <template>
   <div
-    class="w-full mx-auto overflow-hidden border shadow-lg"
+    class="w-full mx-auto overflow-hidden shadow-lg"
     style="
       background-color: var(--main-bg-color);
       border-color: var(--border-color);
@@ -19,8 +19,7 @@ export default {
         class="flex flex-col sm:flex-row items-center sm:items-end -mt-12 mb-6"
       >
         <div
-          class="h-24 w-24 rounded-full border-4 animate-pulse bg-gray-500/20 z-10"
-          style="border-color: var(--main-bg-color)"
+          class="h-24 w-24 rounded-full border-4 border-border animate-pulse bg-gray-500/20 z-10"
         ></div>
 
         <div
@@ -37,12 +36,11 @@ export default {
         </div>
       </div>
 
-      <hr class="border-t my-4" style="border-color: var(--border-color)" />
+      <hr class="border-t border-border my-4" />
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
         <div
-          class="p-4 rounded-xl border flex items-center gap-3 h-20"
-          style="border-color: var(--border-color)"
+          class="p-4 rounded-xl border border-border flex items-center gap-3 h-20"
         >
           <div class="size-8 rounded-full animate-pulse bg-gray-500/20"></div>
           <div class="flex-1 space-y-2">
@@ -52,8 +50,7 @@ export default {
         </div>
 
         <div
-          class="p-4 rounded-xl border flex items-center gap-3 h-20"
-          style="border-color: var(--border-color)"
+          class="p-4 rounded-xl border border-border flex items-center gap-3 h-20"
         >
           <div class="size-8 rounded-full animate-pulse bg-gray-500/20"></div>
           <div class="flex-1 space-y-2">
@@ -71,16 +68,13 @@ export default {
 
         <div class="flex flex-wrap gap-2">
           <div
-            class="h-8 w-24 rounded-full animate-pulse bg-gray-500/20 border"
-            style="border-color: var(--border-color)"
+            class="h-8 w-24 rounded-full animate-pulse bg-gray-500/20 border border-border"
           ></div>
           <div
-            class="h-8 w-20 rounded-full animate-pulse bg-gray-500/20 border"
-            style="border-color: var(--border-color)"
+            class="h-8 w-20 rounded-full animate-pulse bg-gray-500/20 border border-border"
           ></div>
           <div
-            class="h-8 w-28 rounded-full animate-pulse bg-gray-500/20 border"
-            style="border-color: var(--border-color)"
+            class="h-8 w-28 rounded-full animate-pulse bg-gray-500/20 border border-border"
           ></div>
         </div>
       </div>

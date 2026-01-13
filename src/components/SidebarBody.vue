@@ -41,7 +41,7 @@ export default {
 
 <template>
   <div
-    class="flex flex-col justify-between px-1 py-3 w-full h-full text-center border-b-2 border-t-2"
+    class="flex flex-col justify-between px-2 py-3 w-full h-full text-center border-b-2 border-t-2"
     :class="isOpen ? 'items-left' : 'items-center'"
   >
     <nav class="flex flex-col">

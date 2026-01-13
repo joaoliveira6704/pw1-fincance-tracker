@@ -2,27 +2,17 @@
   "users": [
     {
       "id": "1",
-      "username": "joao",
+      "username": "joao888",
       "password": "joao",
       "firstName": "João",
       "lastName": "Oliveira",
       "createdAt": "2025-05-24",
       "isAdmin": true,
-      "income": 12000,
-      "objectives": [
-        1,
-        2
-      ],
-      "expenses": [
-        1,
-        3,
-        4,
-        5
-      ],
-      "friends": [
-        "miguel",
-        "josé"
-      ]
+      "income": 3000,
+      "preferences": {
+        "private": true,
+        "monthlyLimit": 13723
+      }
     },
     {
       "id": "2",
@@ -33,16 +23,10 @@
       "createdAt": "2023-04-21",
       "isAdmin": false,
       "income": 18490,
-      "objectives": [
-        10,
-        22
-      ],
-      "expenses": [
-        12,
-        31,
-        41,
-        51
-      ]
+      "preferences": {
+        "private": true,
+        "monthlyLimit": 2000
+      }
     },
     {
       "id": "6ad8",
@@ -133,35 +117,85 @@
         "currency": "EUR",
         "theme": "light"
       }
+    },
+    {
+      "id": "3040",
+      "firstName": "Teste",
+      "lastName": "teste",
+      "username": "teste123",
+      "password": "$2b$10$9NnwjCw/okIFqVdzQvpvwefeSMf7/DqvkiS6q62RQcMsbWiCdY8aO",
+      "email": "teste@teste.com",
+      "createdAt": "2026-01-12",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "currency": "EUR",
+        "theme": "light"
+      }
+    },
+    {
+      "id": "bb7f",
+      "firstName": "Teste",
+      "lastName": "teste",
+      "username": "teste123",
+      "password": "$2b$10$vAEG1tAEQSggSpkzY9Dtmutr5LYpFV/awYQLDe57fqTqt20mHdFT6",
+      "email": "teste@teste.com",
+      "createdAt": "2026-01-12",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "currency": "EUR",
+        "theme": "light"
+      }
+    },
+    {
+      "id": "3d56",
+      "firstName": "Joao",
+      "lastName": "Oliveira",
+      "username": "teste124",
+      "password": {},
+      "email": "teste@teste.com",
+      "createdAt": "2026-01-12",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "currency": "EUR",
+        "theme": "light"
+      }
+    },
+    {
+      "id": "fce0",
+      "firstName": "Joao",
+      "lastName": "o",
+      "username": "teste99",
+      "password": "$2b$10$6u.jlAe92PQRaLPaAn.i7uaBDPtGf28BMnldHot75GYx2snNOUWOK",
+      "email": "joao12@gma.com",
+      "createdAt": "2026-01-12",
+      "isAdmin": false,
+      "income": 0,
+      "preferences": {
+        "private": false,
+        "monthlyLimit": 4426
+      }
     }
   ],
   "wallets": [
     {
-      "id": "bad1",
+      "id": "85a1fa03-1f98-41b4-a9d3-e1b50dc71356",
       "name": "abc",
-      "balance": 111,
-      "currency": "EUR",
+      "balance": 31,
       "color": "#4ddf7b",
       "userId": "1",
       "isArchived": false
     },
     {
-      "id": "3feb",
+      "id": "449b95db-f0de-4f7f-9205-c69eaf037857",
       "name": "Fundo de Emergência",
-      "balance": 13000,
-      "currency": "EUR",
-      "color": "#e04ddb",
+      "balance": 60,
+      "color": "#e04daa",
       "userId": "1",
-      "isArchived": false
-    },
-    {
-      "id": "15de",
-      "name": "1230",
-      "balance": 22,
-      "currency": "EUR",
-      "color": "#00c244",
-      "userId": "1",
-      "isArchived": false
+      "isArchived": false,
+      "currency": "EUR"
     }
   ],
   "expenses": [
@@ -172,8 +206,7 @@
       "name": "abc",
       "amount": 34242,
       "description": "Compras no pingo-doce",
-      "categoryId": 2,
-      "walletId": 1
+      "categoryId": 2
     },
     {
       "id": "9b22",
@@ -182,7 +215,6 @@
       "date": "1993-12-02",
       "amount": 12,
       "categoryId": 2,
-      "walletId": 1,
       "description": "jsxjsjasjxnajxas"
     },
     {
@@ -192,7 +224,6 @@
       "date": "1992-12-02",
       "amount": 2,
       "categoryId": 2,
-      "walletId": 1,
       "description": "sdfefef"
     },
     {
@@ -202,38 +233,7 @@
       "date": "1992-12-02",
       "amount": 2,
       "categoryId": 2,
-      "walletId": 1,
       "description": "efef"
-    },
-    {
-      "id": "7e97",
-      "userId": "1",
-      "name": "compras",
-      "date": "1992-12-03",
-      "amount": 200,
-      "categoryId": 2,
-      "walletId": 1,
-      "description": "compras na nike"
-    },
-    {
-      "id": "842b",
-      "userId": "1",
-      "name": "Compras",
-      "date": "2025-11-20",
-      "amount": 240,
-      "categoryId": 2,
-      "walletId": 1,
-      "description": "jwjdwdjwd"
-    },
-    {
-      "id": "8405",
-      "userId": "1",
-      "name": "Abc",
-      "date": "2025-12-09",
-      "amount": 240,
-      "categoryId": 2,
-      "walletId": 1,
-      "description": "gahb"
     },
     {
       "id": "6936",
@@ -242,71 +242,86 @@
       "date": "2025-12-04",
       "amount": 154,
       "categoryId": 2,
-      "walletId": 1,
       "description": "efesfsfsef"
-    },
-    {
-      "id": "be33",
-      "userId": "1",
-      "name": "Compras",
-      "date": "2025-10-14",
-      "amount": 14000,
-      "categoryId": 2,
-      "walletId": 1,
-      "description": "Carro"
     },
     {
       "id": "28ce",
       "userId": "1",
-      "name": "123",
+      "name": "teste",
       "date": "1998-03-04",
-      "amount": 123394949,
-      "categoryId": 2,
-      "walletId": 1,
-      "description": "abc"
+      "amount": 1503,
+      "categoryId": "6",
+      "description": "teste",
+      "category": "Compras"
     },
     {
-      "id": "997f",
+      "id": "189e",
       "userId": "1",
-      "name": "Compras de natal",
+      "name": "ddsd",
       "date": "2026-01-03",
-      "amount": 340,
-      "categoryId": 2,
+      "amount": 12,
+      "categoryId": 222,
+      "description": ""
+    },
+    {
+      "id": "0a18",
+      "userId": "1",
+      "name": "Teste",
+      "date": "2026-01-04",
+      "amount": 123,
+      "categoryId": "5",
+      "description": "sdsads"
+    },
+    {
+      "id": "75c8",
+      "userId": "1",
+      "name": "Abc",
+      "date": "2025-12-05",
+      "amount": 900,
+      "categoryId": "3",
+      "description": ""
+    },
+    {
+      "id": "1282",
+      "userId": "1",
+      "name": "Teste",
+      "date": "2026-01-05",
+      "amount": 12,
+      "categoryId": "7",
+      "description": "Teste"
+    },
+    {
+      "id": "67009bfa-0735-40d3-8174-5618294bc0d8",
+      "userId": "1",
+      "name": "teste",
+      "date": "2026-01-06",
+      "amount": 111,
+      "categoryId": "1",
+      "description": "teste"
+    },
+    {
+      "id": "9aece1e0-ed5d-4c38-9ed1-45e7c6757065",
+      "userId": "1",
+      "name": "Testes",
+      "date": "2026-01-12",
+      "amount": 120,
+      "categoryId": "6",
       "walletId": 1,
-      "description": "Compras de natal"
+      "description": "teste\n",
+      "category": "Compras"
+    },
+    {
+      "id": "937af213-c92e-4aab-af62-799edd09016f",
+      "userId": "1",
+      "name": "Teste",
+      "date": "2026-01-13",
+      "amount": 123,
+      "categoryId": "4",
+      "walletId": 1,
+      "description": "Teste\n"
     }
   ],
   "friends": [
-    {
-      "id": "d48f",
-      "userId": "1",
-      "userName": "João Oliveira",
-      "userUsername": "joao",
-      "friendId": "6ad8",
-      "friendName": "Teste Ultimo",
-      "friendUsername": "testeteste",
-      "addedAt": "2025-12-23"
-    },
-    {
-      "id": "6ede",
-      "userId": "1",
-      "userName": "João Oliveira",
-      "userUsername": "joao",
-      "friendId": "6857",
-      "friendName": "admin admin",
-      "friendUsername": "admin",
-      "addedAt": "2025-12-23"
-    },
-    {
-      "id": "d77f",
-      "userId": "2",
-      "userName": "Miguel Neto",
-      "userUsername": "miguel",
-      "friendId": "1",
-      "friendName": "João Oliveira",
-      "friendUsername": "joao",
-      "addedAt": "2025-12-23"
-    },
     {
       "id": "55b2",
       "userId": "2",
@@ -318,46 +333,86 @@
       "addedAt": "2025-12-23"
     },
     {
-      "id": "cfca",
+      "id": "59eb",
       "userId": "1",
       "userName": "João Oliveira",
       "userUsername": "joao",
-      "friendId": "2",
-      "friendName": "Miguel Neto",
-      "friendUsername": "miguel",
-      "addedAt": "2025-12-23"
+      "friendId": "92df",
+      "friendName": "Abc abc",
+      "friendUsername": "acb",
+      "addedAt": "2026-01-08"
     },
     {
-      "id": "6d7b",
+      "id": "6c3a",
+      "userId": "1",
+      "userName": "João Oliveira",
+      "userUsername": "joao",
+      "friendId": "61b7",
+      "friendName": "Joao Oliveira",
+      "friendUsername": "diacidos",
+      "addedAt": "2026-01-08"
+    },
+    {
+      "id": "598b",
       "userId": "1",
       "userName": "João Oliveira",
       "userUsername": "joao",
       "friendId": "d7b4",
       "friendName": "Teste Segundo",
       "friendUsername": "teste2",
-      "addedAt": "2025-12-23"
+      "addedAt": "2026-01-08"
     },
     {
-      "id": "f0f1",
+      "id": "ea15",
+      "userId": "2",
+      "userName": "Miguel Neto",
+      "userUsername": "miguel",
+      "friendId": "1",
+      "friendName": "João Oliveira",
+      "friendUsername": "joao",
+      "addedAt": "2026-01-08"
+    },
+    {
+      "id": "4dbb",
+      "userId": "6857",
+      "userName": "admin admin",
+      "userUsername": "admin",
+      "friendId": "1",
+      "friendName": "João Oliveira",
+      "friendUsername": "joao",
+      "addedAt": "2026-01-08"
+    },
+    {
+      "id": "0b0a",
       "userId": "1",
       "userName": "João Oliveira",
       "userUsername": "joao",
-      "friendId": "38e59c19-50e1-4b18-affc-49f82932ffef",
-      "friendName": "joao joao",
-      "friendUsername": "joao123",
-      "addedAt": "2025-12-27"
+      "friendId": "2",
+      "friendName": "Miguel Neto",
+      "friendUsername": "miguel",
+      "addedAt": "2026-01-08"
+    },
+    {
+      "id": "24f9",
+      "userId": "1",
+      "userName": "João Oliveira",
+      "userUsername": "joao",
+      "friendId": "6857",
+      "friendName": "admin admin",
+      "friendUsername": "admin",
+      "addedAt": "2026-01-08"
     }
   ],
   "userSessions": [
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "16da8768-95c5-43e4-9b87-b920665e5b8a"
+      "token": "c47bc0c3-c739-4b10-a391-190d28272ea0"
     },
     {
       "id": "92c6",
       "userId": "2",
-      "token": "7a6d2cb5-e0c2-4faf-b334-fb7489dc0e52"
+      "token": "5add1eb2-0439-4078-94a2-06336058de4e"
     },
     {
       "id": "a2ab",
@@ -367,7 +422,7 @@
     {
       "id": "2184",
       "userId": "6857",
-      "token": "83feaed6-a019-48dd-9f07-a64bbd875f2c"
+      "token": "52da8bd4-f67d-4563-9d1f-0b2a72888f23"
     },
     {
       "id": "c6d3",
@@ -383,30 +438,67 @@
       "id": "4d6e",
       "userId": "61b7",
       "token": "8d19afb4-65b4-412c-82a1-df83cb26e85e"
+    },
+    {
+      "id": "4c0d",
+      "userId": "2dfd",
+      "token": "2a83d939-be49-42e5-a625-e1f243ed0881"
+    },
+    {
+      "id": "1c2d",
+      "userId": "3d56",
+      "token": "ac857f40-49a8-46a6-864c-0672aaee5853"
+    },
+    {
+      "id": "9d3c",
+      "userId": "fce0",
+      "token": "23895d98-b9de-4a10-b1d7-22c2ae437ede"
     }
   ],
   "objectives": [
     {
-      "userID": "92df",
-      "name": "Viagem",
-      "meta": 1000,
-      "log": [
+      "id": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "name": "Teste",
+      "targetAmount": "14",
+      "deadline": "2026-01-20",
+      "description": "Teste!",
+      "ownerId": "1",
+      "isShared": false,
+      "memberIds": [
+        "ea15",
+        "4dbb"
+      ],
+      "contributions": [
         {
-          "type": "in",
-          "amount": 10,
-          "date": "2025-11-15T14:40:00"
+          "userId": "2",
+          "amount": 20,
+          "timestamp": "2026-01-12T03:08:51.745Z"
+        }
+      ]
+    },
+    {
+      "id": "a2efd77d-968f-493e-8c57-50b4083ef246",
+      "name": "Teste",
+      "targetAmount": 90,
+      "deadline": "2026-01-15",
+      "description": "teste",
+      "ownerId": "1",
+      "memberIds": [
+        "ea15",
+        "4dbb"
+      ],
+      "contributions": [
+        {
+          "userId": "1",
+          "amount": 50,
+          "timestamp": "2026-01-12T01:52:47.079Z"
         },
         {
-          "type": "out",
-          "amount": 5,
-          "date": "2025-11-16T13:00:00"
+          "userId": "2",
+          "amount": 200,
+          "timestamp": "2026-01-12T03:08:36.922Z"
         }
-      ],
-      "createdDate": "2025-11-01",
-      "dueDate": "2025-12-01",
-      "hasFixedContribution": true,
-      "fixedContribution": 20,
-      "id": "20e5"
+      ]
     }
   ],
   "logs": [
@@ -659,6 +751,1002 @@
       "type": "add",
       "amount": 340,
       "date": "2026-01-03T12:31:42.589Z"
+    },
+    {
+      "id": "bc0e",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": "12",
+      "date": "2026-01-03T14:07:00.244Z"
+    },
+    {
+      "id": "c8b2",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": "22",
+      "date": "2026-01-03T14:29:30.308Z"
+    },
+    {
+      "id": "6fdb",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": "222",
+      "date": "2026-01-03T14:32:05.532Z"
+    },
+    {
+      "id": "51f7",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": "123",
+      "date": "2026-01-03T15:17:49.764Z"
+    },
+    {
+      "id": "9bc1",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-03T16:07:12.073Z"
+    },
+    {
+      "id": "768e",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": "123",
+      "date": "2026-01-04T14:44:56.900Z"
+    },
+    {
+      "id": "580b",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": "45060",
+      "date": "2026-01-05T00:57:07.390Z"
+    },
+    {
+      "id": "4163",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-05T00:58:58.645Z"
+    },
+    {
+      "id": "14ba",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": "900",
+      "date": "2026-01-05T00:59:22.218Z"
+    },
+    {
+      "id": "8558",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-05T01:15:11.259Z"
+    },
+    {
+      "id": "4352",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-05T09:10:38.094Z"
+    },
+    {
+      "id": "19db",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": "12",
+      "date": "2026-01-05T12:13:52.343Z"
+    },
+    {
+      "id": "a4cc",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": "12",
+      "date": "2026-01-08T00:08:54.756Z"
+    },
+    {
+      "id": "fbd9",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-08T00:09:00.179Z"
+    },
+    {
+      "id": "8730",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": "1",
+      "date": "2026-01-08T00:10:44.915Z"
+    },
+    {
+      "id": "5084",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-08T00:10:48.356Z"
+    },
+    {
+      "id": "f9f1",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-08T00:10:50.780Z"
+    },
+    {
+      "id": "1332",
+      "userId": "1",
+      "category": "wallet",
+      "walletID": null,
+      "type": "create",
+      "amount": 111,
+      "date": "2026-01-08T00:37:04.457Z"
+    },
+    {
+      "id": "c15d",
+      "userId": "1",
+      "category": "wallet",
+      "walletID": "03d7be99-ba2c-46b9-9dd2-fabff30716ff",
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-08T00:39:44.056Z"
+    },
+    {
+      "id": "d780",
+      "userId": "1",
+      "category": "wallet",
+      "walletID": null,
+      "type": "create",
+      "amount": 111,
+      "date": "2026-01-08T00:56:47.922Z"
+    },
+    {
+      "id": "fec4",
+      "userId": "1",
+      "category": "wallet",
+      "walletID": null,
+      "type": "create",
+      "amount": 1000,
+      "date": "2026-01-08T01:00:29.925Z"
+    },
+    {
+      "id": "f6c6",
+      "userId": "1",
+      "category": "wallet",
+      "walletID": "640c71a3-d924-4d63-929c-42fc40816b60",
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-08T01:00:41.755Z"
+    },
+    {
+      "id": "f2be",
+      "userId": "1",
+      "category": "wallet",
+      "walletID": null,
+      "type": "create",
+      "amount": 12222,
+      "date": "2026-01-08T01:00:59.971Z"
+    },
+    {
+      "id": "1196",
+      "userId": "1",
+      "category": "wallet",
+      "walletID": null,
+      "type": "create",
+      "amount": 11,
+      "date": "2026-01-08T10:25:09.772Z"
+    },
+    {
+      "id": "bd16",
+      "userId": "1",
+      "category": "wallet",
+      "walletID": "3cf17b9b-e2bc-42bf-b1bb-179c23f6362e",
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-08T11:09:49.264Z"
+    },
+    {
+      "id": "a3c9",
+      "userId": "1",
+      "category": "wallet",
+      "walletID": "15de",
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-08T11:10:22.662Z"
+    },
+    {
+      "id": "ccdb",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "add",
+      "amount": "12",
+      "date": "2026-01-08T11:38:16.776Z"
+    },
+    {
+      "id": "a306",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "add",
+      "amount": "11",
+      "date": "2026-01-08T13:00:41.097Z"
+    },
+    {
+      "id": "1e2a",
+      "userId": "1",
+      "category": "wallet",
+      "walletID": "864bd310-cec7-4ab3-80cb-a76cf2871bc0",
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-08T13:01:56.719Z"
+    },
+    {
+      "id": "2108",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-08T14:17:00.452Z"
+    },
+    {
+      "id": "6b4a",
+      "userId": "1",
+      "category": "expense",
+      "walletID": null,
+      "type": "add",
+      "amount": "111",
+      "date": "2026-01-08T14:17:19.860Z"
+    },
+    {
+      "id": "5e94",
+      "userId": "1",
+      "category": "wallet",
+      "walletID": "68d91937-34ce-4d92-9936-71a7f4a7f54c",
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-08T14:19:04.606Z"
+    },
+    {
+      "id": "a37d",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "add",
+      "amount": "11",
+      "date": "2026-01-08T16:01:01.111Z"
+    },
+    {
+      "id": "f4c7",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "add",
+      "amount": "192",
+      "date": "2026-01-08T16:01:12.932Z"
+    },
+    {
+      "id": "3916",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "add",
+      "amount": "50",
+      "date": "2026-01-09T12:05:43.396Z"
+    },
+    {
+      "id": "6afb",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:18:46.800Z"
+    },
+    {
+      "id": "dcd8",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:18:53.025Z"
+    },
+    {
+      "id": "eae9",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:19:33.311Z"
+    },
+    {
+      "id": "1092",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:19:36.310Z"
+    },
+    {
+      "id": "7d52",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:19:56.998Z"
+    },
+    {
+      "id": "9632",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:20:15.762Z"
+    },
+    {
+      "id": "d186",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:20:21.016Z"
+    },
+    {
+      "id": "831b",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:20:24.796Z"
+    },
+    {
+      "id": "a02a",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:20:27.466Z"
+    },
+    {
+      "id": "76c3",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:20:30.630Z"
+    },
+    {
+      "id": "e787",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:20:32.012Z"
+    },
+    {
+      "id": "e77f",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:20:33.246Z"
+    },
+    {
+      "id": "8441",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:20:34.459Z"
+    },
+    {
+      "id": "eda4",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "add",
+      "amount": "400",
+      "date": "2026-01-09T13:24:18.920Z"
+    },
+    {
+      "id": "3e56",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "add",
+      "amount": "300",
+      "date": "2026-01-09T13:25:42.528Z"
+    },
+    {
+      "id": "be7f",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "contribute",
+      "amount": 35,
+      "date": "2026-01-09T13:28:28.710Z"
+    },
+    {
+      "id": "af9f",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T13:34:17.205Z"
+    },
+    {
+      "id": "eb32",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T14:16:29.171Z"
+    },
+    {
+      "id": "2733",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T14:16:31.003Z"
+    },
+    {
+      "id": "923f",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "remove",
+      "amount": null,
+      "date": "2026-01-09T14:16:36.041Z"
+    },
+    {
+      "id": "163d",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "add",
+      "amount": "111",
+      "date": "2026-01-09T14:16:46.914Z"
+    },
+    {
+      "id": "db72",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "contribute",
+      "amount": 50,
+      "date": "2026-01-09T14:18:52.123Z"
+    },
+    {
+      "id": "b008",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "contribute",
+      "amount": 40,
+      "date": "2026-01-10T18:51:32.341Z"
+    },
+    {
+      "id": "271b",
+      "userId": "1",
+      "category": "objective",
+      "walletID": null,
+      "type": "contribute",
+      "amount": 2,
+      "date": "2026-01-10T18:51:38.134Z"
+    },
+    {
+      "id": "b9af",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4e38ca59-5ae1-4014-b82c-8e571236ecbe",
+      "type": "contribute",
+      "amount": 20,
+      "date": "2026-01-10T19:52:52.325Z"
+    },
+    {
+      "id": "ea9c",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4e38ca59-5ae1-4014-b82c-8e571236ecbe",
+      "type": "remove",
+      "amount": 0,
+      "date": "2026-01-11T22:55:03.359Z"
+    },
+    {
+      "id": "629f",
+      "userId": "1",
+      "category": "objective",
+      "typeId": null,
+      "type": "add",
+      "amount": 2,
+      "date": "2026-01-11T22:57:35.236Z"
+    },
+    {
+      "id": "792c",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "e3804c33-602e-45e3-b1f0-8fe944dce03d",
+      "type": "remove",
+      "amount": 0,
+      "date": "2026-01-11T23:09:48.112Z"
+    },
+    {
+      "id": "b191",
+      "userId": "1",
+      "category": "objective",
+      "typeId": null,
+      "type": "add",
+      "amount": 1,
+      "date": "2026-01-11T23:13:13.676Z"
+    },
+    {
+      "id": "c0ea",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "a626068b-c6bd-45b5-8d93-fbe87a3d4a44",
+      "type": "remove",
+      "amount": 0,
+      "date": "2026-01-11T23:14:11.829Z"
+    },
+    {
+      "id": "d235",
+      "userId": "1",
+      "category": "objective",
+      "typeId": null,
+      "type": "add",
+      "amount": 14,
+      "date": "2026-01-11T23:19:08.629Z"
+    },
+    {
+      "id": "799f",
+      "userId": "1",
+      "category": "objective",
+      "typeId": null,
+      "type": "add",
+      "amount": 123,
+      "date": "2026-01-12T00:01:10.975Z"
+    },
+    {
+      "id": "186e",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "a2efd77d-968f-493e-8c57-50b4083ef246",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-12T00:06:34.812Z"
+    },
+    {
+      "id": "07bc",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": null,
+      "type": "create",
+      "amount": 12,
+      "date": "2026-01-12T00:17:16.716Z"
+    },
+    {
+      "id": "508c",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "70e18868-4d34-4abc-b2c2-a86c8bf07ed7",
+      "type": "remove",
+      "amount": 0,
+      "date": "2026-01-12T00:42:45.670Z"
+    },
+    {
+      "id": "af10",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": null,
+      "type": "create",
+      "amount": 20,
+      "date": "2026-01-12T00:48:15.465Z"
+    },
+    {
+      "id": "64f0",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "2a5f36ad-a407-48b4-8bdc-23b8d4c09e18",
+      "type": "remove",
+      "amount": 0,
+      "date": "2026-01-12T00:48:19.109Z"
+    },
+    {
+      "id": "2b61",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "a2efd77d-968f-493e-8c57-50b4083ef246",
+      "type": "contribute",
+      "amount": 50,
+      "date": "2026-01-12T01:52:47.094Z"
+    },
+    {
+      "id": "6abb",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "a2efd77d-968f-493e-8c57-50b4083ef246",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-12T01:53:08.889Z"
+    },
+    {
+      "id": "0965",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "3feb",
+      "type": "withdraw",
+      "amount": -20,
+      "date": "2026-01-12T02:05:36.374Z"
+    },
+    {
+      "id": "1eff",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "3feb",
+      "type": "deposit",
+      "amount": 10,
+      "date": "2026-01-12T02:05:55.869Z"
+    },
+    {
+      "id": "af03",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "3feb",
+      "type": "deposit",
+      "amount": 2,
+      "date": "2026-01-12T02:34:56.046Z"
+    },
+    {
+      "id": "9f48",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": null,
+      "type": "create",
+      "amount": 20,
+      "date": "2026-01-12T02:37:30.154Z"
+    },
+    {
+      "id": "5e47",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "85a1fa03-1f98-41b4-a9d3-e1b50dc71356",
+      "type": "create",
+      "amount": 11,
+      "date": "2026-01-12T02:40:33.732Z"
+    },
+    {
+      "id": "2a49",
+      "userId": "2",
+      "category": "objective",
+      "typeId": "a2efd77d-968f-493e-8c57-50b4083ef246",
+      "type": "contribute",
+      "amount": 200,
+      "date": "2026-01-12T03:08:36.944Z"
+    },
+    {
+      "id": "823d",
+      "userId": "2",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "contribute",
+      "amount": 20,
+      "date": "2026-01-12T03:08:51.755Z"
+    },
+    {
+      "id": "7447",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "2e6d20b4-532e-4621-b62d-835a9b1fd002",
+      "type": "remove",
+      "amount": 0,
+      "date": "2026-01-12T09:19:41.003Z"
+    },
+    {
+      "id": "db89",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "3feb",
+      "type": "remove",
+      "amount": 0,
+      "date": "2026-01-12T09:19:42.662Z"
+    },
+    {
+      "id": "fd42",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "449b95db-f0de-4f7f-9205-c69eaf037857",
+      "type": "create",
+      "amount": 20,
+      "date": "2026-01-12T09:21:35.100Z"
+    },
+    {
+      "id": "76a3",
+      "userId": "1",
+      "category": "expense",
+      "typeId": "28ce",
+      "type": "update",
+      "amount": 1503,
+      "date": "2026-01-12T09:53:33.964Z"
+    },
+    {
+      "id": "b7b1",
+      "userId": "1",
+      "category": "expense",
+      "typeId": "28ce",
+      "type": "update",
+      "amount": 1503,
+      "date": "2026-01-12T09:54:32.307Z"
+    },
+    {
+      "id": "6e65",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-12T09:54:36.880Z"
+    },
+    {
+      "id": "6c96",
+      "userId": "1",
+      "category": "objective",
+      "typeId": null,
+      "type": "add",
+      "amount": 22,
+      "date": "2026-01-12T10:00:24.876Z"
+    },
+    {
+      "id": "2b71",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "6aad4e6d-190a-45e1-8d19-f3965db5b8f9",
+      "type": "remove",
+      "amount": 0,
+      "date": "2026-01-12T10:00:29.516Z"
+    },
+    {
+      "id": "56a6",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-12T11:27:25.964Z"
+    },
+    {
+      "id": "a4bc",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-12T11:27:31.515Z"
+    },
+    {
+      "id": "1a07",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-12T11:29:08.210Z"
+    },
+    {
+      "id": "92f2",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-12T11:29:17.480Z"
+    },
+    {
+      "id": "1598",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-12T11:29:20.927Z"
+    },
+    {
+      "id": "432d",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-12T11:29:24.920Z"
+    },
+    {
+      "id": "f220",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-12T11:29:47.442Z"
+    },
+    {
+      "id": "6e78",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-12T11:29:55.125Z"
+    },
+    {
+      "id": "6168",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-12T11:30:08.592Z"
+    },
+    {
+      "id": "0b10",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "a2efd77d-968f-493e-8c57-50b4083ef246",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-12T12:04:18.439Z"
+    },
+    {
+      "id": "8a4f",
+      "userId": "1",
+      "category": "expense",
+      "typeId": null,
+      "type": "add",
+      "amount": 10,
+      "date": "2026-01-12T12:05:21.267Z"
+    },
+    {
+      "id": "d195",
+      "userId": "1",
+      "category": "expense",
+      "typeId": "9aece1e0-ed5d-4c38-9ed1-45e7c6757065",
+      "type": "update",
+      "amount": 120,
+      "date": "2026-01-12T12:05:45.337Z"
+    },
+    {
+      "id": "ecc7",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-12T12:13:10.050Z"
+    },
+    {
+      "id": "85c2",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "449b95db-f0de-4f7f-9205-c69eaf037857",
+      "type": "deposit",
+      "amount": 50,
+      "date": "2026-01-12T15:14:58.927Z"
+    },
+    {
+      "id": "a6ba",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "449b95db-f0de-4f7f-9205-c69eaf037857",
+      "type": "withdraw",
+      "amount": 10,
+      "date": "2026-01-12T15:15:10.493Z"
+    },
+    {
+      "id": "ba8b",
+      "userId": "1",
+      "category": "expense",
+      "typeId": null,
+      "type": "add",
+      "amount": 123,
+      "date": "2026-01-12T20:23:57.589Z"
+    },
+    {
+      "id": "529e",
+      "userId": "1",
+      "category": "wallet",
+      "typeId": "85a1fa03-1f98-41b4-a9d3-e1b50dc71356",
+      "type": "deposit",
+      "amount": 20,
+      "date": "2026-01-13T14:41:13.037Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "label": "Alimentação"
+    },
+    {
+      "id": "2",
+      "label": "Transporte"
+    },
+    {
+      "id": "3",
+      "label": "Contas & Utilidades"
+    },
+    {
+      "id": "4",
+      "label": "Lazer & Entretenimento"
+    },
+    {
+      "id": "5",
+      "label": "Saúde"
+    },
+    {
+      "id": "6",
+      "label": "Compras"
+    },
+    {
+      "id": "7",
+      "label": "Educação"
+    },
+    {
+      "id": "8",
+      "label": "Cuidados Pessoais"
+    },
+    {
+      "id": "9",
+      "label": "Viagens"
+    },
+    {
+      "id": "10",
+      "label": "Outros"
     }
   ]
 }

@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import router from "@/router";
 import * as api from "@/api/api.js";
+import { comparePassword } from "@/utils/encrypt";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -86,13 +87,15 @@ export const useAuthStore = defineStore("auth", {
 
     async login(username, password) {
       try {
-        const data = await api.get(
-          BASE_URL,
-          `users?username=${username}&password=${password}`
-        );
+        const data = await api.get(BASE_URL, `users?username=${username}`);
 
         if (data.length === 1) {
           const loggedInUser = data[0];
+
+          if (!password === loggedInUser.password) {
+            comparePassword(password, loggedInUser.password);
+          }
+
           const token = crypto.randomUUID();
 
           this.userId = loggedInUser.id;

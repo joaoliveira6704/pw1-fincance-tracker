@@ -12,6 +12,7 @@ export default {
     isGood: { type: Boolean, default: true },
     subtext: String,
     footer: String,
+    hasTrend: { type: Boolean, default: true },
   },
   computed: {
     isPositiveTrend() {
@@ -20,7 +21,7 @@ export default {
     trendClass() {
       const base =
         "flex items-center text-primary-text text-xs px-2 py-1 rounded-full border ";
-      return this.isPositiveTrend
+      return this.isGood
         ? base + "border-green-900/50 bg-green-500/20"
         : base + "border-red-900/50 bg-red-500/20";
     },
@@ -37,7 +38,7 @@ export default {
   >
     <div class="flex justify-between items-start mb-4">
       <span class="text-sm font-medium text-primary-text">{{ label }}</span>
-      <span :class="trendClass">
+      <span v-if="hasTrend" :class="trendClass">
         <component :is="trendIcon" :size="14" class="mr-1" />
         {{ trend }}
       </span>

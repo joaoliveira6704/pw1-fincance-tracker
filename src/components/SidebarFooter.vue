@@ -43,7 +43,9 @@ export default {
 </script>
 
 <template>
-  <div class="flex flex-col justify-between px-2 py-1 w-full h-fit text-center">
+  <div
+    class="flex flex-col justify-between px-2 py-2 w-full text-center border-t border-border"
+  >
     <nav class="flex flex-col">
       <SidebarLink
         v-if="userObj"

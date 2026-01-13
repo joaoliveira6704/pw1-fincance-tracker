@@ -48,7 +48,6 @@ export default {
         plugins: {
           legend: { display: false },
           tooltip: {
-            // Cores ajustadas para combinar com o tema Dark/Light
             backgroundColor: "#212121", // bg-stackrblack
             titleColor: "#ffffff",
             bodyColor: "#9e9e9e", // stackr-grey-light
@@ -78,13 +77,13 @@ export default {
           x: {
             grid: { display: false },
             ticks: {
-              color: "#9e9e9e", // stackr-grey-light
+              color: "#9e9e9e",
               font: { family: "Roboto", size: 10, weight: "bold" },
               maxTicksLimit: 7,
             },
             border: { display: false },
           },
-          y: { display: false, min: 0 },
+          y: { display: true, min: 0 },
         },
         elements: {
           point: {
@@ -161,7 +160,6 @@ export default {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
-      // Definição das cores baseadas no teu CSS
       const colorGreen = "#4ddf7b"; // --stackr-green
       const colorRed = "#ef4444"; // Vermelho padrão (para despesas)
       const colorBlue = "#3b82f6"; // Azul padrão (para objetivos)
@@ -217,9 +215,11 @@ export default {
 
 <template>
   <div
-    class="border bg-navbar-bg border-border rounded-2xl p-6 mb-6 transition-colors duration-200"
+    class="border bg-navbar-bg border-border rounded-2xl p-3 md:p-6 mb-6 transition-colors duration-200"
   >
-    <div class="flex justify-between items-center mb-10">
+    <div
+      class="flex flex-col lg:flex-row gap-4 justify-between items-center mb-10"
+    >
       <div class="flex items-center gap-4">
         <div>
           <h2 class="text-primary-text font-medium font-ProximaNova text-lg">
@@ -255,13 +255,15 @@ export default {
         </div>
       </div>
 
-      <div class="flex gap-2">
+      <div
+        class="flex min-[450px]:flex-row flex-col w-full min-[450px]:w-fit gap-2 items-center"
+      >
         <button
           v-if="chartData && chartData.datasets"
           v-for="(dataset, index) in chartData.datasets"
           :key="index"
           @click="toggleDataset(index)"
-          class="flex items-center gap-2 cursor-pointer px-3 py-1.5 text-xs rounded-md border border-border transition bg-secondary-bg hover:bg-border"
+          class="flex flex-col lg:flex-col max-[450px]:flex-row w-full min-[450px]:w-fit text-center justify-center items-center gap-2 cursor-pointer px-3 py-1.5 text-xs rounded-md border border-border transition bg-secondary-bg hover:bg-border"
           :class="{ 'opacity-50': dataset.hidden }"
         >
           <span

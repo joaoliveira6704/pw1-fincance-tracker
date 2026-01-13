@@ -1,3 +1,5 @@
+import { getUserId } from "./session";
+
 // Gera um ID único
 const generateId = () => crypto.randomUUID();
 
@@ -19,49 +21,39 @@ export function createUser(username, firstName, lastName, email, password) {
     isAdmin: false,
     income: 0,
     preferences: {
-      currency: "EUR",
-      theme: "light",
+      private: false,
+      monthlyLimit: 0,
     },
   };
 }
 
 // Cria uma despesa
-export function createExpense(userId, name, date, amount, description) {
+export function createExpense(
+  userId,
+  name,
+  categoryId,
+  date,
+  amount,
+  description
+) {
   return {
+    id: generateId(),
     userId: userId,
     name: name,
     date: date,
     amount: amount,
-    categoryId: 2,
+    categoryId: categoryId,
     walletId: 1,
     description: description,
   };
 }
 
-/* id: "log_001",
-  userId: "user_tiago",
-  actionType: "CREATE",
-  entity: "transaction",
-  entityId: "txn_55",
-  
-  amount: -25.50,               // Negativo para indicar saída visualmente fácil
-  currency: "EUR",
-  
-  description: "Jantar no McDonald's",
-  details: {
-    category: "Alimentação",
-    wallet: "Dinheiro Vivo"
-  },
-  
-  timestamp: "2023-11-23T20:15:00Z"
-} */
-
 // Cria uma nova Carteira (Wallet)
 export function createWallet(name, color, userId, amount) {
   return {
+    id: generateId(),
     name: name,
     balance: Number(amount),
-    currency: "EUR",
     color: color,
     userId: userId,
     isArchived: false,
@@ -73,22 +65,19 @@ export function createGoal(
   name,
   targetAmount,
   deadline,
-  status = "active",
+  description,
   ownerId,
-  isShared,
-  memberIds,
-  contributions
+  memberIds
 ) {
   return {
     id: generateId(),
     name,
     targetAmount,
     deadline,
-    status,
+    description,
     ownerId,
-    isShared,
     memberIds,
-    contributions,
+    contributions: [],
   };
 }
 
@@ -96,16 +85,16 @@ export function createGoal(
 export function createLog(
   userId,
   category,
-  walletID = null,
+  typeId = null,
   type,
   amount = null
 ) {
   return {
     userId: userId,
     category: category,
-    walletID: walletID,
+    typeId: typeId,
     type: type,
-    amount: amount,
+    amount: Number(amount),
     date: todayDateTime(),
   };
 }
@@ -125,4 +114,12 @@ export function createFriend(currentUserObj, friendUserObj) {
 
 export function createCountObject(date) {
   return { date: date, count: 0 };
+}
+
+export function createObjectiveContribution(amount) {
+  return {
+    userId: getUserId(),
+    amount: amount,
+    timestamp: todayDateTime(),
+  };
 }

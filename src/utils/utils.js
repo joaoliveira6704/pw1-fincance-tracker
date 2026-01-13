@@ -1,6 +1,8 @@
-import { createCountObject } from "./factories";
-
-// Returns formatted date to portugal
+/**
+ * Formats Date
+ * @param {Date} date - The date to format
+ * @returns {String} - String with formatted date ("Ex: 1 de Janeiro de 2026")
+ */
 export function formattedDate(date) {
   if (!date) return "N/A";
   return new Date(date).toLocaleDateString("pt-PT", {
@@ -24,14 +26,23 @@ export function formattedIncome(income) {
 }
 
 export function getDailyCount(data) {
-  // 1. Count everything in a single pass using an Object map
+  // Contagem com normalização de data
   const countsMap = data.reduce((acc, item) => {
-    // If date exists, add 1. If not, start at 1.
-    acc[item.date] = (acc[item.date] || 0) + 1;
+    if (!item.date) return acc;
+
+    // Converte a data (seja ela YYYY-MM-DD ou ISO Timestamp) para apenas YYYY-MM-DD
+    const d = new Date(item.date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const dateKey = `${year}-${month}-${day}`;
+
+    // Se a data já existe, soma. Se não, começa em 1.
+    acc[dateKey] = (acc[dateKey] || 0) + 1;
     return acc;
   }, {});
 
-  // 2. Convert the map back to your array format
+  // Converte o mapa de volta para o formato de array que o heatmap espera
   return Object.keys(countsMap).map((date) => ({
     date: date,
     count: countsMap[date],
@@ -44,35 +55,45 @@ export function getDailyCount(data) {
  * @param {Date} referenceDate - Reference Date (today)
  * @returns {Object|null} - Object with all data lists
  */
+/**
+ * Processes Logs and returns Arrays with data
+ */
 export function processChartData(logs, referenceDate) {
   if (!logs || logs.length === 0) return null;
 
   const now = new Date(referenceDate);
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const year = now.getFullYear();
+  const month = now.getMonth();
+
+  const firstDayOfMonth = new Date(year, month, 1);
+  const today = new Date();
+
+  // Define o fim do gráfico
+  const endPoint =
+    month === today.getMonth() && year === today.getFullYear()
+      ? new Date(today.getFullYear(), today.getMonth(), today.getDate())
+      : new Date(year, month + 1, 0);
 
   let currentBalance = 0;
-  let accumulatedExpenses = 0;
   let accumulatedObjectives = 0;
 
-  // Order Logs by Date
   const sortedLogs = [...logs].sort(
     (a, b) => new Date(a.date) - new Date(b.date)
   );
 
-  // 1. Calculate Initial Balance (Logs Before day 1 of the current month)
+  // Cálculo do Saldo Inicial
   sortedLogs.forEach((log) => {
     const logDate = new Date(log.date);
     if (logDate < firstDayOfMonth) {
       const amount = Number(log.amount) || 0;
-      if (log.category === "wallet" && ["create", "add"].includes(log.type))
-        currentBalance += amount;
-      if (log.category === "expense" && log.type === "add")
-        currentBalance -= amount;
-      if (log.category === "expense" && log.type === "remove")
-        currentBalance += amount;
-      if (log.category === "objective" && log.type === "add")
-        currentBalance -= amount;
+      if (log.category === "wallet") {
+        if (["create", "add"].includes(log.type)) currentBalance += amount;
+        if (log.type === "remove") currentBalance -= amount;
+      }
+      // Calcular objetivos
+      if (log.category === "objective" && log.type === "add") {
+        accumulatedObjectives += amount;
+      }
     }
   });
 
@@ -81,57 +102,96 @@ export function processChartData(logs, referenceDate) {
   const dataExpenses = [];
   const dataObjectives = [];
 
-  // 2. Loop for each month day
-  for (
-    let d = new Date(firstDayOfMonth);
-    d <= today;
-    d.setDate(d.getDate() + 1)
-  ) {
-    const currentDateStr = d.toISOString().split("T")[0];
+  // Loop Diário
+  let d = new Date(firstDayOfMonth);
+  while (d <= endPoint) {
+    const yearStr = d.getFullYear();
+    const monthStr = String(d.getMonth() + 1).padStart(2, "0");
+    const dayStr = String(d.getDate()).padStart(2, "0");
+    const currentDateStr = `${yearStr}-${monthStr}-${dayStr}`;
 
-    // Creates Label (ex: 01 JAN)
     labels.push(
       d
         .toLocaleDateString("pt-PT", { day: "2-digit", month: "short" })
         .toUpperCase()
     );
 
-    const daysLogs = sortedLogs.filter((l) => l.date === currentDateStr);
+    // As Despesas passam a 0 a cada dia
+    let dailyExpenses = 0;
+
+    const daysLogs = sortedLogs.filter((l) => {
+      const dLog = new Date(l.date);
+      const dLogStr = `${dLog.getFullYear()}-${String(
+        dLog.getMonth() + 1
+      ).padStart(2, "0")}-${String(dLog.getDate()).padStart(2, "0")}`;
+      return dLogStr === currentDateStr;
+    });
 
     daysLogs.forEach((log) => {
       const amount = Number(log.amount) || 0;
 
+      // Saldo Total carteiras acumuladas
       if (log.category === "wallet") {
         if (["add", "create"].includes(log.type)) currentBalance += amount;
-      } else if (log.category === "expense") {
-        if (log.type === "add") {
-          currentBalance -= amount;
-          accumulatedExpenses += amount;
-        }
-        if (log.type === "remove") {
-          currentBalance += amount;
-          accumulatedExpenses -= amount;
-        }
-      } else if (log.category === "objective") {
-        if (log.type === "add") {
-          currentBalance -= amount;
-          accumulatedObjectives += amount;
-        }
+        if (log.type === "remove") currentBalance -= amount;
+      }
+
+      // Despesas
+      else if (log.category === "expense") {
+        if (log.type === "add") dailyExpenses += amount;
+        if (log.type === "remove") dailyExpenses -= amount;
+      }
+
+      // Objetivos acumulados
+      else if (log.category === "objective" && log.type === "add") {
+        accumulatedObjectives += amount;
       }
     });
 
     dataBalance.push(currentBalance);
-    dataExpenses.push(accumulatedExpenses);
+    dataExpenses.push(dailyExpenses);
     dataObjectives.push(accumulatedObjectives);
+
+    d.setDate(d.getDate() + 1);
   }
 
-  if (labels.length === 0) return null;
+  return { labels, dataBalance, dataExpenses, dataObjectives };
+}
 
-  // Return Data
+export function getObjectiveData(objective) {
+  const sum = objective.contributions.reduce(
+    (acc, contribution) => acc + Number(contribution.amount),
+    0
+  );
+  const target = objective.targetAmount || 1;
+  const progress = (sum / target) * 100;
+
+  const finalProgress = Math.min(Math.round(progress), 100);
+
   return {
-    labels,
-    dataBalance,
-    dataExpenses,
-    dataObjectives,
+    sum,
+    progress: finalProgress,
+  };
+}
+
+export function processObjectivesData(objectives) {
+  let objectivesProgress = [];
+  let sum = 0;
+  let percentage = 0;
+
+  objectives.forEach((objective) => {
+    let data = getObjectiveData(objective);
+    sum += data.sum;
+    objectivesProgress.push(data.progress);
+  });
+
+  console.log(objectivesProgress);
+  percentage =
+    objectivesProgress.reduce((acc, progress) => acc + Number(progress), 0) /
+    objectivesProgress.length;
+
+  return {
+    percentage,
+    sum,
   };
 }

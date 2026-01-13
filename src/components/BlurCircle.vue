@@ -27,8 +27,8 @@ export default {};
 .middle-circle {
   background-image: radial-gradient(
     closest-side,
-    var(--inner-circle-color),
-    var(--primary-bg-color)
+    var(--inner-circle),
+    var(--main-bg)
   );
   position: absolute;
   filter: blur(50px);

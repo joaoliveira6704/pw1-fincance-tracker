@@ -10,6 +10,11 @@ export const useLogStore = defineStore("logs", {
     loading: false,
     error: null,
   }),
+  getters: {
+    getFilteredLogs: (state) => (typeId) => {
+      return state.logs.filter((l) => l.typeId === typeId);
+    },
+  },
   actions: {
     async fetchUserLogs(userId) {
       this.loading = true;
@@ -27,11 +32,11 @@ export const useLogStore = defineStore("logs", {
       }
     },
 
-    async addNewLog(userId, category, walletID = null, type, amount) {
+    async addNewLog(userId, category, typeId = null, type, amount) {
       this.loading = true;
       this.error = null;
       try {
-        const logObj = createLog(userId, category, walletID, type, amount);
+        const logObj = createLog(userId, category, typeId, type, amount);
         await api.post(BASE_URL, "logs", logObj);
         this.logs.push(logObj);
       } catch (e) {

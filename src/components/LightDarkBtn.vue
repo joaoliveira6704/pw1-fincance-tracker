@@ -18,7 +18,6 @@ export default {
     },
   },
   methods: {
-    // We only map the action. The store handles the rest.
     ...mapActions(useThemeStore, ["toggleColorMode"]),
   },
 };
@@ -28,7 +27,7 @@ export default {
   <button
     v-if="!isLanding && variant === 'navbarOpen'"
     @click="toggleColorMode"
-    class="relative notLanding flex h-8 w-16 cursor-pointer items-center rounded-full bg-gray-200 p-1 shadow-inner transition-colors duration-300 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
+    class="relative notLanding flex h-8 w-full cursor-pointer items-center rounded-full bg-gray-200 p-1 shadow-inner transition-colors duration-300 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
   >
     <span
       class="absolute left-1.5 flex items-center justify-center text-primary"
@@ -42,7 +41,7 @@ export default {
     </span>
     <span
       class="z-10 h-6 w-6 rounded-full shadow-md bg-stackrgreen-500 transition-transform duration-300 ease-in-out"
-      :class="darkMode ? 'translate-x-8' : 'translate-x-0'"
+      :class="darkMode ? 'translate-x-30' : 'translate-x-0'"
     ></span>
   </button>
 

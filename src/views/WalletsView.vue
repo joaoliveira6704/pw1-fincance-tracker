@@ -4,14 +4,20 @@ import { mapActions, mapState } from "pinia";
 import { getUserId } from "@/utils/session";
 import WalletCard from "@/components/WalletCard.vue";
 import Button from "@/components/Button.vue";
-import Swal from "sweetalert2";
 import CreateWalletModal from "@/components/modal/CreateWalletModal.vue";
+import { PlusCircle } from "lucide-vue-next";
+import { useLogStore } from "@/stores/logStore";
+import { formattedDate, formattedIncome } from "@/utils/utils";
+import { toast } from "@/utils/swal";
+import WalletList from "@/components/lists/WalletList.vue";
 
 export default {
   components: {
     WalletCard,
     Button,
     CreateWalletModal,
+    PlusCircle,
+    WalletList,
   },
 
   data() {
@@ -31,32 +37,57 @@ export default {
       "moveBalance",
       "removeWallet",
     ]),
+    ...mapActions(useLogStore, ["addNewLog"]),
 
     async fetch() {
       await this.fetchWallets();
     },
 
     async handleCreateWallet(formData) {
-      console.log("Creating wallet:", formData);
       const userId = getUserId();
 
-      await this.addWallet(
+      const newWallet = await this.addWallet(
         formData.name,
         formData.color,
         userId,
         formData.initialAmount
       );
 
+      await this.addNewLog(
+        userId,
+        "wallet",
+        newWallet.id,
+        "create",
+        formData.initialAmount
+      );
+
       this.showCreateModal = false;
+      toast.fire({
+        icon: "success",
+        title: "Carteira Criada!",
+      });
     },
 
     async walletMovement(data) {
-      const [id, amount] = data;
+      const [id, amount, type] = data;
       await this.moveBalance(id, amount);
+      console.log(type);
+
+      let label = type === "withdraw" ? "Levantaste" : "Depositaste";
+      toast.fire({
+        icon: "success",
+        title: `${label} ${formattedIncome(Math.abs(amount))}!`,
+      });
     },
 
     async deleteWallet(id) {
       await this.removeWallet(id);
+
+      await this.addNewLog(getUserId(), "wallet", id, "remove", null);
+      toast.fire({
+        icon: "success",
+        title: "Carteira Removida!",
+      });
     },
   },
 
@@ -67,87 +98,27 @@ export default {
 </script>
 
 <template>
-  <div class="max-h-screen w-full p-8" style="background-color: var(--main-bg)">
-    <header class="flex justify-between items-center mb-8">
-      <h1 class="text-xl text-primary-text font-medium">Carteiras</h1>
-      <Button @click="showCreateModal = true" variant="outline"
-        ><Plus class="text-primary-text" />
-        <p class="text-primary-text">Adicionar</p></Button
-      >
-    </header>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-      <WalletCard
-        v-for="wallet in wallets"
-        :key="wallet.id"
-        :wallet="wallet"
-        @movement="walletMovement"
-        @delete-wallet="deleteWallet"
-      />
+  <div
+    class="w-full min-h-screen overflow-auto bg-main-bg text-primary-text pb-10 md:pb-0"
+  >
+    <div class="max-w-7xl mx-auto px-4 flex flex-col gap-y-10 text-center">
+      <div class="mt-8">
+        <h1 class="text-4xl md:text-5xl font-bold font-ProximaNova mb-4">
+          Carteiras
+        </h1>
+        <Button @click="showCreateModal = true" variant="fill" class="gap-2">
+          <PlusCircle class="w-5 h-5" />
+          Adicionar Carteira
+        </Button>
+      </div>
+      <WalletList />
     </div>
-
-    <CreateWalletModal
-      :isOpen="showCreateModal"
-      @close="showCreateModal = false"
-      @create-wallet="handleCreateWallet"
-    />
   </div>
+  <CreateWalletModal
+    :isOpen="showCreateModal"
+    @close="showCreateModal = false"
+    @create-wallet="handleCreateWallet"
+  />
 </template>
 
-<style>
-.stackr-swal-popup {
-  background-color: var(--main-bg) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 16px !important;
-  padding: 2rem !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
-}
-.stackr-swal-title {
-  color: var(--primary-text) !important;
-  font-family: var(--font-ProximaNova);
-  font-size: 1.5rem !important;
-  font-weight: 700 !important;
-}
-.stackr-swal-text {
-  color: var(--secondary-text) !important;
-  font-size: 1rem !important;
-}
-.stackr-swal-icon {
-  border: none !important;
-  margin-bottom: 1rem !important;
-}
-.stackr-swal-actions {
-  gap: 12px;
-  width: 100%;
-}
-.stackr-swal-confirm {
-  background-color: var(--color-stackrgreen-500) !important;
-  color: #000 !important;
-  border: none !important;
-  padding: 12px 24px !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  font-size: 1rem !important;
-  cursor: pointer;
-  transition: transform 0.1s ease;
-}
-.stackr-swal-confirm:hover {
-  filter: brightness(1.1);
-  transform: scale(1.02);
-}
-.stackr-swal-cancel {
-  background-color: transparent !important;
-  border: 1px solid var(--border) !important;
-  color: var(--secondary-text) !important;
-  padding: 12px 24px !important;
-  border-radius: 8px !important;
-  font-weight: 500 !important;
-  font-size: 1rem !important;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.stackr-swal-cancel:hover {
-  background-color: var(--secondary-bg) !important;
-  color: var(--primary-text) !important;
-}
-</style>
+<style></style>

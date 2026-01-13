@@ -2,21 +2,30 @@
 import Button from "@/components/Button.vue";
 import Skeleton from "@/components/skeletons/ProfileSkeleton.vue";
 import ProfileCard from "@/components/cards/ProfileCard.vue";
+import ProfileFeed from "@/components/ProfileFeed.vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useUsersStore } from "@/stores/userStore";
-import { mapActions, mapState, mapStores } from "pinia";
+import { useLogStore } from "@/stores/logStore";
+import { mapActions, mapState } from "pinia";
 import Swal from "sweetalert2";
+import { getUserId } from "@/utils/session";
+import { confirmAction, toast } from "@/utils/swal";
+import EditProfileModal from "@/components/modal/EditProfileModal.vue";
 
 export default {
   components: {
     Button,
     Skeleton,
     ProfileCard,
+    ProfileFeed,
+    EditProfileModal,
   },
   data() {
     return {
       user: {},
       error: null,
+      isLoading: false,
+      isEditModalOpen: false,
       alertIcon: `
         <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 16h.01"/><path d="M12 8v4"/>
@@ -26,59 +35,104 @@ export default {
     };
   },
   computed: {
-    ...mapState(useUsersStore, ["loading"]),
+    ...mapState(useUsersStore, ["loading", "users"]),
+    ...mapState(useLogStore, ["logs"]),
+
+    sortedLogs() {
+      return [...(this.logs || [])].sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+    },
   },
   methods: {
-    ...mapActions(useUsersStore, ["fetchLoggedUser"]),
+    ...mapActions(useLogStore, ["fetchUserLogs", "addNewLog"]),
+    ...mapActions(useUsersStore, [
+      "fetchUsers",
+      "fetchLoggedUser",
+      "fetchUserByUsername",
+      "updateUser",
+    ]),
     ...mapActions(useAuthStore, ["logout"]),
-    getSwalConfig(title, text, showCancel = false) {
-      return {
-        title: title,
-        text: text,
-        iconHtml: this.alertIcon,
-        buttonsStyling: false,
-        showCancelButton: showCancel,
-        confirmButtonText: "Sim",
-        cancelButtonText: "Cancelar",
-        customClass: {
-          popup: "stackr-swal-popup",
-          title: "stackr-swal-title",
-          htmlContainer: "stackr-swal-text",
-          icon: "stackr-swal-icon",
-          confirmButton: "stackr-swal-confirm",
-          cancelButton: "stackr-swal-cancel",
-          actions: "stackr-swal-actions",
-        },
-      };
-    },
+
     logoutUser() {
-      Swal.fire(
-        this.getSwalConfig(
-          "Tens a certeza?",
-          "Vais ter de iniciar sessão novamente!",
-          true
-        )
+      confirmAction(
+        "Tens a certeza?",
+        "Vais ter de iniciar sessão novamente!"
       ).then(async (result) => {
         if (result.isConfirmed) {
           this.logout();
         }
       });
     },
+
+    handleEditModal() {
+      this.isEditModalOpen = true;
+    },
+
+    // --- LÓGICA PELO USERNAME ---
+    async loadProfileData() {
+      this.isLoading = true;
+      this.error = null;
+      // Resetar o user para evitar mostrar dados antigos enquanto carrega
+      this.user = {};
+
+      try {
+        const username = this.$route.params.username;
+
+        if (username) {
+          const usersFound = await this.fetchUserByUsername(username);
+
+          if (usersFound && usersFound.length > 0) {
+            this.user = usersFound[0];
+          } else {
+            throw new Error("Utilizador não encontrado");
+          }
+        } else {
+          this.user = await this.fetchLoggedUser();
+        }
+
+        // Validação extra antes de buscar logs
+        if (this.user && this.user.id) {
+          await this.fetchUserLogs(this.user.id);
+        } else {
+          if (!this.error) this.error = "Erro ao carregar dados do utilizador.";
+        }
+      } catch (e) {
+        this.error = e.message || "Falha ao carregar o perfil.";
+        console.error("Erro no loadProfileData:", e);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    async handleSaveEdit(user) {
+      const newUser = await this.updateUser(user);
+      await this.addNewLog(user.id, "user", user.id, "edit", null);
+      this.user = newUser;
+      this.isEditModalOpen = false;
+      toast.fire({
+        icon: "success",
+        title: "Perfil Atualizado!",
+      });
+    },
   },
-  async created() {
-    try {
-      this.user = await this.fetchLoggedUser();
-    } catch (e) {
-      this.error = "Failed to load profile.";
-      console.error(e);
-    }
+  async mounted() {
+    await this.fetchUsers();
+  },
+
+  watch: {
+    // Observa a mudança do parâmetro 'username'
+    "$route.params.username": {
+      handler: "loadProfileData",
+      immediate: true,
+    },
   },
 };
 </script>
 
 <template>
-  <div class="w-full min-h-screen">
-    <div v-if="loading">
+  <div class="w-full min-h-screen overflow-auto bg-main-bg">
+    <div v-if="isLoading">
       <Skeleton />
     </div>
 
@@ -86,81 +140,26 @@ export default {
       v-else-if="error"
       class="w-full max-w-3xl mx-auto p-4 rounded-lg bg-red-100 border border-red-300 text-red-700 text-center"
     >
-      <i class="pi pi-exclamation-triangle mr-2"></i>
       {{ error }}
     </div>
 
-    <div v-else class="flex justify-center">
-      <ProfileCard :user="user" @logout="logoutUser" />
+    <div v-else class="flex flex-col items-center">
+      <ProfileCard :user="user" @logout="logoutUser" @edit="handleEditModal" />
+
+      <ProfileFeed
+        v-if="user.preferences?.private ?? false"
+        :logs="sortedLogs"
+      />
+      <h1 v-else>O perfil deste utilizador é privado.</h1>
     </div>
   </div>
+  <EditProfileModal
+    :user="user"
+    :is-open="isEditModalOpen"
+    @close="isEditModalOpen = false"
+    @save="handleSaveEdit"
+    :users="users"
+  />
 </template>
 
-<style>
-/* POPUP */
-.stackr-swal-popup {
-  border: 1px solid #333;
-  border-radius: 16px !important;
-  padding: 2rem !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
-}
-
-/* TITULO */
-.stackr-swal-title {
-  color: var(--primary-color) !important;
-  font-family: var(--font-ProximaNova);
-  font-size: 1.5rem !important;
-  font-weight: 700 !important;
-}
-
-/* TEXTO */
-.stackr-swal-text {
-  color: var(--primary-color) !important; /* Gray text */
-  font-size: 1rem !important;
-}
-
-/* ICON */
-.stackr-swal-icon {
-  border: none !important; /* Removes the default circle border */
-  margin-bottom: 1rem !important;
-}
-
-/* CONTAINER BTNS */
-.stackr-swal-actions {
-  gap: 12px;
-  width: 100%;
-}
-
-/* BTN CONFIRMAR */
-.stackr-swal-confirm {
-  background-color: var(--color-stackrgreen-500) !important;
-  color: #000 !important;
-  border: none !important;
-  padding: 12px 24px !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  font-size: 1rem !important;
-  cursor: pointer;
-  transition: transform 0.1s ease;
-}
-.stackr-swal-confirm:hover {
-  filter: brightness(1.1);
-  transform: scale(1.02);
-}
-
-.stackr-swal-cancel {
-  background-color: transparent !important;
-  border: 1px solid #4b5563 !important;
-  color: #d1d5db !important;
-  padding: 12px 24px !important;
-  border-radius: 8px !important;
-  font-weight: 500 !important;
-  font-size: 1rem !important;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.stackr-swal-cancel:hover {
-  background-color: #374151 !important;
-  color: #fff !important;
-}
-</style>
+<style></style>
