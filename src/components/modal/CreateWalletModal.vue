@@ -15,10 +15,12 @@ export default {
     PlusCircle,
     AlertCircle,
   },
-  emits: ["create-wallet"],
+  props: {
+    isOpen: Boolean,
+  },
+  emits: ["create-wallet", "close"],
   data() {
     return {
-      isOpen: false,
       isSubmitted: false,
       error: null,
 
@@ -84,116 +86,109 @@ export default {
 </script>
 
 <template>
-  <div>
-    <Button @click="openModal" variant="fill" class="gap-2">
-      <PlusCircle class="w-5 h-5" />
-      Nova Carteira
-    </Button>
-
-    <Transition name="fade">
+  <Transition name="fade">
+    <div
+      v-if="isOpen"
+      class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+      @click.self="$emit('close')"
+    >
       <div
-        v-if="isOpen"
-        class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-        @click.self="closeModal"
+        class="relative w-full max-w-md bg-secondary-bg rounded-3xl shadow-2xl border border-border overflow-hidden animate-scale-in"
       >
         <div
-          class="relative w-full max-w-md bg-secondary-bg rounded-3xl shadow-2xl border border-border overflow-hidden animate-scale-in"
+          class="flex justify-between items-center p-6 border-b border-border bg-main-bg"
         >
-          <div
-            class="flex justify-between items-center p-6 border-b border-border bg-main-bg"
-          >
-            <div class="flex items-center gap-2">
-              <div class="p-2 bg-stackrgreen-500/10 rounded-lg">
-                <Wallet class="w-5 h-5 text-stackrgreen-500" />
-              </div>
-              <h2 class="text-xl font-ProximaNova font-bold text-primary-text">
-                Nova Carteira
-              </h2>
+          <div class="flex items-center gap-2">
+            <div class="p-2 bg-stackrgreen-500/10 rounded-lg">
+              <Wallet class="w-5 h-5 text-stackrgreen-500" />
             </div>
-            <button
-              @click="closeModal"
-              class="p-2 text-secondary-text hover:text-primary-text hover:bg-black/5 rounded-full transition-colors"
-            >
-              <X class="w-6 h-6" />
-            </button>
+            <h2 class="text-xl font-ProximaNova font-bold text-primary-text">
+              Nova Carteira
+            </h2>
+          </div>
+          <button
+            @click="$emit('close')"
+            class="p-2 text-secondary-text hover:text-primary-text hover:bg-black/5 rounded-full transition-colors"
+          >
+            <X class="w-6 h-6" />
+          </button>
+        </div>
+
+        <form @submit.prevent="submitForm" class="p-8 space-y-6">
+          <div class="space-y-4">
+            <RegisterInput
+              label-text="Nome da Carteira"
+              input-type="text"
+              v-model="form.name"
+              placeholder="Ex: Minha conta, Cofre..."
+              id="walletName"
+              :is-valid="nameValid"
+            />
+
+            <RegisterInput
+              label-text="Saldo Inicial (€)"
+              input-type="number"
+              v-model="form.initialAmount"
+              id="initialAmount"
+              placeholder="0.00"
+              step="0.01"
+              :is-valid="amountValid"
+            />
+
+            <div class="flex flex-col gap-2">
+              <label
+                class="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-secondary-text ml-1"
+              >
+                <Palette class="w-3 h-3" /> Cor de Identificação
+              </label>
+              <div
+                class="flex items-center gap-4 bg-main-bg p-3 rounded-xl border border-border"
+              >
+                <input
+                  id="walletColor"
+                  type="color"
+                  v-model="form.color"
+                  class="h-10 w-10 rounded-lg cursor-pointer bg-transparent border-none"
+                />
+                <span
+                  class="text-sm font-mono font-bold text-primary-text uppercase"
+                >
+                  {{ form.color }}
+                </span>
+              </div>
+            </div>
           </div>
 
-          <form @submit.prevent="submitForm" class="p-8 space-y-6">
-            <div class="space-y-4">
-              <RegisterInput
-                label-text="Nome da Carteira"
-                input-type="text"
-                v-model="form.name"
-                placeholder="Ex: Minha conta, Cofre..."
-                id="walletName"
-                :is-valid="nameValid"
-              />
+          <div
+            v-if="error"
+            class="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 text-red-500 rounded-lg text-sm font-bold font-ProximaNova"
+          >
+            <AlertCircle class="w-4 h-4" />
+            <span>{{ error }}</span>
+          </div>
 
-              <RegisterInput
-                label-text="Saldo Inicial (€)"
-                input-type="number"
-                v-model="form.initialAmount"
-                id="initialAmount"
-                placeholder="0.00"
-                step="0.01"
-                :is-valid="amountValid"
-              />
-
-              <div class="flex flex-col gap-2">
-                <label
-                  class="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-secondary-text ml-1"
-                >
-                  <Palette class="w-3 h-3" /> Cor de Identificação
-                </label>
-                <div
-                  class="flex items-center gap-4 bg-main-bg p-3 rounded-xl border border-border"
-                >
-                  <input
-                    id="walletColor"
-                    type="color"
-                    v-model="form.color"
-                    class="h-10 w-10 rounded-lg cursor-pointer bg-transparent border-none"
-                  />
-                  <span
-                    class="text-sm font-mono font-bold text-primary-text uppercase"
-                  >
-                    {{ form.color }}
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div
-              v-if="error"
-              class="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 text-red-500 rounded-lg text-sm font-bold font-ProximaNova"
+          <div class="flex justify-end gap-3 pt-4 border-t border-border">
+            <Button
+              variant="outline"
+              type="button"
+              @click="closeModal"
+              class="flex-1"
             >
-              <AlertCircle class="w-4 h-4" />
-              <span>{{ error }}</span>
-            </div>
-
-            <div class="flex justify-end gap-3 pt-4 border-t border-border">
-              <Button
-                variant="outline"
-                type="button"
-                @click="closeModal"
-                class="flex-1"
-              >
-                Cancelar
-              </Button>
-              <Button
-                variant="fill"
-                type="submit"
-                class="flex-[2]"
-                :disabled="!form.name"
-              >
-                Criar Carteira
-              </Button>
-            </div>
-          </form>
-        </div>
+              Cancelar
+            </Button>
+            <Button
+              variant="fill"
+              type="submit"
+              class="flex-[2]"
+              :disabled="!form.name"
+            >
+              Criar Carteira
+            </Button>
+          </div>
+        </form>
       </div>
-    </Transition>
-  </div>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>

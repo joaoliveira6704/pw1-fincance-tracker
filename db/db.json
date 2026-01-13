@@ -13,7 +13,7 @@
     },
     {
       "id": "1",
-      "username": "joao",
+      "username": "joao2",
       "password": "",
       "firstName": "João",
       "lastName": "Oliveira",
@@ -1728,6 +1728,15 @@
       "type": "edit",
       "amount": 0,
       "date": "2026-01-13T15:50:57.003Z"
+    },
+    {
+      "id": "fee2",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-13T15:52:53.576Z"
     }
   ],
   "categories": [
