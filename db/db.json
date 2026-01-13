@@ -32,7 +32,7 @@
       "firstName": "Miguel",
       "lastName": "Neto",
       "createdAt": "2023-04-21",
-      "isAdmin": true,
+      "isAdmin": false,
       "income": 18490,
       "preferences": {
         "private": true,
@@ -339,7 +339,7 @@
     {
       "id": "92c6",
       "userId": "2",
-      "token": "1263e978-4c8b-4e27-a89c-aae68d3ddc6d"
+      "token": "dac508d5-210e-4732-9808-b97b2999f28e"
     },
     {
       "id": "a2ab",
@@ -376,9 +376,7 @@
       "description": "Teste!",
       "ownerId": "1",
       "isShared": false,
-      "memberIds": [
-        "4dbb"
-      ],
+      "memberIds": ["4dbb"],
       "contributions": [
         {
           "userId": "2",

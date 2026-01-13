@@ -116,7 +116,7 @@ export default {
 <template>
   <div class="w-full max-w-7xl mx-auto p-0 md:p-6 text-primary-text">
     <div
-      class="flex flex-col sm:flex-row justify-between items-center md:items-end mb-6 gap-4 border-b border-border pb-6"
+      class="flex flex-col sm:flex-row justify-center items-center md:items-end mb-6 gap-4 border-b border-border pb-6"
     >
       <div>
         <h1

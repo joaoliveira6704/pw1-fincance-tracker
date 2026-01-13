@@ -10,10 +10,14 @@ import {
 } from "lucide-vue-next";
 import SidebarLink from "./SidebarLink.vue";
 import LightDarkBtn from "./LightDarkBtn.vue";
+import { useUsersStore } from "@/stores/userStore";
+import { mapActions } from "pinia";
+import { getUserId } from "@/utils/session";
 
 export default {
   data() {
     return {
+      isAdmin: false,
       LayoutDashboard,
       User,
       Goal,
@@ -35,6 +39,17 @@ export default {
   },
   props: {
     isOpen: Boolean,
+  },
+
+  methods: {
+    ...mapActions(useUsersStore, ["fetchUserById"]),
+  },
+
+  async mounted() {
+    this.userId = await getUserId();
+    const user = await this.fetchUserById(this.userId);
+    this.isAdmin = user.isAdmin ? true : false;
+    console.log(this.isAdmin, user);
   },
 };
 </script>
@@ -75,7 +90,13 @@ export default {
         :isOpen="isOpen"
         :icon="Users"
       />
-      <SidebarLink page="admin" name="Admin" :isOpen="isOpen" :icon="Users" />
+      <SidebarLink
+        v-if="isAdmin"
+        page="admin"
+        name="Admin"
+        :isOpen="isOpen"
+        :icon="Users"
+      />
     </nav>
 
     <LightDarkBtn :variant="isOpen ? 'navbarOpen' : 'navbarClosed'" />
