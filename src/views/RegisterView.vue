@@ -4,6 +4,7 @@ import RegisterInput from "@/components/RegisterInput.vue";
 import { useAuthStore } from "@/stores/authStore";
 import { useUsersStore } from "@/stores/userStore";
 import * as api from "@/api/api.js";
+import { encryptPassword } from "@/utils/encrypt";
 const BASE_URL = "http://localhost:3000";
 
 export default {
@@ -13,6 +14,7 @@ export default {
   },
   data() {
     return {
+      encryptedPassword: "",
       usersStore: useUsersStore(),
       username: "",
       firstName: "",
@@ -43,7 +45,7 @@ export default {
     async handleLogin() {
       try {
         this.error = null;
-        await this.authStore.login(this.username, this.password);
+        await this.authStore.login(this.username, this.encryptedPassword);
         router.push("/main");
       } catch (err) {
         this.error = "Erro: Credenciais erradas.";
@@ -51,12 +53,13 @@ export default {
     },
 
     async addNewUser() {
+      this.encryptedPassword = await encryptPassword(this.password);
       await this.usersStore.addUser(
         this.username,
         this.firstName,
         this.lastName,
         this.email,
-        this.password
+        this.encryptedPassword
       );
       await this.handleLogin();
     },

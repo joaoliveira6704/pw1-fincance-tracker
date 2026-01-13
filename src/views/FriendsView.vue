@@ -2,7 +2,6 @@
 import { mapActions, mapState } from "pinia";
 import { useFriendStore } from "@/stores/friendStore";
 import { useUsersStore } from "@/stores/userStore";
-import Swal from "sweetalert2";
 import Fuse from "fuse.js";
 import { Users, Search } from "lucide-vue-next";
 
@@ -10,6 +9,7 @@ import { Users, Search } from "lucide-vue-next";
 import SearchInput from "@/components/SearchInput.vue";
 import CommunityTab from "@/components/CommunityTab.vue";
 import UserCard from "@/components/cards/CommunityCard.vue";
+import { toast, confirmAction } from "@/utils/swal";
 
 export default {
   components: {
@@ -24,13 +24,6 @@ export default {
       activeTab: "discover",
       currentUser: null,
       searchQuery: "",
-      alertIcon: `
-        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="12" y1="8" x2="12" y2="12"/>
-          <line x1="12" y1="16" x2="12.01" y2="16"/>
-        </svg>
-      `,
     };
   },
   computed: {
@@ -41,7 +34,7 @@ export default {
       let sourceData = [];
       let keys = [];
 
-      // 1. Determine Data Source
+      // Data Source
       if (this.activeTab === "discover") {
         sourceData = this.availableUsers;
         keys = ["firstName", "lastName", "username"];
@@ -53,7 +46,7 @@ export default {
         keys = ["userName", "userUsername"];
       }
 
-      // 2. Search Logic
+      // Search Logic
       let results = sourceData;
       if (this.searchQuery.trim()) {
         const fuse = new Fuse(sourceData, {
@@ -122,61 +115,33 @@ export default {
       }
     },
 
-    // SweetAlert Logic
-    getSwalConfig(title, text, showCancel = false) {
-      return {
-        title,
-        text,
-        iconHtml: this.alertIcon,
-        buttonsStyling: false,
-        showCancelButton: showCancel,
-        confirmButtonText: "Sim",
-        cancelButtonText: "Cancelar",
-        customClass: {
-          popup: "stackr-swal-popup",
-          title: "stackr-swal-title",
-          htmlContainer: "stackr-swal-text",
-          icon: "stackr-swal-icon",
-          confirmButton: "stackr-swal-confirm",
-          cancelButton: "stackr-swal-cancel",
-          actions: "stackr-swal-actions",
-        },
-      };
-    },
-
     async addFriend(user) {
       try {
         await this.addFollowing(this.currentUser, user);
         await this.updateInfo();
-        Swal.fire({
-          ...this.getSwalConfig("Sucesso", "Amigo adicionado!"),
+        toast.fire({
           icon: "success",
-          iconHtml: undefined,
+          title: "Conexão adicionada!",
         });
       } catch (error) {
-        Swal.fire({
-          ...this.getSwalConfig("Erro", "Erro ao adicionar amigo."),
+        toast.fire({
           icon: "error",
-          iconHtml: undefined,
+          title: "Erro ao adicionar conexão!",
         });
       }
     },
 
     async removeFriend(id) {
-      Swal.fire(
-        this.getSwalConfig(
-          "Tens a certeza?",
-          "Vais deixar de ser amigo deste utilizador!",
-          true
-        )
+      await confirmAction(
+        "Tens a certeza?",
+        "Vais deixar de ser amigo deste utilizador!"
       ).then(async (result) => {
         if (result.isConfirmed) {
           await this.removeFriendship(id);
           await this.updateInfo();
-          Swal.fire({
-            ...this.getSwalConfig("Removido!", "O utilizador foi removido."),
+          toast.fire({
             icon: "success",
-            iconHtml: undefined,
+            title: "Conexão removida!",
           });
         }
       });
@@ -196,15 +161,15 @@ export default {
 
 <template>
   <div
-    class="min-h-screen w-full flex flex-col items-center pb-20 bg-(--main-bg) text-(--primary-text) transition-colors duration-300"
+    class="min-h-screen w-full overflow-auto flex flex-col items-center pb-15 md:pb-0 bg-(--main-bg) text-(--primary-text) transition-colors duration-300"
   >
     <div class="mt-12 mb-8 text-center px-4">
       <h1
-        class="text-4xl md:text-5xl font-ProximaNova font-bold tracking-tight mb-2"
+        class="text-2xl sm:text-4xl md:text-5xl font-ProximaNova font-bold tracking-tight mb-2"
       >
         Comunidade
       </h1>
-      <p class="text-(--secondary-text) text-lg">
+      <p class="text-(--secondary-text) text-md md:text-lg">
         Gere as tuas conexões e descobre novas pessoas.
       </p>
     </div>
@@ -316,61 +281,4 @@ export default {
   </div>
 </template>
 
-<style>
-/* ... SweetAlert CSS remains exactly the same as provided ... */
-.stackr-swal-popup {
-  background-color: var(--main-bg) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 16px !important;
-  padding: 2rem !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
-}
-.stackr-swal-title {
-  color: var(--primary-text) !important;
-  font-family: var(--font-ProximaNova);
-  font-size: 1.5rem !important;
-  font-weight: 700 !important;
-}
-.stackr-swal-text {
-  color: var(--secondary-text) !important;
-  font-size: 1rem !important;
-}
-.stackr-swal-icon {
-  border: none !important;
-  margin-bottom: 1rem !important;
-}
-.stackr-swal-actions {
-  gap: 12px;
-  width: 100%;
-}
-.stackr-swal-confirm {
-  background-color: var(--color-stackrgreen-500) !important;
-  color: #000 !important;
-  border: none !important;
-  padding: 12px 24px !important;
-  border-radius: 8px !important;
-  font-weight: 600 !important;
-  font-size: 1rem !important;
-  cursor: pointer;
-  transition: transform 0.1s ease;
-}
-.stackr-swal-confirm:hover {
-  filter: brightness(1.1);
-  transform: scale(1.02);
-}
-.stackr-swal-cancel {
-  background-color: transparent !important;
-  border: 1px solid var(--border) !important;
-  color: var(--secondary-text) !important;
-  padding: 12px 24px !important;
-  border-radius: 8px !important;
-  font-weight: 500 !important;
-  font-size: 1rem !important;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.stackr-swal-cancel:hover {
-  background-color: var(--secondary-bg) !important;
-  color: var(--primary-text) !important;
-}
-</style>
+<style></style>

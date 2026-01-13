@@ -13,6 +13,8 @@ function getUserId() {
 export const useObjectivesStore = defineStore("objectives", {
   state: () => ({
     objectives: [],
+    loading: false,
+    error: null,
   }),
 
   getters: {
@@ -23,33 +25,28 @@ export const useObjectivesStore = defineStore("objectives", {
 
   actions: {
     async fetchObjectives() {
+      this.loading = true;
       const userID = getUserId();
       if (!userID) return;
 
       try {
-        const data = await api.get(BASE_URL, `objectives?userID=${userID}`);
+        const data = await api.get(BASE_URL, `objectives?ownerID=${userID}`);
         this.objectives = data;
       } catch (e) {
         console.error("Erro ao buscar Objetivos", e);
+      } finally {
+        this.loading = false;
       }
     },
 
-    async addObjective(
-      name,
-      targetAmount,
-      deadline,
-      status,
-      isShared,
-      memberIds
-    ) {
+    async addObjective(name, targetAmount, deadline, description, memberIds) {
       const userId = getUserId();
       const objectiveData = factory.createGoal(
         name,
         targetAmount,
         deadline,
-        status,
+        description,
         userId,
-        isShared,
         memberIds
       );
       try {
@@ -60,6 +57,69 @@ export const useObjectivesStore = defineStore("objectives", {
         this.error = e.message;
         console.error("Error adding Objective", e);
         throw e;
+      }
+    },
+    async addObjectiveContribution(objective, amount) {
+      this.loading = true;
+      try {
+        const contributionObject = factory.createObjectiveContribution(amount);
+
+        const contributionsArray = objective.contributions;
+
+        contributionsArray.push(contributionObject);
+
+        await api.patch(BASE_URL, `objectives/${objective.id}`, {
+          contributions: contributionsArray,
+        });
+
+        const objectiveIdx = this.objectives.findIndex(
+          (o) => o.id === objective.id
+        );
+
+        this.objectives[objectiveIdx].contributions = contributionsArray;
+      } catch (e) {
+        this.error = e.message;
+        console.error("Error updating user preferences:", e);
+        throw e;
+      } finally {
+        this.loading = false;
+      }
+    },
+    async deleteObjective(id) {
+      try {
+        await api.remove(BASE_URL, `objectives/${id}`);
+        const objectiveIdx = this.objectives.findIndex((o) => o.id == id);
+        this.objectives.splice(objectiveIdx, 1);
+      } catch (e) {
+        console.error("Error removing expense", e);
+      }
+    },
+
+    async updateObjective(objective) {
+      this.loading = true;
+      try {
+        // 1. API Call
+        await api.patch(BASE_URL, `objectives/${objective.id}`, {
+          ...objective,
+        });
+
+        // 2. Fix: Added 'const' to prevent ReferenceError
+        const objectiveIndex = this.objectives.findIndex(
+          (o) => o.id === objective.id
+        );
+
+        // 3. Update local state reactively
+        if (objectiveIndex !== -1) {
+          this.objectives.splice(objectiveIndex, 1, { ...objective });
+        }
+
+        return objective;
+      } catch (e) {
+        this.error = e.message;
+        console.error("Error updating objective:", e);
+        throw e;
+      } finally {
+        this.loading = false;
       }
     },
   },

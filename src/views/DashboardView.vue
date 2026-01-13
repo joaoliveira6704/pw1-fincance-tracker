@@ -1,13 +1,17 @@
 <script>
 import Button from "@/components/Button.vue";
 import DashboardCard from "@/components/cards/DashboardCard.vue";
+import QuoteCard from "@/components/cards/QuoteCard.vue";
 import DashboardChart from "@/components/charts/DashboardChart.vue";
 import Heatmap from "@/components/charts/Heatmap.vue";
 import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton.vue";
+import { useExpenseStore } from "@/stores/expenseStore";
 import { useLogStore } from "@/stores/logStore";
+import { useObjectivesStore } from "@/stores/objectiveStore";
 import { useThemeStore } from "@/stores/themeStore";
 import { useUsersStore } from "@/stores/userStore";
-import { getDailyCount } from "@/utils/utils";
+import { useWalletStore } from "@/stores/walletStore";
+import { getDailyCount, processObjectivesData } from "@/utils/utils";
 import { Plus, LayoutPanelLeft } from "lucide-vue-next";
 import { mapActions, mapState } from "pinia";
 
@@ -21,22 +25,18 @@ export default {
     Heatmap,
     DashboardSkeleton,
     Button,
+    QuoteCard,
   },
   data() {
     return {
+      isLoading: false,
       heatmapData: [],
       userData: [],
-      activeTab: "Saldo",
-      columns: ["Section Type", "Status", "Target", "Limit", "Reviewer"],
-      tabs: [
-        { name: "Saldo", count: null },
-        { name: "Despesas", count: 32 },
-        { name: "Objetivos", count: 5 },
-      ],
+      type: null,
       metrics: [
         {
           label: "Saldo Total",
-          value: "€12.450,00",
+          value: "€0,00",
           trend: "+2.4%",
           trendUp: true,
           isGood: true,
@@ -45,7 +45,7 @@ export default {
         },
         {
           label: "Despesas do Mês",
-          value: "€1.140,00",
+          value: "€0,00",
           trend: "-15%",
           trendUp: false,
           isGood: false,
@@ -65,24 +65,105 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useUsersStore, ["fetchLoggedUser"]),
+    ...mapActions(useWalletStore, ["fetchWallets"]),
+    ...mapActions(useUsersStore, ["fetchLoggedUser", "fetchQuote"]),
+    ...mapActions(useExpenseStore, ["fetchExpenses"]),
     ...mapActions(useLogStore, ["fetchUserLogs"]),
+    ...mapActions(useObjectivesStore, ["fetchObjectives"]),
+    formatCurrency(val) {
+      return new Intl.NumberFormat("pt-PT", {
+        style: "currency",
+        currency: "EUR",
+      }).format(val);
+    },
+    applyMetrics() {
+      this.metrics[0].value = this.formatCurrency(
+        this.wallets.reduce((sum, wallet) => sum + Number(wallet.balance), 0)
+      );
+      const now = new Date(); // Data Atual
+
+      // Data do Mês Anterior
+      const prevDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+
+      const currentMonthTotal = this.getTotalByMonth(now);
+      const prevMonthTotal = this.getTotalByMonth(prevDate);
+
+      // Calcular a Trend
+
+      let trendPercentage =
+        ((currentMonthTotal - prevMonthTotal) / prevMonthTotal) * 100;
+
+      // Orçamento Fixo
+      const budgetLimit = this.currentUser.preferences.monthlyLimit;
+      const budgetUsage = (currentMonthTotal / budgetLimit) * 100;
+
+      // Atualizar o metrics[1]
+      this.metrics[1].value = this.formatCurrency(currentMonthTotal);
+
+      const sign = trendPercentage > 0 ? "+" : "";
+      this.metrics[1].trend = `${sign}${trendPercentage.toFixed(1) || 0.0}%`;
+
+      this.metrics[1].trendUp = trendPercentage > 0;
+      this.metrics[1].isGood = trendPercentage <= 0;
+
+      this.metrics[1].subtext = `${budgetUsage.toFixed(
+        0
+      )}% do limite mensal utilizado`;
+
+      this.metrics[1].footer = `Limite Mensal ${this.formatCurrency(
+        this.currentUser.preferences.monthlyLimit
+      )}`;
+
+      this.type = this.metrics[1].isGood ? "momentum" : "boost";
+
+      // Atualizar o metrics[2]
+      let processedObjData = processObjectivesData(this.objectives);
+
+      this.metrics[2].value =
+        this.objectives.length > 0
+          ? processedObjData.percentage.toFixed(2) + "%"
+          : "Sem Objetivos";
+
+      this.metrics[2].hasTrend = false;
+
+      this.metrics[2].trendUp = trendPercentage > 0;
+      this.metrics[2].isGood = trendPercentage <= 0;
+
+      this.metrics[2].subtext = `${this.formatCurrency(
+        processedObjData.sum
+      )} guardados`;
+
+      this.metrics[2].footer = `Objetivos Ativos: ${this.objectives.length}`;
+
+      this.type =
+        this.metrics[1].isGood && this.metrics[0].isGood ? "momentum" : "boost";
+    },
   },
   computed: {
-    ...mapState(useUsersStore, ["loading"]),
+    ...mapState(useWalletStore, ["wallets", "loading"]),
+    ...mapState(useUsersStore, ["currentQuote", "loading", "currentUser"]),
     ...mapState(useThemeStore, ["darkMode"]),
+    ...mapState(useExpenseStore, ["expenses", "getTotalByMonth", "loading"]),
+    ...mapState(useObjectivesStore, ["objectives", "loading"]),
   },
   async mounted() {
+    this.isLoading = true;
     const loggedUser = await this.fetchLoggedUser();
     this.userData = await this.fetchUserLogs(loggedUser.id);
     this.heatmapData = getDailyCount(this.userData);
+    await this.fetchWallets();
+    await this.fetchExpenses();
+    await this.fetchObjectives();
+    this.applyMetrics();
+    await this.fetchQuote(this.type);
+    this.isLoading = false;
   },
 };
 </script>
 
 <template>
   <div
-    v-if="loading"
+    v-if="isLoading"
     class="max-h-screen w-full text-gray-400 p-8 font-sans"
     style="background-color: var(--main-bg)"
   >
@@ -90,15 +171,12 @@ export default {
   </div>
   <div
     v-else
-    class="max-h-screen w-full text-gray-400 p-8 font-sans"
-    style="background-color: var(--main-bg)"
+    class="w-full min-h-screen overflow-auto bg-main-bg text-primary-text pt-10 pb-5 px-4 md:px-8"
   >
-    <header class="flex justify-between items-center mb-8">
-      <h1 class="text-xl text-primary-text font-medium">Dashboard</h1>
-      <Button variant="outline"
-        ><Plus class="text-primary-text" />
-        <p class="text-primary-text">Adicionar</p></Button
-      >
+    <header class="items-center text-center pb-5">
+      <h1 class="text-4xl md:text-5xl font-bold font-ProximaNova mb-4">
+        Dashboard
+      </h1>
     </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
@@ -108,48 +186,16 @@ export default {
         v-bind="metric"
       />
     </div>
-
+    <QuoteCard
+      v-if="currentQuote"
+      class="mb-6"
+      label="Frase Motivacional Para Ti"
+      :subtext="`Por: ${currentQuote.author}`"
+      :quote="currentQuote.message"
+    />
     <DashboardChart :logs="userData" />
 
     <Heatmap :heatmapData="heatmapData" :darkMode="darkMode" />
-
-    <div class="flex justify-between items-center mb-4">
-      <div class="flex bg-[#141414] border border-[#262626] rounded-xl p-1">
-        <button
-          v-for="tab in tabs"
-          :key="tab.name"
-          @click="activeTab = tab.name"
-          :class="[
-            'px-4 py-2 text-sm rounded-lg flex items-center gap-2 transition',
-            activeTab === tab.name
-              ? 'bg-white/10 text-white'
-              : 'text-gray-500 hover:text-gray-300',
-          ]"
-        >
-          {{ tab.name }}
-          <span
-            v-if="tab.count"
-            class="text-[10px] bg-white/10 px-1.5 py-0.5 rounded-full"
-            >{{ tab.count }}</span
-          >
-        </button>
-      </div>
-    </div>
-
-    <!--  <div
-      class="grid grid-cols-6 gap-4 px-6 py-4 bg-[#141414] border border-[#262626] rounded-xl text-[10px] font-bold uppercase tracking-[0.15em]"
-    >
-      <div class="flex items-center gap-3 text-gray-500">
-        <input
-          type="checkbox"
-          class="rounded bg-black border-gray-700 accent-white"
-        />
-        Header
-      </div>
-      <div v-for="col in columns" :key="col" class="text-gray-500">
-        {{ col }}
-      </div>
-    </div> -->
   </div>
 </template>
 

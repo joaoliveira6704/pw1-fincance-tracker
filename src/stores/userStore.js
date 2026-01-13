@@ -1,12 +1,16 @@
 import { defineStore } from "pinia";
 import * as api from "@/api/api.js";
 import * as factory from "@/utils/factories";
+import { getUserId } from "@/utils/session";
+import { encryptPassword } from "@/utils/encrypt";
 
 const BASE_URL = "http://localhost:3000";
 
 export const useUsersStore = defineStore("users", {
   state: () => ({
     users: [],
+    currentUser: null,
+    currentQuote: null,
     loading: false,
     error: null,
   }),
@@ -17,6 +21,23 @@ export const useUsersStore = defineStore("users", {
   },
 
   actions: {
+    async fetchQuote(type) {
+      this.loading = true;
+      this.error = null;
+      try {
+        let quoteData = await api.get(
+          "https://inspirational-quotes-api.vercel.app/api/v1",
+          `quotes?category=motivation,${type}&random=true`
+        );
+
+        this.currentQuote = quoteData.data[0];
+      } catch (e) {
+        this.error = e.message;
+        console.error("Error fetching quote:", e);
+      } finally {
+        this.loading = false;
+      }
+    },
     async fetchUsers() {
       this.loading = true;
       this.error = null;
@@ -53,7 +74,7 @@ export const useUsersStore = defineStore("users", {
         const session = JSON.parse(localStorage.getItem("user-session"));
         if (!session) throw new Error("No session found");
         const loggedUserId = session.userId;
-
+        this.currentUser = await this.fetchUserById(loggedUserId);
         return await this.fetchUserById(loggedUserId);
       } catch (e) {
         this.error = e.message;

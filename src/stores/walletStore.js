@@ -52,7 +52,9 @@ export const useWalletStore = defineStore("wallets", {
 
         const walletData = factory.createWallet(name, color, userId, amount);
         this.wallets.push(walletData);
-        return await api.post(BASE_URL, "wallets", walletData);
+        await api.post(BASE_URL, "wallets", walletData);
+
+        return walletData;
       } catch (e) {
         (this.error = e.message), console.error("Error adding wallet", e);
         throw e;

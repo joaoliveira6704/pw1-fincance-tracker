@@ -36,15 +36,15 @@ export default {
       v-for="tab in tabs"
       :key="tab.id"
       @click="selectTab(tab.id)"
-      class="flex items-center gap-2 flex-1 justify-center min-w-[110px] py-2.5 px-4 rounded-lg text-sm font-bold transition-all duration-200 ease-out"
+      class="flex items-center gap-2 flex-1 justify-center min-w-[70px] py-2.5 px-4 rounded-lg text-sm font-bold"
       :class="
         modelValue === tab.id
-          ? 'bg-stackrgreen-500 text-stackrblack shadow-md transform scale-[1.02]'
+          ? 'bg-stackrgreen-500 text-stackrblack shadow-md'
           : 'text-(--secondary-text) hover:text-(--primary-text) hover:bg-(--main-bg)'
       "
     >
       <component :is="tab.icon" class="w-4 h-4" />
-      {{ tab.label }}
+      <span class="hidden md:block">{{ tab.label }}</span>
     </button>
   </div>
 </template>

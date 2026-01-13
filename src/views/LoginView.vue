@@ -20,7 +20,7 @@ export default {
     async handleLogin() {
       try {
         this.error = null;
-        await this.authStore.login(this.username, this.password);
+        await this.authStore.login(this.username.toLowerCase(), this.password);
         router.push("/main");
       } catch (err) {
         this.error = "Erro: Credenciais erradas.";
@@ -37,15 +37,17 @@ export default {
 <template>
   <!-- WRAPPER -->
   <div
-    class="flex flex-col h-screen text-center mx-auto items-center justify-center gap-2.5"
+    class="flex bg-main-bg flex-col h-screen text-center mx-auto items-center justify-center gap-2.5"
   >
     <div class="flex flex-col">
-      <h1 class="text-3xl font-ProximaNova">Login</h1>
-      <p class="text-lg">@{{ username }}</p>
+      <h1 class="text-3xl font-ProximaNova font-bold">Login</h1>
+      <p class="text-base text-stackrgreen-500">
+        @{{ username.toLowerCase() }}
+      </p>
     </div>
     <form
       @submit.prevent="handleLogin"
-      class="bg-white text-black flex flex-col w-100 h-fit p-10 py-10 rounded-xl gap-5"
+      class="bg-navbar-bg border border-border text-primary-text flex flex-col w-100 h-fit p-10 py-10 rounded-xl gap-5"
     >
       <div>
         <RegisterInput

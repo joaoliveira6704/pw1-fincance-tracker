@@ -67,7 +67,7 @@ const router = createRouter({
           component: () => import("@/views/WalletsView.vue"),
         },
         {
-          path: "profile",
+          path: "profile/:username?",
           name: "profile",
           meta: {
             title: "Perfil - Stackr",

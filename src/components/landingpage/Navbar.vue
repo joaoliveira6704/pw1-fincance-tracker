@@ -4,6 +4,7 @@ import Button from "@/components/Button.vue";
 import Logo from "@/components/Logo.vue";
 import { useAuthStore } from "@/stores/authStore";
 import { mapActions, mapState } from "pinia";
+import gsap from "gsap";
 
 export default {
   components: {
@@ -23,13 +24,22 @@ export default {
   },
   async mounted() {
     this.isSessionValid = await this.validateSession();
+
+    // Animação da Navbar
+    gsap.from(this.$refs.nav, {
+      y: -100,
+      opacity: 0,
+      duration: 1,
+      ease: "power4.out",
+    });
   },
 };
 </script>
 
 <template>
   <div
-    class="flex w-full max-w-7xl py-6 px-8 rounded-xl text-center justify-between fixed mt-5 backdrop-blur-sm z-50"
+    ref="nav"
+    class="flex w-screen max-w-7xl py-6 px-8 rounded-none md:rounded-xl text-center justify-between fixed mt-0 md:mt-5 backdrop-blur-sm z-50 border border-white/10"
   >
     <Logo />
     <div v-if="isSessionValid" class="flex space-x-2">
@@ -39,9 +49,6 @@ export default {
     <div v-else class="flex space-x-2">
       <Button variant="outline" to="/login">Login</Button>
       <Button variant="fill" to="/register">Register</Button>
-      <router-link to="/login">Login</router-link>
     </div>
   </div>
 </template>
-
-<style scoped></style>

@@ -1,143 +1,65 @@
-<template>
-  <div
-    class="flex flex-col drop-shadow-md"
-    @mouseenter="isHovering = true"
-    @mouseleave="isHovering = false"
-  >
-    <div
-      class="flex justify-between items-center p-5 rounded-md border-2 bg-navbar-bg h-32 w-full transition-all duration-200"
-      :style="{ borderColor: wallet.color }"
-    >
-      <div class="flex flex-col justify-between h-full text-primary">
-        <h1 class="font-bold text-lg">{{ wallet.name }}</h1>
-        <h2>{{ wallet.balance }} {{ wallet.currency }}</h2>
-      </div>
-
-      <div
-        class="flex flex-col py-4 gap-4 h-fit bg-white/20 p-2 rounded-lg backdrop-blur-sm"
-        v-show="isHovering"
-      >
-        <i
-          class="pi pi-download cursor-pointer hover:text-green-300 hover:scale-110 transition"
-          title="Adicionar"
-          @click="movement('in')"
-        ></i>
-        <i
-          class="pi pi-upload cursor-pointer hover:text-yellow-300 hover:scale-110 transition"
-          title="Retirar"
-          @click="movement('out')"
-        ></i>
-        <i
-          class="pi pi-trash cursor-pointer hover:text-red-500 hover:scale-110 transition"
-          title="Apagar Carteira"
-          @click="deleteWallet"
-        ></i>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
-import Swal from "sweetalert2";
+import { Plus, Minus, Trash2, Wallet } from "lucide-vue-next";
+import { confirmAction, inputAmountAlert, toast } from "@/utils/swal";
+import Button from "./Button.vue";
 
 export default {
   name: "WalletCard",
+  components: {
+    Plus,
+    Minus,
+    Trash2,
+    Wallet,
+    Button,
+  },
+  emits: ["view-wallet"],
   props: {
     wallet: {
       type: Object,
       required: true,
     },
   },
-  data() {
-    return {
-      isHovering: false,
-      movementToast: Swal.mixin({
-        toast: true,
-        position: "bottom",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      }),
-      alertIcon: `
-        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="12" y1="8" x2="12" y2="12"/>
-          <line x1="12" y1="16" x2="12.01" y2="16"/>
-        </svg>
-      `,
-    };
+  computed: {
+    formattedBalance() {
+      return new Intl.NumberFormat("pt-PT", {
+        style: "currency",
+        currency: "EUR",
+      }).format(this.wallet.balance || 0);
+    },
   },
   methods: {
-    getSwalConfig(title, text, showCancel = false) {
-      return {
-        title: title,
-        text: text,
-        iconHtml: this.alertIcon,
-        buttonsStyling: false,
-        showCancelButton: showCancel,
-        confirmButtonText: "Sim",
-        cancelButtonText: "Cancelar",
-        customClass: {
-          popup: "stackr-swal-popup",
-          title: "stackr-swal-title",
-          htmlContainer: "stackr-swal-text",
-          icon: "stackr-swal-icon",
-          confirmButton: "stackr-swal-confirm",
-          cancelButton: "stackr-swal-cancel",
-          actions: "stackr-swal-actions",
-        },
-      };
-    },
     movement(moveType) {
-      const actionText = moveType === "in" ? "depositar" : "levantar";
+      const actionMap = {
+        contribute: "Contribuir",
+        deposit: "Depositar",
+        withdraw: "Levantar",
+      };
 
-      Swal.fire({
-        title: moveType === "in" ? "Depósito" : "Levantamento",
-        text: `Insira quantia a ${actionText}:`,
-        input: "number",
-        inputAttributes: {
-          min: "0",
-          step: "0.01",
-        },
-        showCancelButton: true,
-        confirmButtonText: "Confirmar",
-        cancelButtonText: "Cancelar",
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-      }).then((result) => {
+      const actionText = actionMap[moveType];
+
+      inputAmountAlert(moveType, actionText).then((result) => {
         const value = parseFloat(result.value);
-
         if (result.isConfirmed && value > 0) {
           this.$emit("movement", [
             this.wallet.id,
-            moveType === "in" ? value : -value,
+            moveType === "deposit" ? value : -value,
+            moveType,
           ]);
-
-          this.movementToast.fire({
+          toast.fire({
             icon: "success",
-            title: "Sucesso!",
-            text: "A operação foi concluida",
+            title: "Transação efetuada!",
           });
-        } else if (result.isDismissed) {
-          return;
         }
       });
     },
 
     deleteWallet() {
-      Swal.fire(
-        this.getSwalConfig("Tens a certeza?", "Esta ação é irreversível!", true)
+      confirmAction(
+        "Tens a certeza?",
+        "Vais apagar esta carteira para sempre!"
       ).then(async (result) => {
         if (result.isConfirmed) {
           this.$emit("deleteWallet", this.wallet.id);
-          Swal.fire({
-            ...this.getSwalConfig(
-              "Sucesso!",
-              "A carteira foi removida com sucesso."
-            ),
-            icon: "success",
-            iconHtml: undefined,
-          });
         }
       });
     },
@@ -145,4 +67,73 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<template>
+  <div
+    class="group flex flex-col p-5 rounded-2xl bg-secondary-bg border hover:border-stackrgreen-500! cursor-pointer transition-all duration-300 shadow-sm hover:shadow-md h-full"
+    :style="{ borderColor: wallet.color }"
+    @click="$emit('view-wallet', wallet)"
+  >
+    <div class="flex justify-between items-start mb-6">
+      <div
+        class="p-3 rounded-xl bg-main-bg shadow-sm border border-border transition-colors duration-300"
+        :style="{ color: wallet.color }"
+      >
+        <Wallet class="w-6 h-6" />
+      </div>
+      <div class="text-right">
+        <span
+          class="block font-ProximaNova font-bold text-xl text-primary-text"
+        >
+          {{ formattedBalance }}
+        </span>
+        <span
+          class="text-[10px] font-bold text-secondary-text uppercase tracking-widest"
+        >
+          Saldo Disponível
+        </span>
+      </div>
+    </div>
+
+    <div class="mb-6 flex-grow">
+      <h3 class="font-ProximaNova font-bold text-lg text-primary-text truncate">
+        {{ wallet.name }}
+      </h3>
+    </div>
+
+    <div class="mt-auto pt-4 border-t border-border grid grid-cols-3 gap-2">
+      <Button
+        variant="outline"
+        class="!px-0 !py-2 w-full flex items-center justify-center hover:!bg-stackrgreen-500 hover:!border-stackrgreen-500 hover:!text-white"
+        title="Depositar"
+        @click.stop="movement('deposit')"
+      >
+        <Plus class="w-4 h-4" />
+      </Button>
+
+      <Button
+        variant="outline"
+        class="!px-0 !py-2 w-full flex items-center justify-center hover:!bg-yellow-500 hover:!border-yellow-500 hover:!text-white"
+        title="Levantar"
+        @click.stop="movement('withdraw')"
+      >
+        <Minus class="w-4 h-4" />
+      </Button>
+
+      <Button
+        variant="outline"
+        class="!px-0 !py-2 w-full flex items-center justify-center hover:!bg-red-500 hover:!border-red-500 hover:!text-white"
+        title="Eliminar"
+        @click.stop="deleteWallet"
+      >
+        <Trash2 class="w-4 h-4" />
+      </Button>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+button:hover svg {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+</style>

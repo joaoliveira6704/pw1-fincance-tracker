@@ -16,13 +16,11 @@ export default {
 </script>
 
 <template>
-  <div
-    v-if="isOpen"
-    class="fixed inset-0 bg-black/50 overflow-y-auto h-full w-full flex justify-center items-center z-50"
-    @click.self="closeModal"
-  >
+  <Transition name="fade">
     <div
-      class="bg-main-bg border-2 border-border rounded-lg shadow-xl p-6 w-full max-w-md mx-4 relative text-primary-text"
+      v-if="isOpen"
+      class="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+      @click.self="closeModal"
     >
       <button @click="" class="absolute top-4 right-4">
         <svg
@@ -32,21 +30,17 @@ export default {
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
-
-      <h2 class="text-xl font-bold mb-6">Criar Nova Carteira</h2>
-
-      <form @submit.prevent="submitForm" class="flex flex-col gap-4">
-        <div class="flex flex-col gap-1">
-          <label for="walletName" class="text-sm font-medium"
-            >Nome da Carteira</label
+          <div class="flex items-center gap-2">
+            <div class="p-2 bg-stackrgreen-500/10 rounded-lg">
+              <Wallet class="w-5 h-5 text-stackrgreen-500" />
+            </div>
+            <h2 class="text-xl font-ProximaNova font-bold text-primary-text">
+              Nova Carteira
+            </h2>
+          </div>
+          <button
+            @click="closeModal"
+            class="p-2 text-secondary-text hover:text-primary-text hover:bg-main-bg rounded-full transition-colors"
           >
           <input
             id="walletName"
@@ -81,7 +75,6 @@ export default {
               class="h-10 w-20 rounded cursor-pointer"
             />
           </div>
-        </div>
 
         <div class="flex justify-end gap-3 mt-4">
           <Button variant="outline" @click=""> Cancelar </Button>
@@ -95,5 +88,30 @@ export default {
         </div>
       </form>
     </div>
-  </div>
+  </Transition>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out forwards;
+}
+</style>

@@ -11,7 +11,16 @@ export const useFriendStore = defineStore("friends", {
     followers: [],
     availableUsers: [],
   }),
+  getters: {
+    // Receber seguidores e que segue (amigos)
+    getFriends: (state) => {
+      const followingIds = state.following.map((fg) => fg.friendId);
 
+      return (
+        state.followers.filter((fw) => followingIds.includes(fw.userId)) || []
+      );
+    },
+  },
   actions: {
     // Carregar amigos a partir do userId
     async fetchFollowing() {
