@@ -1,12 +1,12 @@
 <template>
   <div
     ref="socialSection"
-    class="flex flex-col md:flex-row mt-20 md:mt-50 items-center text-center"
+    class="flex flex-col lg:flex-row mt-20 md:mt-50 items-center text-center"
   >
     <div class="social-image">
       <img
         src="/social-proof.png"
-        class="mx-auto hidden md:block w-85 md:w-60"
+        class="mx-auto hidden lg:block w-85"
         width="600"
       />
     </div>
@@ -28,7 +28,7 @@
     <div class="social-image">
       <img
         src="/social-proof.png"
-        class="mx-auto block md:hidden w-85 md:w-60"
+        class="mx-auto block lg:hidden w-75 sm:w-85"
         width="600"
       />
     </div>

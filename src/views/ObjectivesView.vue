@@ -7,16 +7,19 @@ import CreateObjectiveModal from "@/components/modal/CreateObjectiveModal.vue";
 import { useFriendStore } from "@/stores/friendStore";
 import { getUserId } from "@/utils/session";
 import { useUsersStore } from "@/stores/userStore";
+import ObjectivesSkeleton from "@/components/skeletons/ObjectivesSkeleton.vue";
 
 export default {
   data() {
     return {
       friends: [],
+      isLoading: false,
     };
   },
   components: {
     CreateObjectiveModal,
     ObjectivesList,
+    ObjectivesSkeleton,
   },
   computed: {
     ...mapState(useCategoryStore, ["categories"]),
@@ -31,17 +34,22 @@ export default {
     ...mapActions(useUsersStore, ["fetchUsers"]),
   },
   async mounted() {
+    this.isLoading = true;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await this.fetchCategories();
     await this.fetchExpenses();
     await this.fetchFollowers();
     await this.fetchFollowing();
     await this.fetchUsers();
+    this.isLoading = false;
   },
 };
 </script>
 
 <template>
+  <ObjectivesSkeleton v-if="isLoading" />
   <div
+    v-else
     class="w-full min-h-screen overflow-auto bg-main-bg text-primary-text pb-10 md:pb-0"
   >
     <div class="max-w-7xl mx-auto px-4 flex flex-col gap-y-10 text-center">

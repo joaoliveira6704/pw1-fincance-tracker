@@ -13,8 +13,8 @@ export function formattedDate(date) {
 }
 
 /**
- * Formats Income String
- * @param {Number} income - The money quantity to format
+ * Formats Value String
+ * @param {Number} value - The money quantity to format
  * @returns {String} - String with formatted income ("Ex: 12000.00 €")
  */
 export function formattedIncome(income) {

@@ -24,24 +24,24 @@ export default {
   },
   async mounted() {
     this.isSessionValid = await this.validateSession();
-
-    // Animação da Navbar
     gsap.from(this.$refs.nav, {
       y: -100,
       opacity: 0,
       duration: 1,
       ease: "power4.out",
+      clearProps: "transform",
     });
   },
 };
 </script>
 
 <template>
-  <div
+  <nav
     ref="nav"
-    class="flex w-screen max-w-7xl py-6 px-8 rounded-none md:rounded-xl text-center justify-between fixed mt-0 md:mt-5 backdrop-blur-sm z-50 border border-white/10"
+    class="fixed top-0 left-1/2 -translate-x-1/2 z-50 flex w-[calc(100%-2.5rem)] max-w-6xl items-center justify-between py-4 px-6 mt-4 md:mt-5 bg-navbar-bg/90 backdrop-blur-lg rounded-2xl"
   >
     <Logo />
+
     <div v-if="isSessionValid" class="flex space-x-2">
       <Button variant="fill" to="/main">Dashboard</Button>
     </div>
@@ -50,5 +50,5 @@ export default {
       <Button variant="outline" to="/login">Login</Button>
       <Button variant="fill" to="/register">Register</Button>
     </div>
-  </div>
+  </nav>
 </template>

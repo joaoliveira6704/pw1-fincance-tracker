@@ -17,10 +17,9 @@ export default {
       type: String,
       default: "",
     },
-    // Adicionei uma prop opcional para destacar se é uma "trend" ou apenas texto
     variant: {
       type: String,
-      default: "default", // 'default' ou 'trend'
+      default: "default",
     },
   },
 };
@@ -46,9 +45,6 @@ export default {
             {{ label }}
           </span>
         </div>
-        <ArrowUpRight
-          class="w-4 h-4 text-secondary-text/30 group-hover:text-stackrgreen-500"
-        />
       </div>
 
       <div class="mb-4">
@@ -64,9 +60,7 @@ export default {
         class="flex items-center gap-2 pt-4 border-t border-border/50"
       >
         <div class="w-1.5 h-1.5 rounded-full bg-stackrgreen-500"></div>
-        <span
-          class="text-xs font-medium text-secondary-text font-Roboto italic"
-        >
+        <span class="text-xs font-medium text-secondary-text font-Roboto">
           {{ subtext }}
         </span>
       </div>

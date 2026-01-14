@@ -16,6 +16,8 @@ import {
   Pencil,
 } from "lucide-vue-next";
 import Button from "../Button.vue";
+import { mapState } from "pinia";
+import { useCategoryStore } from "@/stores/categoryStore";
 
 export default {
   name: "ExpenseCard",
@@ -44,6 +46,7 @@ export default {
   },
   emits: ["view", "edit", "delete"],
   computed: {
+    ...mapState(useCategoryStore, ["getCategoryById"]),
     formattedDate() {
       if (!this.expense.date) return "";
       return new Date(this.expense.date).toLocaleDateString("pt-PT", {
@@ -53,19 +56,14 @@ export default {
       });
     },
     categoryIcon() {
-      const map = {
-        Alimentação: "ShoppingBag",
-        Transporte: "Car",
-        "Contas & Utilidades": "Zap",
-        "Lazer & Entretenimento": "Coffee",
-        Saúde: "Activity",
-        Compras: "Receipt",
-        Educação: "GraduationCap",
-        "Cuidados Pessoais": "Scissors",
-        Viagens: "Plane",
-        Outros: "HelpCircle",
-      };
-      return map[this.expense.category] || "HelpCircle";
+      const category = this.getCategoryById(this.expense.categoryId);
+
+      return category ? category.icon : "fa-solid fa-globe";
+    },
+
+    categoryName() {
+      const category = this.getCategoryById(this.expense.categoryId);
+      return category ? category.label : "Geral";
     },
     // CORREÇÃO AQUI: Lógica movida para computed
     shortDescription() {
@@ -96,7 +94,7 @@ export default {
       <div
         class="p-3 rounded-xl bg-main-bg text-stackrgreen-500 shadow-sm border border-border group-hover:bg-stackrgreen-500 group-hover:text-stackrblack transition-colors duration-300"
       >
-        <component :is="categoryIcon" class="w-6 h-6" />
+        <font-awesome-icon :icon="categoryIcon" class="fa-lg" />
       </div>
       <div class="text-right">
         <span
@@ -120,7 +118,7 @@ export default {
       <span
         class="text-xs font-bold text-stackrgreen-500 uppercase tracking-wide"
       >
-        {{ expense.category || "Geral" }}
+        {{ categoryName || "Geral" }}
       </span>
     </div>
 

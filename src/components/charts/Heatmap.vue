@@ -34,7 +34,7 @@
 
     <div
       ref="scrollContainer"
-      class="py-2 overflow-x-auto max-w-full w-full custom-scrollbar"
+      class="py-2 overflow-x-auto max-w-6xl w-full custom-scrollbar"
     >
       <div class="min-w-[800px]">
         <CalendarHeatmap

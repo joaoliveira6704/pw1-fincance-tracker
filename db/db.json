@@ -13,13 +13,13 @@
     },
     {
       "id": "1",
-      "username": "joao2",
-      "password": "",
+      "username": "joao",
+      "password": "$2b$10$izPUL2CeLt70wV0y3A1e6O5g0s6fySffbTGIOUv3rXgmnNqGXXSoS",
       "firstName": "João",
       "lastName": "Oliveira",
       "createdAt": "2025-05-24",
       "isAdmin": true,
-      "income": 3000,
+      "income": 20000,
       "preferences": {
         "private": true,
         "monthlyLimit": 13723
@@ -32,7 +32,7 @@
       "firstName": "Miguel",
       "lastName": "Neto",
       "createdAt": "2023-04-21",
-      "isAdmin": false,
+      "isAdmin": true,
       "income": 18490,
       "preferences": {
         "private": true,
@@ -80,7 +80,7 @@
       "password": "joao",
       "email": "joao",
       "createdAt": "2025-11-24",
-      "isAdmin": false,
+      "isAdmin": true,
       "income": 0,
       "preferences": {
         "currency": "EUR",
@@ -334,7 +334,7 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "42bd6d54-3550-4fd7-bd19-b5d662a47bd7"
+      "token": "86ac1019-5f47-4d02-b891-bcc521ac1872"
     },
     {
       "id": "92c6",
@@ -354,7 +354,7 @@
     {
       "id": "c6d3",
       "userId": "38e59c19-50e1-4b18-affc-49f82932ffef",
-      "token": "b1dc098a-578f-4b0a-bdce-5f29dfcf782f"
+      "token": "36860cf0-c2a2-4f62-af95-4da0624a4bd0"
     },
     {
       "id": "d0ac",
@@ -376,7 +376,9 @@
       "description": "Teste!",
       "ownerId": "1",
       "isShared": false,
-      "memberIds": ["4dbb"],
+      "memberIds": [
+        "4dbb"
+      ],
       "contributions": [
         {
           "userId": "2",
@@ -1735,6 +1737,159 @@
       "type": "edit",
       "amount": 0,
       "date": "2026-01-13T15:52:53.576Z"
+    },
+    {
+      "id": "8b36",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:35:50.967Z"
+    },
+    {
+      "id": "3efe",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:36:07.521Z"
+    },
+    {
+      "id": "1fbd",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:36:53.935Z"
+    },
+    {
+      "id": "efd4",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:39:02.522Z"
+    },
+    {
+      "id": "e8b9",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:39:12.321Z"
+    },
+    {
+      "id": "96ec",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:39:37.190Z"
+    },
+    {
+      "id": "9a4b",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:40:05.335Z"
+    },
+    {
+      "id": "6011",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:42:10.573Z"
+    },
+    {
+      "id": "4feb",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:42:26.435Z"
+    },
+    {
+      "id": "5ea1",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:43:53.949Z"
+    },
+    {
+      "id": "3db2",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:43:58.451Z"
+    },
+    {
+      "id": "3fe5",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:51:15.215Z"
+    },
+    {
+      "id": "baa3",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:51:20.721Z"
+    },
+    {
+      "id": "6efc",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T13:53:22.158Z"
+    },
+    {
+      "id": "a637",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T14:16:18.719Z"
+    },
+    {
+      "id": "9b4c",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T14:16:27.111Z"
+    },
+    {
+      "id": "4ea4",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-14T14:16:56.529Z"
     }
   ],
   "categories": [

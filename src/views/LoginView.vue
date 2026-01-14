@@ -37,7 +37,7 @@ export default {
 <template>
   <!-- WRAPPER -->
   <div
-    class="flex bg-main-bg flex-col h-screen text-center mx-auto items-center justify-center gap-2.5"
+    class="flex bg-main-bg flex-col h-screen mx-auto items-center justify-center gap-2.5"
   >
     <div class="flex flex-col">
       <h1 class="text-3xl font-ProximaNova font-bold">Login</h1>
@@ -65,12 +65,9 @@ export default {
         />
       </div>
 
-      <button
-        type="submit"
-        class="flex justify-center bg-stackrgreen-500 rounded-full hover:bg-stackrgreen-200 h-fit px-4 py-2 cursor-pointer transition-all duration-200 ease-in-out text-primary-color text-lg font-ProximaNova"
-      >
-        Entrar
-      </button>
+      <Button variant="fill-full" type="submit">Login</Button>
+      <p>Ainda não tens conta?</p>
+      <Button variant="outline-full" to="/register">Criar Conta</Button>
     </form>
 
     <p v-if="error" style="color: red">{{ error }}</p>

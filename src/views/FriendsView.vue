@@ -3,13 +3,14 @@ import { mapActions, mapState } from "pinia";
 import { useFriendStore } from "@/stores/friendStore";
 import { useUsersStore } from "@/stores/userStore";
 import Fuse from "fuse.js";
-import { Users, Search } from "lucide-vue-next";
+import { Users, Search, Eye, Heart } from "lucide-vue-next";
 
 // Components
 import SearchInput from "@/components/SearchInput.vue";
 import CommunityTab from "@/components/CommunityTab.vue";
 import UserCard from "@/components/cards/CommunityCard.vue";
 import { toast, confirmAction } from "@/utils/swal";
+import CommunitySkeleton from "@/components/skeletons/CommunitySkeleton.vue";
 
 export default {
   components: {
@@ -18,12 +19,16 @@ export default {
     UserCard,
     Users,
     Search,
+    Eye,
+    Heart,
+    CommunitySkeleton,
   },
   data() {
     return {
       activeTab: "discover",
       currentUser: null,
       searchQuery: "",
+      isLoading: false,
     };
   },
   computed: {
@@ -149,18 +154,23 @@ export default {
   },
 
   async created() {
+    this.isLoading = true;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await this.updateInfo();
     try {
       this.currentUser = await this.fetchLoggedUser();
     } catch (e) {
       console.error(e);
     }
+    this.isLoading = false;
   },
 };
 </script>
 
 <template>
+  <CommunitySkeleton v-if="isLoading" />
   <div
+    v-else
     class="min-h-screen w-full overflow-auto flex flex-col items-center pb-15 md:pb-0 bg-(--main-bg) text-(--primary-text) transition-colors duration-300"
   >
     <div class="mt-12 mb-8 text-center px-4">

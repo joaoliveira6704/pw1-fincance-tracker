@@ -186,7 +186,7 @@ export default {
 
     <!-- form -->
     <form
-      class="relative m-auto bg-white text-black flex flex-col w-200 h-fit p-10 py-10 justify-between rounded-xl"
+      class="relative m-auto bg-navbar-bg border border-border text-primary flex flex-col w-200 h-fit p-10 py-10 justify-between rounded-xl"
     >
       <i
         @click="this.helpTextHandler()"
@@ -248,9 +248,13 @@ export default {
           a special character
         </p>
       </div>
-      <Button variant="full" @click="addNewUser()" class="m-auto"
-        >Criar conta</Button
-      >
+      <div class="py-3 flex flex-col gap-3">
+        <Button variant="fill-full" @click="addNewUser()" class="m-auto"
+          >Criar conta</Button
+        >
+        <p>Já tens conta?</p>
+        <Button variant="outline-full" to="/login" class="m-auto">Login</Button>
+      </div>
     </form>
   </div>
 </template>

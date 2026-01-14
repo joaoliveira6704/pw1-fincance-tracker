@@ -35,7 +35,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useUsersStore, ["loading", "users"]),
+    ...mapState(useUsersStore, ["users"]),
     ...mapState(useLogStore, ["logs"]),
 
     sortedLogs() {
@@ -116,8 +116,11 @@ export default {
       });
     },
   },
-  async mounted() {
+  async created() {
+    this.isLoading = true;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await this.fetchUsers();
+    this.isLoading = false;
   },
 
   watch: {
@@ -134,13 +137,6 @@ export default {
   <div class="w-full min-h-screen overflow-auto bg-main-bg">
     <div v-if="isLoading">
       <Skeleton />
-    </div>
-
-    <div
-      v-else-if="error"
-      class="w-full max-w-3xl mx-auto p-4 rounded-lg bg-red-100 border border-red-300 text-red-700 text-center"
-    >
-      {{ error }}
     </div>
 
     <div v-else class="flex flex-col items-center">

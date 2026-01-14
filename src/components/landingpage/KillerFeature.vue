@@ -1,7 +1,7 @@
 <template>
   <div
     ref="featureSection"
-    class="flex flex-col md:flex-row mt-40 md:mt-50 items-center text-center"
+    class="flex flex-col lg:flex-row mt-40 md:mt-50 items-center text-center"
   >
     <div
       class="text-4xl min-[475px]:text-5xl md:text-6xl max-w-2xl text-center font-ProximaNova font-bold feature-text"
@@ -21,7 +21,7 @@
     <div class="feature-image">
       <img
         src="/killer-feature.png"
-        class="mx-auto block w-85 md:w-120"
+        class="mx-auto block w-75 sm:w-85 lg:w-120"
         width="600"
       />
     </div>

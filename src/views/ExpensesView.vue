@@ -8,6 +8,7 @@ import AmountSlider from "@/components/slider/AmountSlider.vue";
 import { useUsersStore } from "@/stores/userStore";
 import ProfileSkeleton from "@/components/skeletons/ProfileSkeleton.vue";
 import { toast } from "@/utils/swal";
+import ExpensesSkeleton from "@/components/skeletons/ExpensesSkeleton.vue";
 
 export default {
   data() {
@@ -19,7 +20,7 @@ export default {
     CreateExpenseModal,
     ExpensesList,
     AmountSlider,
-    ProfileSkeleton,
+    ExpensesSkeleton,
   },
   computed: {
     ...mapState(useCategoryStore, ["categories", "loading"]),
@@ -56,6 +57,7 @@ export default {
   },
   async mounted() {
     this.isLoading = true;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await this.fetchExpenses();
     await this.fetchCategories();
     await this.fetchLoggedUser();
@@ -65,7 +67,7 @@ export default {
 </script>
 
 <template>
-  <div v-if="isLoading"><p>Loading data...</p></div>
+  <ExpensesSkeleton v-if="isLoading" />
   <div
     v-else
     class="w-full overflow-auto min-h-screen bg-main-bg text-primary-text pb-10 md:pb-0"

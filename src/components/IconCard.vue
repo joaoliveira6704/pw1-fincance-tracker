@@ -1,23 +1,3 @@
-<template>
-  <div
-    @click="setIcon"
-    @mouseenter="isHovering = true"
-    @mouseleave="isHovering = false"
-    class="flex w-fill h-15 py-2 px-3 items-center justify-center gap-4 rounded-md border cursor-pointer"
-    :class="{ [activeClass]: isActive }"
-  >
-    <font-awesome-icon v-if="!isHovering" :icon="icon" class="fa-lg" />
-    <label v-if="!isHovering" class="pb-2 truncate cursor-pointer">{{
-      iconLabel
-    }}</label>
-    <label
-      v-else
-      class="text-center text-sm pb-2 whitespace-normal cursor-pointer"
-      >{{ iconLabel }}</label
-    >
-  </div>
-</template>
-
 <script>
 export default {
   data() {
@@ -56,4 +36,22 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<template>
+  <div
+    @click="setIcon"
+    @mouseenter="isHovering = true"
+    @mouseleave="isHovering = false"
+    class="flex w-fill h-15 py-2 px-3 items-center justify-center gap-4 rounded-md border cursor-pointer"
+    :class="{ [activeClass]: isActive }"
+  >
+    <font-awesome-icon v-if="!isHovering" :icon="icon" class="fa-lg" />
+    <label v-if="!isHovering" class="pb-2 truncate cursor-pointer">{{
+      iconLabel
+    }}</label>
+    <label
+      v-else
+      class="text-center text-sm pb-2 whitespace-normal cursor-pointer"
+      >{{ iconLabel }}</label
+    >
+  </div>
+</template>

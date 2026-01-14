@@ -11,7 +11,11 @@ import { useObjectivesStore } from "@/stores/objectiveStore";
 import { useThemeStore } from "@/stores/themeStore";
 import { useUsersStore } from "@/stores/userStore";
 import { useWalletStore } from "@/stores/walletStore";
-import { getDailyCount, processObjectivesData } from "@/utils/utils";
+import {
+  formattedIncome,
+  getDailyCount,
+  processObjectivesData,
+} from "@/utils/utils";
 import { Plus, LayoutPanelLeft } from "lucide-vue-next";
 import { mapActions, mapState } from "pinia";
 
@@ -36,30 +40,30 @@ export default {
       metrics: [
         {
           label: "Saldo Total",
-          value: "€0,00",
-          trend: "+2.4%",
+          value: "0",
+          trend: "",
           trendUp: true,
           isGood: true,
-          subtext: "Soma de todas as carteiras",
+          subtext: "Soma do saldo das tuas carteiras",
           footer: "Atualizado em tempo real",
         },
         {
-          label: "Despesas do Mês",
-          value: "€0,00",
-          trend: "-15%",
-          trendUp: false,
-          isGood: false,
-          subtext: "76% do orçamento utilizado",
-          footer: "Limite mensal: €1.500",
-        },
-        {
-          label: "Progresso dos Objetivos",
-          value: "28.5%",
-          trend: "+5.2%",
+          label: "Despesas",
+          value: "0",
+          trend: "",
           trendUp: true,
           isGood: true,
-          subtext: "€1.200,00 guardados",
-          footer: "Quantidade de Objetivos Ativos: 5",
+          subtext: "",
+          footer: "",
+        },
+        {
+          label: "Objetivos",
+          value: "0",
+          trend: "",
+          trendUp: true,
+          isGood: true,
+          subtext: "",
+          footer: "",
         },
       ],
     };
@@ -70,81 +74,91 @@ export default {
     ...mapActions(useExpenseStore, ["fetchExpenses"]),
     ...mapActions(useLogStore, ["fetchUserLogs"]),
     ...mapActions(useObjectivesStore, ["fetchObjectives"]),
-    formatCurrency(val) {
-      return new Intl.NumberFormat("pt-PT", {
-        style: "currency",
-        currency: "EUR",
-      }).format(val);
-    },
     applyMetrics() {
-      this.metrics[0].value = this.formatCurrency(
-        this.wallets.reduce((sum, wallet) => sum + Number(wallet.balance), 0)
+      // --- 1. CÁLCULO DO SALDO TOTAL (Atual) ---
+      const currentBalance = this.wallets.reduce(
+        (sum, wallet) => sum + Number(wallet.balance),
+        0
       );
-      const now = new Date(); // Data Atual
+      this.metrics[0].value = formattedIncome(currentBalance);
 
-      // Data do Mês Anterior
+      // --- 2. CÁLCULO DA TREND DO SALDO ---
+      const now = new Date();
+      const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+      // Calculamos quanto foi adicionado/removido das carteiras NESTE mês através dos logs
+      const currentMonthWalletChanges = this.userData
+        .filter(
+          (log) =>
+            new Date(log.date) >= firstDayOfMonth && log.category === "wallet"
+        )
+        .reduce((acc, log) => {
+          const amount = Number(log.amount) || 0;
+          if (["add", "create"].includes(log.type)) return acc + amount;
+          if (log.type === "remove") return acc - amount;
+          return acc;
+        }, 0);
+
+      // Saldo anterior = Saldo atual - Mudanças deste mês
+      const previousBalance = currentBalance - currentMonthWalletChanges;
+
+      // Evitar divisão por zero e calcular %
+      let balanceTrend = 0;
+      if (previousBalance > 0) {
+        balanceTrend =
+          ((currentBalance - previousBalance) / previousBalance) * 100;
+      }
+
+      // Atualizar metric do Saldo (index 0)
+      const balanceSign = balanceTrend > 0 ? "+" : "";
+      this.metrics[0].trend = `${balanceSign}${balanceTrend.toFixed(1)}%`;
+      this.metrics[0].trendUp = balanceTrend >= 0;
+      this.metrics[0].isGood = balanceTrend >= 0; // Para saldo, subir é bom!
+
+      // --- 3. CÁLCULO DAS DESPESAS (metric index 1) ---
       const prevDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-
       const currentMonthTotal = this.getTotalByMonth(now);
-      const prevMonthTotal = this.getTotalByMonth(prevDate);
+      const prevMonthTotal = this.getTotalByMonth(prevDate) || 1; // evita NaN
 
-      // Calcular a Trend
-
-      let trendPercentage =
+      let expenseTrend =
         ((currentMonthTotal - prevMonthTotal) / prevMonthTotal) * 100;
 
-      // Orçamento Fixo
-      const budgetLimit = this.currentUser.preferences.monthlyLimit;
+      const budgetLimit = this.currentUser.preferences.monthlyLimit || 1;
       const budgetUsage = (currentMonthTotal / budgetLimit) * 100;
 
-      // Atualizar o metrics[1]
-      this.metrics[1].value = this.formatCurrency(currentMonthTotal);
-
-      const sign = trendPercentage > 0 ? "+" : "";
-      this.metrics[1].trend = `${sign}${trendPercentage.toFixed(1) || 0.0}%`;
-
-      this.metrics[1].trendUp = trendPercentage > 0;
-      this.metrics[1].isGood = trendPercentage <= 0;
-
+      this.metrics[1].value = formattedIncome(currentMonthTotal);
+      const expSign = expenseTrend > 0 ? "+" : "";
+      this.metrics[1].trend = `${expSign}${expenseTrend.toFixed(1)}%`;
+      this.metrics[1].trendUp = expenseTrend > 0;
+      this.metrics[1].isGood = expenseTrend <= 0; // Para despesa, subir é mau!
       this.metrics[1].subtext = `${budgetUsage.toFixed(
         0
       )}% do limite mensal utilizado`;
+      this.metrics[1].footer = `Limite Mensal ${formattedIncome(budgetLimit)}`;
 
-      this.metrics[1].footer = `Limite Mensal ${this.formatCurrency(
-        this.currentUser.preferences.monthlyLimit
-      )}`;
-
-      this.type = this.metrics[1].isGood ? "momentum" : "boost";
-
-      // Atualizar o metrics[2]
+      // --- 4. CÁLCULO DOS OBJETIVOS (metric index 2) ---
       let processedObjData = processObjectivesData(this.objectives);
-
       this.metrics[2].value =
         this.objectives.length > 0
           ? processedObjData.percentage.toFixed(2) + "%"
           : "Sem Objetivos";
 
-      this.metrics[2].hasTrend = false;
-
-      this.metrics[2].trendUp = trendPercentage > 0;
-      this.metrics[2].isGood = trendPercentage <= 0;
-
-      this.metrics[2].subtext = `${this.formatCurrency(
+      this.metrics[2].subtext = `${formattedIncome(
         processedObjData.sum
       )} guardados`;
-
       this.metrics[2].footer = `Objetivos Ativos: ${this.objectives.length}`;
 
+      // Lógica da frase motivacional
       this.type =
         this.metrics[1].isGood && this.metrics[0].isGood ? "momentum" : "boost";
     },
   },
   computed: {
-    ...mapState(useWalletStore, ["wallets", "loading"]),
-    ...mapState(useUsersStore, ["currentQuote", "loading", "currentUser"]),
+    ...mapState(useWalletStore, ["wallets"]),
+    ...mapState(useUsersStore, ["currentQuote", "currentUser"]),
     ...mapState(useThemeStore, ["darkMode"]),
-    ...mapState(useExpenseStore, ["expenses", "getTotalByMonth", "loading"]),
-    ...mapState(useObjectivesStore, ["objectives", "loading"]),
+    ...mapState(useExpenseStore, ["expenses", "getTotalByMonth"]),
+    ...mapState(useObjectivesStore, ["objectives"]),
   },
   async mounted() {
     this.isLoading = true;
@@ -162,11 +176,7 @@ export default {
 </script>
 
 <template>
-  <div
-    v-if="isLoading"
-    class="max-h-screen w-full text-gray-400 p-8 font-sans"
-    style="background-color: var(--main-bg)"
-  >
+  <div v-if="isLoading" class="max-h-screen w-full p-8 font-sans bg-main-bg">
     <DashboardSkeleton />
   </div>
   <div
@@ -184,6 +194,7 @@ export default {
         v-for="(metric, index) in metrics"
         :key="index"
         v-bind="metric"
+        class="md:last:col-span-2 lg:last:col-span-1"
       />
     </div>
     <QuoteCard

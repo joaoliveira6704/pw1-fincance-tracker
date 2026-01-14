@@ -37,6 +37,7 @@ export default {
         style: "currency",
         currency: "EUR",
       }).format(this.expense.amount);
+      format
     },
   },
 };

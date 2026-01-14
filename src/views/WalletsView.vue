@@ -10,6 +10,7 @@ import { useLogStore } from "@/stores/logStore";
 import { formattedDate, formattedIncome } from "@/utils/utils";
 import { toast } from "@/utils/swal";
 import WalletList from "@/components/lists/WalletList.vue";
+import WalletsSkeleton from "@/components/skeletons/WalletsSkeleton.vue";
 
 export default {
   components: {
@@ -18,11 +19,13 @@ export default {
     CreateWalletModal,
     PlusCircle,
     WalletList,
+    WalletsSkeleton,
   },
 
   data() {
     return {
       showCreateModal: false,
+      isLoading: false,
     };
   },
 
@@ -38,10 +41,6 @@ export default {
       "removeWallet",
     ]),
     ...mapActions(useLogStore, ["addNewLog"]),
-
-    async fetch() {
-      await this.fetchWallets();
-    },
 
     async handleCreateWallet(formData) {
       const userId = getUserId();
@@ -92,13 +91,18 @@ export default {
   },
 
   async mounted() {
-    await this.fetch();
+    this.isLoading = true;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await this.fetchWallets();
+    this.isLoading = false;
   },
 };
 </script>
 
 <template>
+  <WalletsSkeleton v-if="isLoading" />
   <div
+    v-else
     class="w-full min-h-screen overflow-auto bg-main-bg text-primary-text pb-10 md:pb-0"
   >
     <div class="max-w-7xl mx-auto px-4 flex flex-col gap-y-10 text-center">

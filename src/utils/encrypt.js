@@ -1,34 +1,40 @@
 import bcrypt from "bcryptjs";
 
-let passwordHash;
-
+/**
+ * Encripta uma password em texto limpo
+ */
 export async function encryptPassword(password) {
   try {
     const salt = await bcrypt.genSalt(10);
-    passwordHash = await bcrypt.hash(password, salt);
-    console.log("Hash gerado:", passwordHash);
-    return passwordHash;
+    const hash = await bcrypt.hash(password, salt);
+    console.log("Hash gerado com sucesso");
+    return hash;
   } catch (error) {
     console.error("Erro ao criptografar:", error);
+    throw error;
   }
 }
 
+/**
+ * Compara a password introduzida com o hash guardado
+ */
 export async function comparePassword(userInputPassword, storedHashedPassword) {
-  bcrypt.compare(userInputPassword, storedHashedPassword, (err, result) => {
-    if (err) {
-      // Handle error
-      console.error("Error comparing passwords:", err);
-      return;
-    }
+  // Simular Edge Cases onde o utilizador envie literalmente a password com hash ou a password ainda não tenha passado por encriptação
+  if (userInputPassword === storedHashedPassword) {
+    return true;
+  }
+  try {
+    const match = await bcrypt.compare(userInputPassword, storedHashedPassword);
 
-    if (result) {
-      // Passwords match, authentication successful
-      console.log("Passwords match! User authenticated.");
+    if (match) {
+      console.log("Passwords coincidem!");
       return true;
     } else {
-      // Passwords don't match, authentication failed
-      console.log("Passwords do not match! Authentication failed.");
-      return true;
+      console.log("Passwords não coincidem!");
+      return false;
     }
-  });
+  } catch (error) {
+    console.error("Erro na comparação de passwords:", error);
+    return false;
+  }
 }
