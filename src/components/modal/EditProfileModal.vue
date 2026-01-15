@@ -94,7 +94,6 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.localUser.username}&scale
       const isChangingPassword = this.localUser.password.length > 0;
 
       if (isChangingPassword) {
-        // 1. Validar se ele preencheu a password atual
         if (!this.passwordOldInput) {
           this.errors.push(
             "Insere a password atual para poderes mudar para uma nova."
@@ -102,7 +101,6 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.localUser.username}&scale
           return;
         }
 
-        // 2. Comparar o que ele digitou (passwordOldInput) com o hash (lastPassword)
         const isCorrect = await comparePassword(
           this.passwordOldInput,
           this.lastPassword
@@ -121,8 +119,11 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.localUser.username}&scale
         // Se não quer mudar a pass, mantém o hash antigo
         this.localUser.password = this.lastPassword;
       }
-
-      // ... (restante validação de username e nomes igual ao que tinhas)
+      if (this.users.find((u) => u.username === this.localUser.username)) {
+        if (!this.errors.includes("Username já existe"))
+          this.errors.push("Username já existe");
+        return;
+      }
 
       this.$emit("save", this.localUser);
     },

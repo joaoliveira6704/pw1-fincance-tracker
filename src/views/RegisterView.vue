@@ -172,22 +172,21 @@ export default {
 
 <template>
   <!-- WRAPPER -->
-  <div class="flex h-screen gap-5">
-    <!-- title wrapper -->
-    <div class="flex flex-col pt-5 absolute">
-      <h1 class="text-4xl m-auto">
-        Bem vind@
-        <h1 class="text-stackrgreen-200 text-8xl">
-          {{ firstName }} <br />
-          {{ lastName }}
-        </h1>
-      </h1>
-    </div>
-
+  <div class="flex h-screen bg-main-bg gap-5">
     <!-- form -->
     <form
       class="relative m-auto bg-navbar-bg border border-border text-primary flex flex-col w-200 h-fit p-10 py-10 justify-between rounded-xl"
     >
+      <!-- title wrapper -->
+      <div class="flex font-ProximaNova text-center pb-5 font-bold">
+        <h1 class="text-3xl m-auto">
+          Bem vind@
+          <h1 class="text-stackrgreen-500 text-4xl">
+            {{ firstName }}
+            {{ lastName }}
+          </h1>
+        </h1>
+      </div>
       <i
         @click="this.helpTextHandler()"
         class="pi pi-question-circle absolute right-5 top-5"

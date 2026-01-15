@@ -35,7 +35,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(useUsersStore, ["users"]),
+    ...mapState(useUsersStore, ["users", "currentUser"]),
     ...mapState(useLogStore, ["logs"]),
 
     sortedLogs() {
@@ -118,8 +118,9 @@ export default {
   },
   async created() {
     this.isLoading = true;
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     await this.fetchUsers();
+    await this.fetchLoggedUser();
     this.isLoading = false;
   },
 
@@ -143,7 +144,11 @@ export default {
       <ProfileCard :user="user" @logout="logoutUser" @edit="handleEditModal" />
 
       <ProfileFeed
-        v-if="user.preferences?.private ?? false"
+        v-if="
+          user.username == currentUser.username
+            ? true
+            : user.preferences?.private ?? false
+        "
         :logs="sortedLogs"
       />
       <h1 v-else>O perfil deste utilizador é privado.</h1>

@@ -14,15 +14,15 @@
     {
       "id": "1",
       "username": "joao",
-      "password": "$2b$10$izPUL2CeLt70wV0y3A1e6O5g0s6fySffbTGIOUv3rXgmnNqGXXSoS",
+      "password": "$2b$10$TnKY3xqDpWpzprE8X1nMge/UNaHX5QZ1vYrTy9WZV1KERDv47mv06",
       "firstName": "João",
       "lastName": "Oliveira",
       "createdAt": "2025-05-24",
-      "isAdmin": true,
-      "income": 20000,
+      "isAdmin": false,
+      "income": 200,
       "preferences": {
-        "private": true,
-        "monthlyLimit": 13723
+        "private": false,
+        "monthlyLimit": 3715
       }
     },
     {
@@ -68,7 +68,7 @@
       "lastName": "admin",
       "createdAt": "2025-11-24",
       "income": 0,
-      "isAdmin": false,
+      "isAdmin": true,
       "objectives": [],
       "expenses": []
     },
@@ -80,7 +80,7 @@
       "password": "joao",
       "email": "joao",
       "createdAt": "2025-11-24",
-      "isAdmin": true,
+      "isAdmin": false,
       "income": 0,
       "preferences": {
         "currency": "EUR",
@@ -334,7 +334,7 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "86ac1019-5f47-4d02-b891-bcc521ac1872"
+      "token": "a8182063-c372-460c-9063-70ad6e906a72"
     },
     {
       "id": "92c6",
@@ -377,7 +377,7 @@
       "ownerId": "1",
       "isShared": false,
       "memberIds": [
-        "4dbb"
+        "ea15"
       ],
       "contributions": [
         {
@@ -394,6 +394,11 @@
           "userId": "1",
           "amount": 12,
           "timestamp": "2026-01-13T15:42:59.511Z"
+        },
+        {
+          "userId": "1",
+          "amount": 2,
+          "timestamp": "2026-01-15T14:21:37.106Z"
         }
       ]
     }
@@ -1890,12 +1895,84 @@
       "type": "edit",
       "amount": 0,
       "date": "2026-01-14T14:16:56.529Z"
+    },
+    {
+      "id": "bc2e",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-15T14:21:23.880Z"
+    },
+    {
+      "id": "6f04",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "contribute",
+      "amount": 2,
+      "date": "2026-01-15T14:21:37.120Z"
+    },
+    {
+      "id": "80c7",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-15T14:22:11.168Z"
+    },
+    {
+      "id": "2bf8",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-15T14:22:41.121Z"
+    },
+    {
+      "id": "b7a6",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-15T14:22:49.082Z"
+    },
+    {
+      "id": "1e3d",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-15T14:22:55.966Z"
+    },
+    {
+      "id": "a7c2",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-15T14:23:01.263Z"
+    },
+    {
+      "id": "5f05",
+      "userId": "1",
+      "category": "user",
+      "typeId": "1",
+      "type": "edit",
+      "amount": 0,
+      "date": "2026-01-15T14:34:32.808Z"
     }
   ],
   "categories": [
     {
       "id": "1",
-      "icon": "fa-solid fa-burger",
+      "icon": "fa-solid fa-burn",
       "label": "Alimentação"
     },
     {
