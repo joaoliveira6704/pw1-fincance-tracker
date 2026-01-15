@@ -158,14 +158,21 @@ export function processChartData(logs, referenceDate) {
   return { labels, dataBalance, dataExpenses, dataObjectives };
 }
 
+/**
+ * Retorna os dados de um objetivo individual
+ */
 export function getObjectiveData(objective) {
-  const sum = objective.contributions.reduce(
-    (acc, contribution) => acc + Number(contribution.amount),
+  const contributions = objective.contributions || [];
+
+  const sum = contributions.reduce(
+    (acc, contribution) => acc + Number(contribution.amount || 0),
     0
   );
-  const target = objective.targetAmount || 1;
+
+  const target = Number(objective.targetAmount) || 1;
   const progress = (sum / target) * 100;
 
+  // Arredonda e limita a 100%
   const finalProgress = Math.min(Math.round(progress), 100);
 
   return {
@@ -174,24 +181,34 @@ export function getObjectiveData(objective) {
   };
 }
 
+/**
+ * Processa uma lista de objetivos
+ */
 export function processObjectivesData(objectives) {
+  // Retorna o objeto com zeros
+  if (!objectives || objectives.length === 0) {
+    return {
+      percentage: 0,
+      sum: 0,
+    };
+  }
+
   let objectivesProgress = [];
-  let sum = 0;
-  let percentage = 0;
+  let totalSum = 0;
 
   objectives.forEach((objective) => {
     let data = getObjectiveData(objective);
-    sum += data.sum;
+    totalSum += data.sum;
     objectivesProgress.push(data.progress);
   });
 
-  console.log(objectivesProgress);
-  percentage =
+  // Cálculo da média das percentagens
+  const totalPercentage =
     objectivesProgress.reduce((acc, progress) => acc + Number(progress), 0) /
     objectivesProgress.length;
 
   return {
-    percentage,
-    sum,
+    percentage: totalPercentage,
+    sum: totalSum,
   };
 }
