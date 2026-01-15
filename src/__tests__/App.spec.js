@@ -112,3 +112,15 @@ describe("Carteiras", () => {
     expect(result.progress).toBe(50);
   });
 });
+
+describe("Api", () => {
+  it("Deve retornar a categoria correta", () => {
+    const mockWallet = {
+      targetAmount: 1000,
+      contributions: [{ amount: 200 }, { amount: 300 }],
+    };
+    const result = getObjectiveData(mockWallet);
+    expect(result.sum).toBe(500);
+    expect(result.progress).toBe(50);
+  });
+});

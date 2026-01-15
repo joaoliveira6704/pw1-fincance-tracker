@@ -28,11 +28,13 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.user.username}&scale=70&b
 
     incomeLabel() {
       let income;
+      console.log(this.user.preferences.private);
 
       if (this.user.id != getUserId()) {
-        income = this.user.preferences?.private
-          ? "Privado"
-          : formattedIncome(this.user.income);
+        income =
+          this.user.preferences?.private ?? false
+            ? formattedIncome(this.user.income)
+            : "Privado";
       } else {
         income = formattedIncome(this.user.income);
       }
