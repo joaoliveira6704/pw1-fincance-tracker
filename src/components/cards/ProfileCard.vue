@@ -2,6 +2,7 @@
 import { formattedDate, formattedIncome } from "@/utils/utils";
 import { Calendar, Wallet, User, Users } from "lucide-vue-next";
 import Button from "../Button.vue";
+import { getUserId } from "@/utils/session";
 
 export default {
   name: "ProfileCard",
@@ -24,6 +25,22 @@ export default {
       return `
 https://api.dicebear.com/9.x/identicon/png?seed=${this.user.username}&scale=70&backgroundColor=#ffffff`;
     },
+
+    incomeLabel() {
+      let income;
+      console.log(this.user.preferences.private);
+
+      if (this.user.id != getUserId()) {
+        income =
+          this.user.preferences?.private ?? false
+            ? formattedIncome(this.user.income)
+            : "Privado";
+      } else {
+        income = formattedIncome(this.user.income);
+      }
+
+      return income;
+    },
   },
   methods: {
     formattedDate,
@@ -37,7 +54,7 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.user.username}&scale=70&b
 
 <template>
   <div
-    class="w-full mx-auto flex flex-col text-center transition-all ease-in-out duration-700"
+    class="w-full mx-auto flex flex-col text-center"
     style="background-color: var(--main-bg); border-color: var(--border)"
   >
     <div
@@ -108,7 +125,9 @@ https://api.dicebear.com/9.x/identicon/png?seed=${this.user.username}&scale=70&b
             >
               Salário
             </p>
-            <p class="font-medium">{{ formattedIncome(user.income) }}</p>
+            <p class="font-medium">
+              {{ incomeLabel }}
+            </p>
           </div>
         </div>
       </div>

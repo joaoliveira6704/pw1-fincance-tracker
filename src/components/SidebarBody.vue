@@ -7,6 +7,7 @@ import {
   ScrollText,
   Users,
   Wallet,
+  Shield,
 } from "lucide-vue-next";
 import SidebarLink from "./SidebarLink.vue";
 import LightDarkBtn from "./LightDarkBtn.vue";
@@ -24,6 +25,7 @@ export default {
       ScrollText,
       Users,
       Wallet,
+      Shield,
     };
   },
   components: {
@@ -36,6 +38,7 @@ export default {
     Users,
     LightDarkBtn,
     Wallet,
+    Shield,
   },
   props: {
     isOpen: Boolean,
@@ -95,7 +98,7 @@ export default {
         page="admin"
         name="Admin"
         :isOpen="isOpen"
-        :icon="Users"
+        :icon="Shield"
       />
     </nav>
 

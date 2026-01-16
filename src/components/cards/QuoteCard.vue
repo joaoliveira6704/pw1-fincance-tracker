@@ -68,11 +68,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-/* Efeito de escala suave no texto ao passar o rato */
-.group:hover p {
-  color: var(--primary-text);
-  transform: translateY(-1px);
-  transition: all 0.3s ease;
-}
-</style>
+<style scoped></style>

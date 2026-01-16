@@ -2,7 +2,7 @@
   <div class="flex flex-col items-center transition-all duration-500">
     <div
       ref="heroContent"
-      class="text-3xl min-[475px]:text-5xl md:text-7xl max-w-5xl text-center font-ProximaNova font-bold mt-30"
+      class="text-3xl min-[475px]:text-5xl md:text-7xl max-w-5xl text-center font-ProximaNova font-bold mt-20"
     >
       <img src="/hero-image.png" class="mx-auto block hero-img" width="600" />
       <h1 class="mt-10 hero-title">
