@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@/stores/authStore";
+import { useUsersStore } from "@/stores/userStore";
 import { getUserId } from "@/utils/session";
 import * as api from "@/api/api.js";
 
@@ -136,7 +137,9 @@ router.beforeEach(async (to, from, next) => {
 
   if (to.meta.requiresAdmin) {
     const userId = getUserId();
-    const user = await api.get(BASE_URL, `users/${userId}`);
+    const userStore = useUsersStore();
+    const user = await userStore.fetchUserById(userId);
+    console.log(user);
     const isAdmin = user.isAdmin;
 
     if (!isAdmin) {
