@@ -1,9 +1,15 @@
 import { describe, it, expect } from "vitest";
-import { getObjectiveData, processObjectivesData } from "@/utils/utils";
+import {
+  formattedDate,
+  formattedIncome,
+  getObjectiveData,
+  processObjectivesData,
+} from "@/utils/utils";
+import axios from "axios";
+import { createUser } from "@/utils/factories";
 
-describe("Lógica de Objetivos Financeiros", () => {
-  // TESTE 1: Cálculo básico de um objetivo
-  it("getObjectiveData deve calcular a soma e progresso base de um objetivo", () => {
+describe("Objectives Logic", () => {
+  it("Must calculate the sum and progress given one objective", () => {
     const mockObjective = {
       targetAmount: 1000,
       contributions: [{ amount: 200 }, { amount: 300 }],
@@ -13,8 +19,7 @@ describe("Lógica de Objetivos Financeiros", () => {
     expect(result.progress).toBe(50);
   });
 
-  // TESTE 2: Limite de 100%
-  it("getObjectiveData não deve retornar progresso maior que 100%", () => {
+  it("Must not return progress over 100% (cap the progress at 100%)", () => {
     const mockObjective = {
       targetAmount: 100,
       contributions: [{ amount: 150 }],
@@ -23,52 +28,46 @@ describe("Lógica de Objetivos Financeiros", () => {
     expect(result.progress).toBe(100);
   });
 
-  // TESTE 3: Arredondamento
-  it("getObjectiveData deve arredondar o progresso para o inteiro mais próximo", () => {
+  it("Must round the progress to the closest integer", () => {
     const mockObjective = {
       targetAmount: 300,
-      contributions: [{ amount: 100 }], // 33.333%
+      contributions: [{ amount: 100 }],
     };
     const result = getObjectiveData(mockObjective);
     expect(result.progress).toBe(33);
   });
 
-  // TESTE 4: Lista vazia (O erro que tinhas)
   it("processObjectivesData deve retornar zeros se a lista de objetivos for vazia", () => {
     const result = processObjectivesData([]);
     expect(result.sum).toBe(0);
     expect(result.percentage).toBe(0);
   });
 
-  // TESTE 5: Média de múltiplos objetivos
-  it("processObjectivesData deve calcular a média correta entre vários objetivos", () => {
+  it("Must calculate correct average between list items", () => {
     const mockList = [
-      { targetAmount: 100, contributions: [{ amount: 100 }] }, // 100%
-      { targetAmount: 100, contributions: [{ amount: 0 }] }, // 0%
+      { targetAmount: 100, contributions: [{ amount: 100 }] },
+      { targetAmount: 100, contributions: [{ amount: 0 }] },
     ];
     const result = processObjectivesData(mockList);
     expect(result.percentage).toBe(50);
     expect(result.sum).toBe(100);
   });
 
-  // TESTE 6: Objetivo sem contribuições
   it("getObjectiveData deve lidar com a ausência do array de contribuições", () => {
-    const mockObjective = { targetAmount: 1000 }; // Sem o campo contributions
+    const mockObjective = { targetAmount: 1000 };
     const result = getObjectiveData(mockObjective);
     expect(result.sum).toBe(0);
     expect(result.progress).toBe(0);
   });
 
-  // TESTE 7: Divisão por zero no Target
-  it("getObjectiveData deve evitar erro se o targetAmount for zero", () => {
+  it("Must not throw error if 0", () => {
     const mockObjective = { targetAmount: 0, contributions: [{ amount: 50 }] };
     const result = getObjectiveData(mockObjective);
 
     expect(result.progress).toBe(100);
   });
 
-  // TESTE 8: Valores decimais
-  it("processObjectivesData deve somar corretamente valores com casas decimais", () => {
+  it("Must sum correctly values with floating numbers", () => {
     const mockList = [
       {
         targetAmount: 100,
@@ -79,8 +78,7 @@ describe("Lógica de Objetivos Financeiros", () => {
     expect(result.sum).toBe(31);
   });
 
-  // TESTE 9: Inputs de string (Simulando erro de API/Input)
-  it("getObjectiveData deve converter strings numéricas para Number antes de somar", () => {
+  it("Must convert numeric strings to number before sum", () => {
     const mockObjective = {
       targetAmount: "1000",
       contributions: [{ amount: "500" }],
@@ -90,8 +88,7 @@ describe("Lógica de Objetivos Financeiros", () => {
     expect(result.progress).toBe(50);
   });
 
-  // TESTE 10: Grande volume de contribuições
-  it("getObjectiveData deve somar corretamente uma longa lista de contribuições", () => {
+  it("Must sum a long contribution list correctly", () => {
     const contributions = Array(100).fill({ amount: 10 });
     const mockObjective = { targetAmount: 1000, contributions };
     const result = getObjectiveData(mockObjective);
@@ -100,27 +97,80 @@ describe("Lógica de Objetivos Financeiros", () => {
   });
 });
 
-describe("Carteiras", () => {
-  // TESTE 1: Adição de dinheiro a carteira
-  it("Deve adicionar 10€ a uma carteira", () => {
-    const mockWallet = {
-      targetAmount: 1000,
-      contributions: [{ amount: 200 }, { amount: 300 }],
-    };
-    const result = getObjectiveData(mockWallet);
-    expect(result.sum).toBe(500);
-    expect(result.progress).toBe(50);
+describe("Api", () => {
+  it("Must return the correct categories on quote", async () => {
+    const response = await axios.get(
+      "https://inspirational-quotes-api.vercel.app/api/v1/quotes?category=motivation,momentum&random=true"
+    );
+
+    expect(response.data.data[0].categories).toEqual(
+      expect.arrayContaining(["Motivation", "Momentum"])
+    );
+  });
+
+  it("Must return logs list", async () => {
+    const response = await axios.get("http://localhost:3000/logs");
+
+    expect(response.status).toBe(200);
+  });
+
+  it("Must return users list", async () => {
+    const response = await axios.get("http://localhost:3000/users");
+
+    expect(response.status).toBe(200);
+  });
+
+  it("Must return specific user (user 1)", async () => {
+    const response = await axios.get("http://localhost:3000/users/1");
+    expect(response.data.id).toBe("1");
+  });
+
+  it("Must return wallets for user 1", async () => {
+    const response = await axios.get("http://localhost:3000/wallets?userId=1");
+    console.log(response.data);
+
+    expect(response.data.length).toBeGreaterThanOrEqual(1);
   });
 });
 
-describe("Api", () => {
-  it("Deve retornar a categoria correta", () => {
-    const mockWallet = {
-      targetAmount: 1000,
-      contributions: [{ amount: 200 }, { amount: 300 }],
-    };
-    const result = getObjectiveData(mockWallet);
-    expect(result.sum).toBe(500);
-    expect(result.progress).toBe(50);
+describe("Factories", () => {
+  it("Creates a user with the correct format", () => {
+    const result = createUser("test", "first", "last", "email", "password");
+
+    expect(result.username).toBe("test");
+    expect(result.firstName).toBe("first");
+    expect(result.lastName).toBe("last");
+    expect(result.email).toBe("email");
+    expect(result.password).toBe("password");
+  });
+});
+
+describe("Formats", () => {
+  it("Must return formatted income", () => {
+    const mockAmount = 1200;
+
+    const result = formattedIncome(mockAmount);
+    expect(result).toBe("1200,00\u00a0€");
+  });
+
+  it("Must return 0.00 € string if sent empty amount", () => {
+    const mockAmount = "";
+
+    const result = formattedIncome(mockAmount);
+    expect(result).toBe("0.00 €");
+  });
+
+  it("Must return correct formatted date", () => {
+    const mockDate = "2026-01-12T03:08:51.745Z";
+
+    const result = formattedDate(mockDate);
+    expect(result).toBe("12 DE JANEIRO DE 2026");
+  });
+
+  it("Must return empty string if sent empty date", () => {
+    const mockDate = "";
+
+    const result = formattedDate(mockDate);
+    expect(result).toBe("");
   });
 });

@@ -4,12 +4,14 @@
  * @returns {String} - String with formatted date ("Ex: 1 de Janeiro de 2026")
  */
 export function formattedDate(date) {
-  if (!date) return "N/A";
-  return new Date(date).toLocaleDateString("pt-PT", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  if (!date) return "";
+  return new Date(date)
+    .toLocaleDateString("pt-PT", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
+    .toUpperCase();
 }
 
 /**
