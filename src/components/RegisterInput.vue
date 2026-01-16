@@ -59,7 +59,7 @@ export default {
   <div :class="divClass">
     <label class="ml-1">{{ labelText }} :</label>
     <input
-      class="bg-stackrgrey-light/50 rounded-xl px-3 py-2 hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50"
+      class="bg-stackrgrey-light/50 rounded-xl px-3 py-2 text-primary-text! hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50"
       :class="inputClass"
       :type="inputType"
       :placeholder="labelText"

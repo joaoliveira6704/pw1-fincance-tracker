@@ -113,6 +113,7 @@ export default {
     async saveEditObjective(objective) {
       await this.updateObjective(objective);
 
+      this.isEditModalOpen = false;
       toast.fire({
         icon: "success",
         title: `O Objetivo ${objective.name} foi atualizado!`,

@@ -67,7 +67,7 @@ export default {
         : `${base} outline-red-500`;
     },
     textareaClass() {
-      return "w-full bg-[#9e9e9e]/50 rounded-xl px-3 py-2 hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50 transition-colors outline-1 outline-gray-500 focus:outline-1 resize-none placeholder-gray-600";
+      return "w-full bg-[#9e9e9e]/50 rounded-xl px-3 py-2 hover:bg-[#C5C4CB]/50 focus:bg-[#C5C4CB]/50 transition-colors outline-1 outline-gray-500 focus:outline-1 resize-none placeholder-primary-text/50";
     },
   },
   methods: {
