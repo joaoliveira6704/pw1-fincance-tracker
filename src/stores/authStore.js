@@ -89,27 +89,32 @@ export const useAuthStore = defineStore("auth", {
       try {
         const data = await api.get(BASE_URL, `users?username=${username}`);
 
-        if (data.length === 1) {
-          const loggedInUser = data[0];
-
-          if (!password === loggedInUser.password) {
-            comparePassword(password, loggedInUser.password);
-          }
-
-          const token = crypto.randomUUID();
-
-          this.userId = loggedInUser.id;
-          this.sessionToken = token;
-
-          await saveUserSession(this.userId, this.sessionToken);
-
-          router.push("/main");
-          return true;
-        } else {
-          throw new Error("Credenciais inválidas");
+        // Check if user exists
+        if (data.length === 0) {
+          throw new Error("Utilizador não encontrado");
         }
+
+        const user = data[0];
+
+        // Verify password using your utility
+        const isMatch = await comparePassword(password, user.password);
+
+        if (!isMatch) {
+          // If passwords don't match, we stop here
+          throw new Error("Senha incorreta");
+        }
+
+        // Success logic: Generate token and update state
+        const token = crypto.randomUUID();
+        this.userId = user.id;
+        this.sessionToken = token;
+
+        await saveUserSession(this.userId, this.sessionToken);
+
+        router.push("/main");
+        return true;
       } catch (error) {
-        console.error("Erro de login:", error);
+        console.error("Erro de login:", error.message);
         throw error;
       }
     },

@@ -51,17 +51,15 @@ export default {
     // Objetivos ativos (não passados) e PARTILHADOS
     sharedObjectives() {
       const today = new Date();
-      let filteredObjectives = this.objectives.filter((obj) => {
+      const userId = getUserId();
+
+      return this.objectives.filter((obj) => {
         const isExpired = obj.deadline && new Date(obj.deadline) < today;
-        const isShared = obj.memberIds && obj.memberIds.length > 0;
+        const isShared =
+          (obj.memberIds && obj.memberIds.length > 0) ||
+          (obj.memberIds && obj.memberIds.includes(userId));
         return !isExpired && isShared;
       });
-
-      this.objectives.forEach((obj) => {
-        if (obj.memberIds.includes(getUserId())) filteredObjectives.push(obj);
-      });
-
-      return filteredObjectives;
     },
 
     // Objetivos ativos (não passados) e INDIVIDUAIS

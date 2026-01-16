@@ -326,7 +326,7 @@
     {
       "id": "d1f3",
       "userId": "1",
-      "token": "b70b4824-7921-43db-b429-6e616d896f0a"
+      "token": "5ec80d8e-0dc3-4e35-a2f6-43e4781d072a"
     },
     {
       "id": "92c6",
@@ -361,43 +361,14 @@
   ],
   "objectives": [
     {
-      "id": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
-      "name": "Teste",
-      "targetAmount": 150,
-      "deadline": "2029-01-20",
-      "description": "Teste!",
+      "id": "20817098-ac03-4c48-980b-b33727227b5b",
+      "name": "teste",
+      "targetAmount": "12",
+      "deadline": "2026-01-30",
+      "description": "",
       "ownerId": "1",
-      "isShared": false,
-      "memberIds": [
-        "ea15"
-      ],
-      "contributions": [
-        {
-          "userId": "2",
-          "amount": 20,
-          "timestamp": "2026-01-12T03:08:51.745Z"
-        },
-        {
-          "userId": "1",
-          "amount": 2,
-          "timestamp": "2026-01-13T15:42:39.954Z"
-        },
-        {
-          "userId": "1",
-          "amount": 12,
-          "timestamp": "2026-01-13T15:42:59.511Z"
-        },
-        {
-          "userId": "1",
-          "amount": 2,
-          "timestamp": "2026-01-15T14:21:37.106Z"
-        },
-        {
-          "userId": "1",
-          "amount": 2,
-          "timestamp": "2026-01-16T16:04:48.701Z"
-        }
-      ]
+      "memberIds": [],
+      "contributions": []
     }
   ],
   "logs": [
@@ -2027,6 +1998,114 @@
       "type": "remove",
       "amount": 0,
       "date": "2026-01-16T17:59:51.438Z"
+    },
+    {
+      "id": "a6e3",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-16T18:44:07.154Z"
+    },
+    {
+      "id": "60b1",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-16T18:44:21.510Z"
+    },
+    {
+      "id": "c750",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-16T19:01:47.043Z"
+    },
+    {
+      "id": "4951",
+      "userId": "1",
+      "category": "objective",
+      "typeId": null,
+      "type": "add",
+      "amount": 2,
+      "date": "2026-01-16T19:02:03.074Z"
+    },
+    {
+      "id": "f590",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "a352027b-3e59-4f58-8f5d-d48ebd077973",
+      "type": "remove",
+      "amount": 0,
+      "date": "2026-01-16T19:02:16.222Z"
+    },
+    {
+      "id": "88ac",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-16T19:02:25.191Z"
+    },
+    {
+      "id": "f6bb",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-16T19:03:58.300Z"
+    },
+    {
+      "id": "5c94",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "4f1db1d9-54fa-478a-ae93-d8ae5dfb7ce3",
+      "type": "remove",
+      "amount": 0,
+      "date": "2026-01-16T19:04:36.129Z"
+    },
+    {
+      "id": "5566",
+      "userId": "1",
+      "category": "objective",
+      "typeId": null,
+      "type": "add",
+      "amount": 12,
+      "date": "2026-01-16T19:04:50.759Z"
+    },
+    {
+      "id": "42c5",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "20817098-ac03-4c48-980b-b33727227b5b",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-16T19:05:02.819Z"
+    },
+    {
+      "id": "f23e",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "20817098-ac03-4c48-980b-b33727227b5b",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-16T19:05:09.089Z"
+    },
+    {
+      "id": "f539",
+      "userId": "1",
+      "category": "objective",
+      "typeId": "20817098-ac03-4c48-980b-b33727227b5b",
+      "type": "update",
+      "amount": 0,
+      "date": "2026-01-16T19:05:14.113Z"
     }
   ],
   "categories": [

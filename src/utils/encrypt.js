@@ -19,6 +19,8 @@ export async function encryptPassword(password) {
  * Compara a password introduzida com o hash guardado
  */
 export async function comparePassword(userInputPassword, storedHashedPassword) {
+  console.log(userInputPassword, " ", storedHashedPassword);
+
   // Simular Edge Cases onde o utilizador envie literalmente a password com hash ou a password ainda não tenha passado por encriptação
   if (userInputPassword === storedHashedPassword) {
     return true;
